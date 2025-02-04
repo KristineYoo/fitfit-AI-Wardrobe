@@ -1,7 +1,7 @@
 import { useState } from 'react'
-import reactLogo from './assets/react.svg'
+import reactLogo from '../assets/react.svg'
 
-function Template() {
+export function Template() {
     const [count, setCount] = useState(0)
   
     return (
@@ -26,5 +26,3 @@ function Template() {
       </>
     )
   }
-  
-  export default Template()
