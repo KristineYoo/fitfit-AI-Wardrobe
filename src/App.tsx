@@ -5,6 +5,7 @@ import { Template } from './Pages/Template'
 import { Items } from './Pages/Items'
 import { Login } from './Pages/Login'
 import { Outfits } from './Pages/Outfits'
+import Navbar from './components/Navbar'
 
 
 //This is where we actually make our app
@@ -13,13 +14,17 @@ import { Outfits } from './Pages/Outfits'
 function App() {
   return (
     <Router>
-      <Routes>
-        <Route path="/" element={<Landing/>}/>
-        <Route path="/template" element={<Template/>}/>
-        <Route path="/outfits" element={<Outfits/>}/>
-        <Route path="/login" element={<Login/>}/>
-        <Route path="/items" element={<Items/>}/>
-      </Routes>
+     
+        <Navbar />
+        <Routes>
+          <Route path="/" element={<Landing/>}/>
+          <Route path="/home" element={<Landing/>}/>
+          <Route path="/template" element={<Template/>}/>
+          <Route path="/outfits" element={<Outfits/>}/>
+          <Route path="/login" element={<Login/>}/>
+          <Route path="/items" element={<Items/>}/>
+        </Routes>
+
     </Router>
   )
 }
