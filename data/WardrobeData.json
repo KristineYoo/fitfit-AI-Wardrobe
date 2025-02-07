@@ -7,6 +7,7 @@
         "brand": "Zara",
         "size": "M",
         "color": "pink",
+        "image":"data/Photos/pink_sweater.jpeg",
         "styling": {
             "tags": ["casual", "formal", "buttons"],
             "season": "winter",
@@ -42,6 +43,7 @@
         "brand": "Zara",
         "size": "S",
         "color": "black",
+        "image":"data/Photos/Black_Dress.jpeg",
         "styling": {
             "tags": ["casual", "formal", "buttons"],
             "season": "summer",
@@ -77,6 +79,7 @@
         "brand": "Zara",
         "size": "M",
         "color": "white",
+        "image":"data/Photos/White_T-Shirt.jpeg",
         "styling": {
             "tags": ["casual", "formal", "buttons"],
             "season": "spring",
@@ -112,6 +115,7 @@
         "brand": "Zara",
         "size": "M",
         "color": "blue",
+        "image":"data/Photos/Blue_Jeans.jpeg",
         "styling": {
             "tags": ["casual", "formal", "buttons"],
             "season": "fall",
@@ -147,6 +151,7 @@
         "brand": "Zara",
         "size": "M",
         "color": "black",
+        "image":"",
         "styling": {
             "tags": ["casual", "formal", "buttons"],
             "season": "winter",
@@ -182,6 +187,7 @@
         "brand": "Zara",
         "size": "M",
         "color": "white",
+        "image":"data/Photos/White_Sneakers.jpeg",
         "styling": {
             "tags": ["casual", "formal", "buttons"],
             "season": "spring",
