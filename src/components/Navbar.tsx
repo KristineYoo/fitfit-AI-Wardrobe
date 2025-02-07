@@ -132,6 +132,28 @@ function Navbar() {
                                     </Typography>
                                 </MenuItem>
                             ))}
+                            <MenuItem 
+                                onClick={() => { handleCloseNavMenu(); window.location.href = '/#/login'; }}
+                                sx={{
+                                    color: '#F5E6E8',
+                                    '&:hover': {
+                                        backgroundColor: 'rgba(245, 230, 232, 0.1)'
+                                    }
+                                }}
+                            >
+                                <Typography sx={{ 
+                                    textAlign: 'center',
+                                    fontFamily: '"Helvetica Neue", Arial, sans-serif',
+                                    fontWeight: 500,
+                                    letterSpacing: '0.1rem',
+                                    transition: 'color 0.3s ease',
+                                    '&:hover': {
+                                        color: '#D5B9B2'
+                                    }
+                                }}>
+                                    Logout
+                                </Typography>
+                            </MenuItem>
                         </Menu>
                     </Box>
 
