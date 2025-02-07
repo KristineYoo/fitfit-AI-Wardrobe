@@ -37,43 +37,50 @@ function Navbar() {
         }}>
             <Container maxWidth={false} >
                 <Toolbar disableGutters sx={{ minHeight: { xs: '56px', sm: '64px' } }}>
-                    {/* Logo + Fitfit for Desktop */}
-                    <CheckroomIcon sx={{ 
-                        display: { xs: 'none', md: 'flex' }, 
-                        mr: 1,
-                        fontSize: '2rem',
-                        color: '#F5E6E8',
-                        transition: 'transform 0.3s ease',
-                        '&:hover': {
-                            transform: 'scale(1.1)',
-                            color: '#D5B9B2'
-                        }
-                    }} />
-                    <Typography
-                        variant="h6"
-                        noWrap
+                    <Box
                         component="a"
-                        href="#"
+                        href="/#/"
                         sx={{
-                            mr: 2,
                             display: { xs: 'none', md: 'flex' },
-                            fontFamily: '"Helvetica Neue", Arial, sans-serif',
-                            fontWeight: 600,
-                            letterSpacing: '0.2rem',
-                            fontSize: '1.4rem',
-                            color: '#F5E6E8',
+                            alignItems: 'center',
                             textDecoration: 'none',
-                            transition: 'color 0.3s ease',
                             '&:hover': {
-                                color: '#D5B9B2'
+                                '& .logo-icon, & .logo-text': {
+                                    transform: 'scale(1.1)',
+                                    color: '#D5B9B2'
+                                }
                             }
                         }}
                     >
-                        FitFit
-                    </Typography>
+                        <CheckroomIcon
+                            className="logo-icon"
+                            sx={{
+                                mr: 1,
+                                fontSize: '2rem',
+                                color: '#F5E6E8',
+                                transition: 'transform 0.3s ease, color 0.3s ease'
+                            }}
+                        />
+                        <Typography
+                            className="logo-text"
+                            variant="h6"
+                            noWrap
+                            sx={{
+                                mr: 2,
+                                fontFamily: '"Helvetica Neue", Arial, sans-serif',
+                                fontWeight: 600,
+                                letterSpacing: '0.2rem',
+                                fontSize: '1.4rem',
+                                color: '#F5E6E8',
+                                transition: 'transform 0.3s ease, color 0.3s ease'
+                            }}
+                        >
+                            FitFit
+                        </Typography>
+                    </Box>
 
                     {/* Menu for Mobile */}
-                    <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
+                    <Box sx={{ display: { xs: 'flex', md: 'none' } }}>
                         <IconButton
                             size="large"
                             onClick={handleOpenNavMenu}
@@ -158,40 +165,49 @@ function Navbar() {
                     </Box>
 
                     {/* Logo + Fitfit for Mobile */}
-                    <CheckroomIcon sx={{ 
-                        display: { xs: 'flex', md: 'none' }, 
-                        mr: 1,
-                        fontSize: '1.8rem',
-                        color: '#F5E6E8',
-                        transition: 'transform 0.3s ease',
-                        '&:hover': {
-                            transform: 'scale(1.1)',
-                            color: '#D5B9B2'
-                        }
-                    }} />
-                    <Typography
-                        variant="h6"
-                        noWrap
+                    <Box
                         component="a"
-                        href="/"
+                        href="/#/"
                         sx={{
-                            mr: 2,
                             display: { xs: 'flex', md: 'none' },
-                            flexGrow: 1,
-                            fontFamily: '"Helvetica Neue", Arial, sans-serif',
-                            fontWeight: 600,
-                            letterSpacing: '0.2rem',
-                            fontSize: '1.2rem',
-                            color: '#F5E6E8',
+                            alignItems: 'center',
                             textDecoration: 'none',
-                            transition: 'color 0.3s ease',
+                            flexGrow: 1,
+                            justifyContent: 'center',
                             '&:hover': {
-                                color: '#D5B9B2'
+                                '& .logo-icon, & .logo-text': {
+                                    transform: 'scale(1.1)',
+                                    color: '#D5B9B2'
+                                }
                             }
                         }}
                     >
-                        FitFit
-                    </Typography>
+                        <CheckroomIcon
+                            className="logo-icon"
+                            sx={{
+                                mr: 1,
+                                fontSize: '1.8rem',
+                                color: '#F5E6E8',
+                                transition: 'transform 0.3s ease, color 0.3s ease'
+                            }}
+                        />
+                        <Typography
+                            className="logo-text"
+                            variant="h6"
+                            noWrap
+                            sx={{
+                                mr: 2,
+                                fontFamily: '"Helvetica Neue", Arial, sans-serif',
+                                fontWeight: 600,
+                                letterSpacing: '0.2rem',
+                                fontSize: '1.2rem',
+                                color: '#F5E6E8',
+                                transition: 'transform 0.3s ease, color 0.3s ease'
+                            }}
+                        >
+                            FitFit
+                        </Typography>
+                    </Box>
 
                     {/* Menu for Desktop */}
                     <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' }, justifyContent: 'flex-start' }}>
