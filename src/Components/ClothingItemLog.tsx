@@ -18,36 +18,35 @@ const style = {
   p: 4,
 };
 
-export default function BasicModal() {
+export default function LogItemModal() {
   const [open, setOpen] = React.useState<boolean>(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
 
   return (
     <div>
-     <Fab
-      sx = {{
-        position: 'fixed',
-        bottom: 16,
-        right: 16
-      }} 
-      color= "primary" 
-      aria-label="add"
-      onClick= {handleOpen} >
+      <Fab
+        sx={{
+          position: 'fixed',
+          bottom: 16,
+          right: 16
+        }}
+        color="primary"
+        aria-label="add"
+        onClick={handleOpen} >
         <AddIcon />
-        </Fab>
+      </Fab>
       <Modal
         open={open}
         onClose={handleClose}
-        aria-labelledby="modal-modal-title"
-        aria-describedby="modal-modal-description"
+        aria-labelledby="clothingItemLogModalTitle"
       >
         <Box sx={style}>
-          <Typography id="modal-modal-title" variant="h6" component="h2">
+          <Typography id="clothingItemLogModalTitle" variant="h6" component="h2">
             Uplaod Clothing Item
           </Typography>
           <TextField id="outlined-basic" label="Name of Item" variant="outlined" fullWidth sx={{ mt: 2 }} />
-          <TextField id="standard-basic" label="Notes" variant="standard"  fullWidth sx={{ mt: 2 }} />
+          <TextField id="standard-basic" label="Notes" variant="standard" fullWidth sx={{ mt: 2 }} />
         </Box>
       </Modal>
     </div>
