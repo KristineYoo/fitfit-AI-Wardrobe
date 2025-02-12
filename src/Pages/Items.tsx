@@ -1,5 +1,5 @@
 import data from '../../data/WardrobeData.json'
-import ItemThumbnail from '../Components/ItemThumbnail.jsx'
+import ItemThumbnail from '../components/ItemThumbnail.jsx'
 
 export function Items() {
   
