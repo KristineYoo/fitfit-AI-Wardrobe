@@ -151,7 +151,7 @@
         "brand": "Zara",
         "size": "M",
         "color": "black",
-        "image":"",
+        "image":"data/Photos/Black_Boots.jpeg",
         "styling": {
             "tags": ["casual", "formal", "buttons"],
             "season": "winter",
