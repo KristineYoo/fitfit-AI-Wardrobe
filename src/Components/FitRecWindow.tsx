@@ -3,7 +3,7 @@ import { FitThumbnail } from './FitThumbnail';
 import { Fit } from '../types/jsonDataTypes';
 
 
-export default function FitRecWindow( recs:Fit[] ) {
+export default function FitRecWindow( {recs} : {recs:Fit[]} ) {
   return (
       <Paper elevation={1} sx={{p:1}}>
         {                                                       //Code not working starting here

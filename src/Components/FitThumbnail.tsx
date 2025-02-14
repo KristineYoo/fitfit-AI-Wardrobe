@@ -4,8 +4,9 @@ import CardMedia from '@mui/material/CardMedia';
 import Typography from '@mui/material/Typography';
 import Chip from '@mui/material/Chip';
 import Stack from '@mui/material/Stack';
+import { Fit } from '../types/jsonDataTypes'
 
-export function FitThumbnail(rec:any){
+export function FitThumbnail({rec} : {rec:Fit}){
     return (
     <Card sx={{ maxWidth: 345 }}>
         <Typography gutterBottom variant="h5" component="div">
