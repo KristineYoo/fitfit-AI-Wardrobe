@@ -6,6 +6,7 @@ export interface Item {
     brand: string;
     size: string;
     color: string;
+    image: string;
     styling: {
       tags: string[];
       season: string;

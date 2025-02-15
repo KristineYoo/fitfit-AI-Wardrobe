@@ -1,10 +1,11 @@
-import * as data from '../../data/WardrobeData.json'
+import data from '../../data/WardrobeData.json'
 import { Container, Typography } from '@mui/material'
 import FitRecWindow from '../components/FitRecWindow'
 import { Fit, Item } from '../types/jsonDataTypes'
 
 export function Landing(){
-    const all_items:Item[] = data;
+    const all_items = data as Item[];
+    console.log(all_items[0])
     const fit1: Fit = {
         items: [all_items[0], all_items[3], all_items[4]],
         name: "Cute fit",
