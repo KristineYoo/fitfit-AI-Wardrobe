@@ -14,7 +14,7 @@ export function FitThumbnail({rec} : {rec:Fit}){
     
     return (
     <Card sx={{ maxWidth: 345 }}>
-        <Typography gutterBottom variant="h5" component="div">
+        <Typography gutterBottom variant="h5" component="div" sx={{pt:1, pb:1, borderBottom:1}}>
                 {rec.name}
         </Typography>
         <CardMedia>

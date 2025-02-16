@@ -22,7 +22,7 @@ export function Landing(){
     
     return (
         <Container sx={{height: "50vh"}}>
-            <Typography variant="h1">Welcome to Fitfit!</Typography>
+            <Typography variant="h1" sx={{p:2}}>Welcome to Fitfit!</Typography>
             <FitRecWindow recs={fit_recs}/>
         </Container>
     )
