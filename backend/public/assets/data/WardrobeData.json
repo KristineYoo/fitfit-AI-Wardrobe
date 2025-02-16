@@ -7,7 +7,7 @@
         "brand": "Zara",
         "size": "M",
         "color": "pink",
-        "image": "data/Photos/pink_sweater.jpeg",
+        "image": "/img/pink_sweater.jpeg",
         "styling": {
             "tags": [
                 "casual",
@@ -47,7 +47,7 @@
         "brand": "Zara",
         "size": "S",
         "color": "black",
-        "image": "data/Photos/Black_Dress.jpeg",
+        "image": "/img/Black_Dress.jpeg",
         "styling": {
             "tags": [
                 "casual",
@@ -87,7 +87,7 @@
         "brand": "Zara",
         "size": "M",
         "color": "white",
-        "image": "data/Photos/White_T-Shirt.jpeg",
+        "image": "/img/White_T-Shirt.jpeg",
         "styling": {
             "tags": [
                 "casual",
@@ -127,7 +127,7 @@
         "brand": "Zara",
         "size": "M",
         "color": "blue",
-        "image": "data/Photos/Blue_Jeans.jpeg",
+        "image": "/img/Blue_Jeans.jpeg",
         "styling": {
             "tags": [
                 "casual",
@@ -167,7 +167,7 @@
         "brand": "Zara",
         "size": "M",
         "color": "black",
-        "image": "data/Photos/Black_Boots.jpeg",
+        "image": "/img/Black_Boots.jpeg",
         "styling": {
             "tags": [
                 "casual",
@@ -207,7 +207,7 @@
         "brand": "Zara",
         "size": "M",
         "color": "white",
-        "image": "data/Photos/White_Sneakers.jpeg",
+        "image": "/img/White_Sneakers.jpeg",
         "styling": {
             "tags": [
                 "casual",
@@ -246,7 +246,7 @@
         "brand": "Zara",
         "size": "M",
         "color": "pink",
-        "image": "data/Photos/pink_sweater.jpeg",
+        "image": "/img/pink_sweater.jpeg",
         "styling": {
             "tags": [
                 "casual",
