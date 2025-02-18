@@ -2,7 +2,6 @@ import {Paper, Grid2, Typography} from '@mui/material';
 import { FitThumbnail } from './FitThumbnail';
 import { Fit } from '../types/jsonDataTypes';
 
-
 export default function FitRecWindow( {recs} : {recs:Fit[]} ) {
   return (
       <Paper 

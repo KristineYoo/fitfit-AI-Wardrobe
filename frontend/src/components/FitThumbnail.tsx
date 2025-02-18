@@ -4,7 +4,7 @@ import CardMedia from '@mui/material/CardMedia';
 import Typography from '@mui/material/Typography';
 import Chip from '@mui/material/Chip';
 import Stack from '@mui/material/Stack';
-import { Fit } from '../types/jsonDataTypes'
+import { Fit } from '../types/jsonDataTypes';
 import { ImageList, ImageListItem, ImageListItemBar } from '@mui/material';
 
 export function FitThumbnail({rec} : {rec:Fit}){
