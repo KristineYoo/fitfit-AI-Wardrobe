@@ -26,10 +26,15 @@ cd ../backend
 After running the command, make sure that your working directory is .../fitfit/backend, **not** .../fitfit or .../fitfit/frontend
 
 2. **Create and activate a virtual environment**
-- On Windows (if you're using Git Bash, refer to the macOS/Linux command):
+- On Windows:
     ```
     python -m venv venv
     venv\Scripts\activate
+    ```
+- On Windows but using Git Bash:
+    ```
+    python -m venv venv
+    source venv/Scripts/activate
     ```
 - On macOS/Linux:
     ```
