@@ -4,16 +4,16 @@ import CardMedia from '@mui/material/CardMedia';
 import Typography from '@mui/material/Typography';
 import Chip from '@mui/material/Chip';
 import Stack from '@mui/material/Stack';
+import { Item } from '../types/jsonDataTypes.ts'
 
 
 
-
-export default function ItemThumbnail({ item }) {
+export default function ItemThumbnail({ item }:{ item:Item}) {
   return (
       <Card sx={{ maxWidth: 300 }}>
         <CardMedia
           component="img"
-          alt={item.title}
+          alt={item.name}
           height="140"
           image={item.image}
           //This is what should be sizing the photos
