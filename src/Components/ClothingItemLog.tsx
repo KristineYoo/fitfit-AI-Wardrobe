@@ -5,6 +5,17 @@ import AddIcon from '@mui/icons-material/Add';
 import Typography from '@mui/material/Typography';
 import Modal from '@mui/material/Modal';
 import TextField from '@mui/material/TextField';
+import ThicknessSelect from './thicknessSelect-logItem';
+import SelectStyleTagList from './styleTag'
+import SeasonTagList from './seasonTag'
+import OccasionTagList from './occasionTag'
+import MoodTagList from './moodTag'
+import SelectCurrency from './currencySelect'
+import SelectDate from './dateInput'
+import DamageScale from './damage-logclothingitem';
+import DisplayButton from './displaySwitch-logItem'
+import FabricSelect from './fabricselect';
+import TypeSelect from './typeSelect';
 
 const style = {
   position: 'absolute' as const,
@@ -16,12 +27,19 @@ const style = {
   border: '2px solid #000',
   boxShadow: 24,
   p: 4,
+  maxHeight: '80vh',  // Set max height for modal
+  overflowY: 'auto',  // Enable vertical scrolling
 };
+
 
 export default function LogItemModal() {
   const [open, setOpen] = React.useState<boolean>(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
+
+
+
+
 
   return (
     <div>
@@ -45,8 +63,38 @@ export default function LogItemModal() {
           <Typography id="clothingItemLogModalTitle" variant="h6" component="h2">
             Uplaod Clothing Item
           </Typography>
-          <TextField id="outlined-basic" label="Name of Item" variant="outlined" fullWidth sx={{ mt: 2 }} />
-          <TextField id="standard-basic" label="Notes" variant="standard" fullWidth sx={{ mt: 2 }} />
+          <TextField id="uploadItem-name" label="Name of Item" variant="outlined" fullWidth sx={{ my: 2 }} />
+          <TextField id="uploadItem-Notes" label="Notes" variant="outlined" fullWidth sx={{ my: 2 }} />
+          <TypeSelect />
+          <TextField id="uploadclothing-brand" label="Brand" variant="outlined" fullWidth sx={{ my: 2 }} />
+
+          Clothing Styles
+
+          <SelectStyleTagList />
+          <SeasonTagList />
+          <OccasionTagList />
+          <MoodTagList />
+
+          Purchase Info
+          <TextField id="purchaseInfo-price" label="Price" variant="outlined" fullWidth sx={{ my: 2 }} />
+          <SelectCurrency />
+
+          <TextField id="purchaseInfo-link" label="Link to Shop" variant="outlined" fullWidth sx={{ my: 2 }} />
+          Enter Date Purchased
+          <SelectDate />
+          <TextField id="purchaseInfo-resaleVal" label="Resale Value" variant="outlined" fullWidth sx={{ my: 2 }} />
+          Select Condition of Clothing Article
+          <DamageScale />
+          <TextField id="Status-location" label="Where is this clothing item" variant="outlined" fullWidth sx={{ my: 2 }} />
+          Reccomend this piece of clothing in outfits?
+          <DisplayButton />
+          <FabricSelect />
+          <TextField id="fabric-material" label="What are the care instructions for this clothing item" variant="outlined" fullWidth sx={{ my: 2 }} />
+          <ThicknessSelect />
+
+
+
+
         </Box>
       </Modal>
     </div>
