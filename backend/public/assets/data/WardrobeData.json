@@ -7,9 +7,13 @@
         "brand": "Zara",
         "size": "M",
         "color": "pink",
-        "image":"data/Photos/pink_sweater.jpeg",
+        "image": "/img/pink_sweater.jpeg",
         "styling": {
-            "tags": ["casual", "formal", "buttons"],
+            "tags": [
+                "casual",
+                "formal",
+                "buttons"
+            ],
             "season": "winter",
             "occasion": "work",
             "mood": "happy"
@@ -43,9 +47,13 @@
         "brand": "Zara",
         "size": "S",
         "color": "black",
-        "image":"data/Photos/Black_Dress.jpeg",
+        "image": "/img/Black_Dress.jpeg",
         "styling": {
-            "tags": ["casual", "formal", "buttons"],
+            "tags": [
+                "casual",
+                "formal",
+                "buttons"
+            ],
             "season": "summer",
             "occasion": "work",
             "mood": "happy"
@@ -79,9 +87,13 @@
         "brand": "Zara",
         "size": "M",
         "color": "white",
-        "image":"data/Photos/White_T-Shirt.jpeg",
+        "image": "/img/White_T-Shirt.jpeg",
         "styling": {
-            "tags": ["casual", "formal", "buttons"],
+            "tags": [
+                "casual",
+                "formal",
+                "buttons"
+            ],
             "season": "spring",
             "occasion": "work",
             "mood": "happy"
@@ -115,9 +127,13 @@
         "brand": "Zara",
         "size": "M",
         "color": "blue",
-        "image":"data/Photos/Blue_Jeans.jpeg",
+        "image": "/img/Blue_Jeans.jpeg",
         "styling": {
-            "tags": ["casual", "formal", "buttons"],
+            "tags": [
+                "casual",
+                "formal",
+                "buttons"
+            ],
             "season": "fall",
             "occasion": "work",
             "mood": "happy"
@@ -151,9 +167,13 @@
         "brand": "Zara",
         "size": "M",
         "color": "black",
-        "image":"data/Photos/Black_Boots.jpeg",
+        "image": "/img/Black_Boots.jpeg",
         "styling": {
-            "tags": ["casual", "formal", "buttons"],
+            "tags": [
+                "casual",
+                "formal",
+                "buttons"
+            ],
             "season": "winter",
             "occasion": "work",
             "mood": "happy"
@@ -187,9 +207,13 @@
         "brand": "Zara",
         "size": "M",
         "color": "white",
-        "image":"data/Photos/White_Sneakers.jpeg",
+        "image": "/img/White_Sneakers.jpeg",
         "styling": {
-            "tags": ["casual", "formal", "buttons"],
+            "tags": [
+                "casual",
+                "formal",
+                "buttons"
+            ],
             "season": "spring",
             "occasion": "work",
             "mood": "happy"
@@ -214,5 +238,45 @@
             "stretch": "no",
             "thickness": "medium"
         }
+    },
+    {
+        "name": "Pink Sweater",
+        "note": "I like this sweater",
+        "category": "sweater",
+        "brand": "Zara",
+        "size": "M",
+        "color": "pink",
+        "image": "/img/pink_sweater.jpeg",
+        "styling": {
+            "tags": [
+                "casual",
+                "formal",
+                "buttons"
+            ],
+            "season": "fall",
+            "occasion": "work",
+            "mood": "happy"
+        },
+        "purchaseInfo": {
+            "price": 50,
+            "currency": "USD",
+            "date": "2021-01-01",
+            "shopLink": "https://www.zara.com/us/en/pink-sweater-p0001.html",
+            "location": "New York",
+            "resaleValue": 30
+        },
+        "status": {
+            "damage": "no",
+            "location": "New York dorm",
+            "visibility": "shown",
+            "comment": "I love this sweater"
+        },
+        "fabric": {
+            "material": "cotton",
+            "care": "hand wash",
+            "stretch": "no",
+            "thickness": "medium"
+        },
+        "id": "7"
     }
 ]
