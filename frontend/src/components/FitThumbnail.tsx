@@ -1,7 +1,6 @@
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
-import Typography from '@mui/material/Typography';
 import Chip from '@mui/material/Chip';
 import Stack from '@mui/material/Stack';
 import { Fit } from '../types/jsonDataTypes';
@@ -14,9 +13,6 @@ export function FitThumbnail({rec} : {rec:Fit}){
     
     return (
     <Card sx={{ maxWidth: 345 }}>
-        <Typography gutterBottom variant="h5" component="div" sx={{pt:1, pb:1, borderBottom:1}}>
-                {rec.name}
-        </Typography>
         <CardMedia>
             <ImageList 
                 sx={{ 

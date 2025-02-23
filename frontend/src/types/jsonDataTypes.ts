@@ -3,40 +3,24 @@ export interface Item {
     name: string;
     note: string;
     category: string;
-    brand: string;
-    size: string;
-    color: string;
+    color: string[];
     image: string;
     styling: {
       tags: string[];
-      season: string;
-      occasion: string;
-      mood: string;
+      season: string[];
+      occasion: string[];
+      mood: string[];
     };
-    purchaseInfo: {
-        price: number;
-        currency: string;
-        date: string;
-        shopLink: string;
-        location: string;
-        resaleValue: number;
-    };
-    status: {
-        damage: string;
-        location: string;
-        visibility: string;
-        comment: string;
-    };
+    visibility: string;
     fabric: {
-        material: string;
-        care: string;
-        stretch: string;
+        material: string[];
         thickness: string;
     };
+    embedding:number[];
+    deleted:boolean;
   };
   
   export interface Fit {
     items: Item[];
-    name: string;
     tags: string[];
   };
