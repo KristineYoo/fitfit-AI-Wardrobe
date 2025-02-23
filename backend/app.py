@@ -20,7 +20,7 @@ def load_clothing_data():
 # @param item: the new item to be added to the wardrobe data
 # @return: True if the item is valid, False otherwise
 def validate_item(item):
-    required_fields = ["id", "name", "note", "category", "brand", "size", "color", "image", "styling", "purchaseInfo", "status", "fabric"]
+    required_fields = ["id", "name", "note", "category", "color", "image", "styling", "visibility", "fabric"]
     for field in required_fields:
         if field not in item:
             return False

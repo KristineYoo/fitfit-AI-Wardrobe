@@ -4,9 +4,7 @@
         "name": "Pink Sweater",
         "note": "I like this sweater",
         "category": "sweater",
-        "brand": "Zara",
-        "size": "M",
-        "color": "pink",
+        "color": ["pink"],
         "image": "/img/pink_sweater.jpeg",
         "styling": {
             "tags": [
@@ -14,39 +12,24 @@
                 "formal",
                 "buttons"
             ],
-            "season": "winter",
-            "occasion": "work",
-            "mood": "happy"
+            "season": ["winter"],
+            "occasion": ["work"],
+            "mood": ["happy"]
         },
-        "purchaseInfo": {
-            "price": 50,
-            "currency": "USD",
-            "date": "2021-01-01",
-            "shopLink": "https://www.zara.com/us/en/pink-sweater-p0001.html",
-            "location": "New York",
-            "resaleValue": 30
-        },
-        "status": {
-            "damage": "no",
-            "location": "New York dorm",
-            "visibility": "shown",
-            "comment": "I love this sweater"
-        },
+        "visibility": "shown",
         "fabric": {
-            "material": "cotton",
-            "care": "hand wash",
-            "stretch": "no",
+            "material": ["cotton"],
             "thickness": "medium"
-        }
+        },
+        "embedding":[],
+        "deleted":false
     },
     {
         "id": 2,
         "name": "Black Dress",
         "note": "I like this dress",
         "category": "dress",
-        "brand": "Zara",
-        "size": "S",
-        "color": "black",
+        "color": ["black"],
         "image": "/img/Black_Dress.jpeg",
         "styling": {
             "tags": [
@@ -54,39 +37,24 @@
                 "formal",
                 "buttons"
             ],
-            "season": "summer",
-            "occasion": "work",
-            "mood": "happy"
+            "season": ["summer"],
+            "occasion": ["work"],
+            "mood": ["happy"]
         },
-        "purchaseInfo": {
-            "price": 70,
-            "currency": "USD",
-            "date": "2021-01-01",
-            "shopLink": "https://www.zara.com/us/en/black-dress-p0002.html",
-            "location": "New York",
-            "resaleValue": 40
-        },
-        "status": {
-            "damage": "no",
-            "location": "New York dorm",
-            "visibility": "shown",
-            "comment": "I love this dress"
-        },
+        "visibility": "shown",
         "fabric": {
-            "material": "cotton",
-            "care": "hand wash",
-            "stretch": "no",
+            "material": ["cotton"],
             "thickness": "medium"
-        }
+        },
+        "embedding":[],
+        "deleted":false
     },
     {
         "id": 3,
         "name": "White T-shirt",
         "note": "I like this t-shirt",
         "category": "t-shirt",
-        "brand": "Zara",
-        "size": "M",
-        "color": "white",
+        "color": ["white"],
         "image": "/img/White_T-Shirt.jpeg",
         "styling": {
             "tags": [
@@ -94,39 +62,24 @@
                 "formal",
                 "buttons"
             ],
-            "season": "spring",
-            "occasion": "work",
-            "mood": "happy"
+            "season": ["spring"],
+            "occasion": ["work"],
+            "mood": ["happy"]
         },
-        "purchaseInfo": {
-            "price": 20,
-            "currency": "USD",
-            "date": "2021-01-01",
-            "shopLink": "https://www.zara.com/us/en/white-t-shirt-p0003.html",
-            "location": "New York",
-            "resaleValue": 10
-        },
-        "status": {
-            "damage": "no",
-            "location": "New York dorm",
-            "visibility": "shown",
-            "comment": "I love this t-shirt"
-        },
+        "visibility": "shown",
         "fabric": {
-            "material": "cotton",
-            "care": "hand wash",
-            "stretch": "no",
+            "material": ["cotton"],
             "thickness": "medium"
-        }
+        },
+        "embedding":[],
+        "deleted":false
     },
     {
         "id": 4,
         "name": "Blue Jeans",
         "note": "I like these jeans",
         "category": "jeans",
-        "brand": "Zara",
-        "size": "M",
-        "color": "blue",
+        "color": ["blue"],
         "image": "/img/Blue_Jeans.jpeg",
         "styling": {
             "tags": [
@@ -134,39 +87,24 @@
                 "formal",
                 "buttons"
             ],
-            "season": "fall",
-            "occasion": "work",
-            "mood": "happy"
+            "season": ["fall"],
+            "occasion": ["work"],
+            "mood": ["happy"]
         },
-        "purchaseInfo": {
-            "price": 60,
-            "currency": "USD",
-            "date": "2021-01-01",
-            "shopLink": "https://www.zara.com/us/en/blue-jeans-p0004.html",
-            "location": "New York",
-            "resaleValue": 30
-        },
-        "status": {
-            "damage": "no",
-            "location": "New York dorm",
-            "visibility": "shown",
-            "comment": "I love these jeans"
-        },
+        "visibility": "shown",
         "fabric": {
-            "material": "cotton",
-            "care": "hand wash",
-            "stretch": "no",
+            "material": ["cotton"],
             "thickness": "medium"
-        }
+        },
+        "embedding":[],
+        "deleted":false
     },
     {
         "id": 5,
         "name": "Black Boots",
         "note": "I like these boots",
         "category": "boots",
-        "brand": "Zara",
-        "size": "M",
-        "color": "black",
+        "color": ["black"],
         "image": "/img/Black_Boots.jpeg",
         "styling": {
             "tags": [
@@ -174,39 +112,24 @@
                 "formal",
                 "buttons"
             ],
-            "season": "winter",
-            "occasion": "work",
-            "mood": "happy"
+            "season": ["winter"],
+            "occasion": ["work"],
+            "mood": ["happy"]
         },
-        "purchaseInfo": {
-            "price": 100,
-            "currency": "USD",
-            "date": "2021-01-01",
-            "shopLink": "https://www.zara.com/us/en/black-boots-p0005.html",
-            "location": "New York",
-            "resaleValue": 50
-        },
-        "status": {
-            "damage": "no",
-            "location": "New York dorm",
-            "visibility": "shown",
-            "comment": "I love these boots"
-        },
+        "visibility": "shown",
         "fabric": {
-            "material": "leather",
-            "care": "wipe clean",
-            "stretch": "no",
+            "material": ["leather"],
             "thickness": "medium"
-        }
+        },
+        "embedding":[],
+        "deleted":false
     },
     {
         "id": 6,
         "name": "White Sneakers",
         "note": "I like these sneakers",
         "category": "sneakers",
-        "brand": "Zara",
-        "size": "M",
-        "color": "white",
+        "color": ["white"],
         "image": "/img/White_Sneakers.jpeg",
         "styling": {
             "tags": [
@@ -214,29 +137,41 @@
                 "formal",
                 "buttons"
             ],
-            "season": "spring",
-            "occasion": "work",
-            "mood": "happy"
+            "season": ["spring"],
+            "occasion": ["work"],
+            "mood": ["happy"]
         },
-        "purchaseInfo": {
-            "price": 80,
-            "currency": "USD",
-            "date": "2021-01-01",
-            "shopLink": "https://www.zara.com/us/en/white-sneakers-p0006.html",
-            "location": "New York",
-            "resaleValue": 40
-        },
-        "status": {
-            "damage": "no",
-            "location": "New York dorm",
-            "visibility": "shown",
-            "comment": "I love these sneakers"
-        },
+        "visibility": "shown",
         "fabric": {
-            "material": "leather",
-            "care": "wipe clean",
-            "stretch": "no",
+            "material": ["leather"],
             "thickness": "medium"
-        }
+        },
+        "embedding":[],
+        "deleted":false
+    },
+    {
+        "name": "Pink Sweater",
+        "note": "I like this sweater",
+        "category": "sweater",
+        "color": ["pink"],
+        "image": "/img/pink_sweater.jpeg",
+        "styling": {
+            "tags": [
+                "casual",
+                "formal",
+                "buttons"
+            ],
+            "season": ["fall"],
+            "occasion": ["work"],
+            "mood": ["happy"]
+        },
+        "visibility": "shown",
+        "fabric": {
+            "material": ["cotton"],
+            "thickness": "medium"
+        },
+        "id": "7",
+        "embedding":[],
+        "deleted":false
     }
 ]
