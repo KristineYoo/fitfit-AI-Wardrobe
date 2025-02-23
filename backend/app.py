@@ -2,6 +2,7 @@ from flask import Flask, jsonify, request
 from flask_cors import CORS
 import json
 import random
+import os
 
 app = Flask(__name__)
 CORS(app) # Allows Frontend to make requests to Backend
@@ -62,7 +63,7 @@ def add_item():
     items = load_clothing_data()
 
     # generate a new id for the item
-    new_item["id"] = items[-1]["id"] + 1
+    new_item["id"] = int(items[-1]["id"] + 1)
 
     # validate the new item
     if not validate_item(new_item):
@@ -105,6 +106,7 @@ def delete_item(item_id):
             json.dump(items, f, indent=4)
         return jsonify(item)
     return jsonify({"message": "Item not found"}), 404
+
 
 if __name__ == "__main__":
     app.run(debug=True, host="0.0.0.0", port=5000)

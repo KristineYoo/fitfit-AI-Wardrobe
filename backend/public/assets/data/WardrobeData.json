@@ -44,6 +44,8 @@
         "name": "Black Dress",
         "note": "I like this dress",
         "category": "dress",
+        "brand": "Zara",
+        "size": "S",
         "color": "black",
         "image": "/img/Black_Dress.jpeg",
         "styling": {
@@ -57,6 +59,7 @@
             "mood": "happy"
         },
         "purchaseInfo": {
+            "price": 70,
             "currency": "USD",
             "date": "2021-01-01",
             "shopLink": "https://www.zara.com/us/en/black-dress-p0002.html",
@@ -235,45 +238,5 @@
             "stretch": "no",
             "thickness": "medium"
         }
-    },
-    {
-        "name": "Pink Sweater",
-        "note": "I like this sweater",
-        "category": "sweater",
-        "brand": "Zara",
-        "size": "M",
-        "color": "pink",
-        "image": "/img/pink_sweater.jpeg",
-        "styling": {
-            "tags": [
-                "casual",
-                "formal",
-                "buttons"
-            ],
-            "season": "fall",
-            "occasion": "work",
-            "mood": "happy"
-        },
-        "purchaseInfo": {
-            "price": 50,
-            "currency": "USD",
-            "date": "2021-01-01",
-            "shopLink": "https://www.zara.com/us/en/pink-sweater-p0001.html",
-            "location": "New York",
-            "resaleValue": 30
-        },
-        "status": {
-            "damage": "no",
-            "location": "New York dorm",
-            "visibility": "shown",
-            "comment": "I love this sweater"
-        },
-        "fabric": {
-            "material": "cotton",
-            "care": "hand wash",
-            "stretch": "no",
-            "thickness": "medium"
-        },
-        "id": "7"
     }
 ]

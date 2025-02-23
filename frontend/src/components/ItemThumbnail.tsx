@@ -5,10 +5,17 @@ import Typography from '@mui/material/Typography';
 import Chip from '@mui/material/Chip';
 import Stack from '@mui/material/Stack';
 import { Item } from '../types/jsonDataTypes.ts'
+import Button from '@mui/material/Button';
+import axios from 'axios';
 
 
 
 export default function ItemThumbnail({ item }:{ item:Item}) {
+  const deleted = () => {
+    axios.delete("/api/delete-item/"+String(item.id));
+    window.location.reload();
+  }
+  
   return (
       <Card sx={{ maxWidth: 300 }}>
         <CardMedia
@@ -36,6 +43,7 @@ export default function ItemThumbnail({ item }:{ item:Item}) {
           }
           
         </Stack>
+        <Button onClick={deleted}>Delete</Button>
       </Card>
   );
 }
