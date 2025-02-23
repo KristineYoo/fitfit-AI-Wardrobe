@@ -44,8 +44,6 @@
         "name": "Black Dress",
         "note": "I like this dress",
         "category": "dress",
-        "brand": "Zara",
-        "size": "S",
         "color": "black",
         "image": "/img/Black_Dress.jpeg",
         "styling": {
@@ -59,7 +57,6 @@
             "mood": "happy"
         },
         "purchaseInfo": {
-            "price": 70,
             "currency": "USD",
             "date": "2021-01-01",
             "shopLink": "https://www.zara.com/us/en/black-dress-p0002.html",
