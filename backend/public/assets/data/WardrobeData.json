@@ -4,7 +4,9 @@
         "name": "Pink Sweater",
         "note": "I like this sweater",
         "category": "sweater",
-        "color": ["pink"],
+        "color": [
+            "pink"
+        ],
         "image": "/img/pink_sweater.jpeg",
         "styling": {
             "tags": [
@@ -12,24 +14,34 @@
                 "formal",
                 "buttons"
             ],
-            "season": ["winter"],
-            "occasion": ["work"],
-            "mood": ["happy"]
+            "season": [
+                "winter"
+            ],
+            "occasion": [
+                "work"
+            ],
+            "mood": [
+                "happy"
+            ]
         },
         "visibility": "shown",
         "fabric": {
-            "material": ["cotton"],
+            "material": [
+                "cotton"
+            ],
             "thickness": "medium"
         },
-        "embedding":[],
-        "deleted":false
+        "embedding": [],
+        "deleted": false
     },
     {
         "id": 2,
         "name": "Black Dress",
         "note": "I like this dress",
         "category": "dress",
-        "color": ["black"],
+        "color": [
+            "black"
+        ],
         "image": "/img/Black_Dress.jpeg",
         "styling": {
             "tags": [
@@ -37,24 +49,34 @@
                 "formal",
                 "buttons"
             ],
-            "season": ["summer"],
-            "occasion": ["work"],
-            "mood": ["happy"]
+            "season": [
+                "summer"
+            ],
+            "occasion": [
+                "work"
+            ],
+            "mood": [
+                "happy"
+            ]
         },
         "visibility": "shown",
         "fabric": {
-            "material": ["cotton"],
+            "material": [
+                "cotton"
+            ],
             "thickness": "medium"
         },
-        "embedding":[],
-        "deleted":false
+        "embedding": [],
+        "deleted": false
     },
     {
         "id": 3,
         "name": "White T-shirt",
         "note": "I like this t-shirt",
         "category": "t-shirt",
-        "color": ["white"],
+        "color": [
+            "white"
+        ],
         "image": "/img/White_T-Shirt.jpeg",
         "styling": {
             "tags": [
@@ -62,24 +84,34 @@
                 "formal",
                 "buttons"
             ],
-            "season": ["spring"],
-            "occasion": ["work"],
-            "mood": ["happy"]
+            "season": [
+                "spring"
+            ],
+            "occasion": [
+                "work"
+            ],
+            "mood": [
+                "happy"
+            ]
         },
         "visibility": "shown",
         "fabric": {
-            "material": ["cotton"],
+            "material": [
+                "cotton"
+            ],
             "thickness": "medium"
         },
-        "embedding":[],
-        "deleted":false
+        "embedding": [],
+        "deleted": false
     },
     {
         "id": 4,
         "name": "Blue Jeans",
         "note": "I like these jeans",
         "category": "jeans",
-        "color": ["blue"],
+        "color": [
+            "blue"
+        ],
         "image": "/img/Blue_Jeans.jpeg",
         "styling": {
             "tags": [
@@ -87,24 +119,34 @@
                 "formal",
                 "buttons"
             ],
-            "season": ["fall"],
-            "occasion": ["work"],
-            "mood": ["happy"]
+            "season": [
+                "fall"
+            ],
+            "occasion": [
+                "work"
+            ],
+            "mood": [
+                "happy"
+            ]
         },
         "visibility": "shown",
         "fabric": {
-            "material": ["cotton"],
+            "material": [
+                "cotton"
+            ],
             "thickness": "medium"
         },
-        "embedding":[],
-        "deleted":false
+        "embedding": [],
+        "deleted": false
     },
     {
         "id": 5,
         "name": "Black Boots",
         "note": "I like these boots",
         "category": "boots",
-        "color": ["black"],
+        "color": [
+            "black"
+        ],
         "image": "/img/Black_Boots.jpeg",
         "styling": {
             "tags": [
@@ -112,66 +154,24 @@
                 "formal",
                 "buttons"
             ],
-            "season": ["winter"],
-            "occasion": ["work"],
-            "mood": ["happy"]
-        },
-        "visibility": "shown",
-        "fabric": {
-            "material": ["leather"],
-            "thickness": "medium"
-        },
-        "embedding":[],
-        "deleted":false
-    },
-    {
-        "id": 6,
-        "name": "White Sneakers",
-        "note": "I like these sneakers",
-        "category": "sneakers",
-        "color": ["white"],
-        "image": "/img/White_Sneakers.jpeg",
-        "styling": {
-            "tags": [
-                "casual",
-                "formal",
-                "buttons"
+            "season": [
+                "winter"
             ],
-            "season": ["spring"],
-            "occasion": ["work"],
-            "mood": ["happy"]
-        },
-        "visibility": "shown",
-        "fabric": {
-            "material": ["leather"],
-            "thickness": "medium"
-        },
-        "embedding":[],
-        "deleted":false
-    },
-    {
-        "name": "Pink Sweater",
-        "note": "I like this sweater",
-        "category": "sweater",
-        "color": ["pink"],
-        "image": "/img/pink_sweater.jpeg",
-        "styling": {
-            "tags": [
-                "casual",
-                "formal",
-                "buttons"
+            "occasion": [
+                "work"
             ],
-            "season": ["fall"],
-            "occasion": ["work"],
-            "mood": ["happy"]
+            "mood": [
+                "happy"
+            ]
         },
         "visibility": "shown",
         "fabric": {
-            "material": ["cotton"],
+            "material": [
+                "leather"
+            ],
             "thickness": "medium"
         },
-        "id": "7",
-        "embedding":[],
-        "deleted":false
+        "embedding": [],
+        "deleted": false
     }
 ]
