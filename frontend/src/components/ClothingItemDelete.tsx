@@ -12,7 +12,6 @@ import Select, { SelectChangeEvent } from '@mui/material/Select';
 import Button from '@mui/material/Button';
 import DialogActions from '@mui/material/DialogActions';
 import { useEffect } from "react";
-import { ClothingItem } from "../types/ClothingItem";
 import { useState } from "react";
 
 const style = {
