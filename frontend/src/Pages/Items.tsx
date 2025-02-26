@@ -30,9 +30,9 @@ export function Items() {
           <Grid container spacing={3}>
                 {
                 data.map((item: Item) => (
-                  <Grid size={2} key={item.id}>
-                  <ItemThumbnail item={item} />
-                  </Grid>
+                    <Grid size={2} key={item.id}>
+                    <ItemThumbnail item={item} />
+                    </Grid>
                 ))
                 }
             </Grid>

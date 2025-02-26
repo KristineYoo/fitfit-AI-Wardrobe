@@ -101,7 +101,8 @@ def delete_item(item_id):
         # validate the updated item
         
         # update the item details
-        items.remove(item)
+        #items.remove(item)
+        item.update({"deleted": True})
         with open(WARDROBE_DATA_FILE, 'w') as f:
             json.dump(items, f, indent=4)
         return jsonify(item)
