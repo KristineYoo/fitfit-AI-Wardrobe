@@ -1,12 +1,14 @@
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
+import RemoveIcon from '@mui/icons-material/Remove';
 import Typography from '@mui/material/Typography';
 import Chip from '@mui/material/Chip';
 import Stack from '@mui/material/Stack';
 import { Item } from '../types/jsonDataTypes.ts'
 import Button from '@mui/material/Button';
 import axios from 'axios';
+import Box from '@mui/material/Box';
 
 
 
@@ -18,6 +20,9 @@ export default function ItemThumbnail({ item }:{ item:Item}) {
   if (item.deleted==false && item.visibility=="shown")
     return (
         <Card sx={{ maxWidth: 300 }}>
+          <Box textAlign='right'>
+            <Button onClick={deleted} startIcon={<RemoveIcon/>} variant='contained' style={{height: '30px', width : '20px'}}></Button>
+          </Box>
           <CardMedia
             component="img"
             alt={item.name}
@@ -43,7 +48,6 @@ export default function ItemThumbnail({ item }:{ item:Item}) {
             }
             
           </Stack>
-          <Button onClick={deleted}>Delete</Button>
         </Card>
     );
 }
