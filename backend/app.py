@@ -63,7 +63,7 @@ def add_item():
     items = load_clothing_data()
 
     # generate a new id for the item
-    new_item["id"] = int(items[-1]["id"] + 1)
+    new_item["id"] = items[-1]["id"] + 1
 
     # validate the new item
     if not validate_item(new_item):

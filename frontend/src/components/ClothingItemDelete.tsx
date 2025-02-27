@@ -12,7 +12,7 @@ import Select, { SelectChangeEvent } from '@mui/material/Select';
 import Button from '@mui/material/Button';
 import DialogActions from '@mui/material/DialogActions';
 import { useEffect } from "react";
-import { ClothingItem } from "../types/ClothingItem";
+import { Item } from "../types/jsonDataTypes";
 import { useState } from "react";
 
 const style = {
@@ -53,6 +53,7 @@ export default function DeleteItemModal() {
     window.location.reload();
   }
 
+
   return (
     <div>
       <Fab
@@ -84,8 +85,8 @@ export default function DeleteItemModal() {
               onChange={handleChange}
             >
               {
-                data.map((item: ClothingItem) => (
-                  <MenuItem value={item.id}>{item.name}</MenuItem>
+                data.map((item: Item) => (
+                  <MenuItem value={item.id}>{item.deleted==false && item.name}</MenuItem>
                 ))
                 }
             </Select>

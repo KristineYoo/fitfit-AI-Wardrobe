@@ -173,5 +173,75 @@
         },
         "embedding": [],
         "deleted": false
+    },
+    {
+        "id": 6,
+        "name": "White Sneakers",
+        "note": "I like these sneakers",
+        "category": "sneakers",
+        "color": [
+            "white"
+        ],
+        "image": "/img/White_Sneakers.jpeg",
+        "styling": {
+            "tags": [
+                "casual",
+                "formal",
+                "buttons"
+            ],
+            "season": [
+                "spring"
+            ],
+            "occasion": [
+                "work"
+            ],
+            "mood": [
+                "happy"
+            ]
+        },
+        "visibility": "shown",
+        "fabric": {
+            "material": [
+                "leather"
+            ],
+            "thickness": "medium"
+        },
+        "embedding": [],
+        "deleted": false
+    },
+    {
+        "name": "Pink Sweater",
+        "note": "I like this sweater",
+        "category": "sweater",
+        "color": [
+            "pink"
+        ],
+        "image": "/img/pink_sweater.jpeg",
+        "styling": {
+            "tags": [
+                "casual",
+                "formal",
+                "buttons"
+            ],
+            "season": [
+                "fall"
+            ],
+            "occasion": [
+                "work"
+            ],
+            "mood": [
+                "happy"
+            ]
+        },
+        "visibility": "shown",
+        "fabric": {
+            "material": [
+                "cotton"
+            ],
+            "thickness": "medium"
+        },
+        "id": 7,
+        "embedding": [],
+        "deleted": false
     }
 ]
