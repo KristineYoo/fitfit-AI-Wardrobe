@@ -10,7 +10,7 @@ export function Landing(){
     const [loading, setLoading] = useState(true);  // loading is true at the beginning until data is fetched from the backend
     
     useEffect(() => {
-        axios.get('http://localhost:5000/api/items')
+        axios.get('/api/items')
             .then((res) => {
                 console.log(res.data);
                 setData(res.data.items || []);
@@ -30,13 +30,11 @@ export function Landing(){
     console.log(all_items[0])
     const fit1: Fit = {
         items: [all_items[0], all_items[3], all_items[4]],
-        name: "Cute fit",
         tags: ["cute", "pink", "casual"]
     };
 
     const fit2: Fit = {
         items: [all_items[2], all_items[5]],
-        name:"Plain and Simple",
         tags:["clean","simple","casual","chill"]
     };
 

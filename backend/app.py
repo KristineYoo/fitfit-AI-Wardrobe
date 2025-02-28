@@ -3,6 +3,7 @@ from flask_cors import CORS
 import json
 import random
 import filters
+import os
 
 app = Flask(__name__)
 CORS(app) # Allows Frontend to make requests to Backend
@@ -95,6 +96,22 @@ def update_item(item_id):
             json.dump(items, f, indent=4)
         return jsonify(item)
     return jsonify({"message": "Item not found"}), 404
+
+@app.route("/api/delete-item/<int:item_id>", methods=["DELETE"])
+def delete_item(item_id):
+    items = load_clothing_data()
+    item = next((item for item in items if item["id"] == item_id), None)
+    if item:
+        # validate the updated item
+        
+        # update the item details
+        #items.remove(item)
+        item.update({"deleted": True})
+        with open(WARDROBE_DATA_FILE, 'w') as f:
+            json.dump(items, f, indent=4)
+        return jsonify(item)
+    return jsonify({"message": "Item not found"}), 404
+
 
 if __name__ == "__main__":
     app.run(debug=True, host="0.0.0.0", port=5000)
