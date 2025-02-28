@@ -98,9 +98,6 @@ def delete_item(item_id):
     items = load_clothing_data()
     item = next((item for item in items if item["id"] == item_id), None)
     if item:
-        # validate the updated item
-        
-        # update the item details
         #items.remove(item)
         item.update({"deleted": True})
         with open(WARDROBE_DATA_FILE, 'w') as f:
