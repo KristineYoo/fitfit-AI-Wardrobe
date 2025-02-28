@@ -2,7 +2,7 @@ from flask import Flask, jsonify, request
 from flask_cors import CORS
 import json
 import random
-
+from transformer import getEmbedding
 app = Flask(__name__)
 CORS(app) # Allows Frontend to make requests to Backend
 
@@ -30,6 +30,37 @@ def validate_item(item):
 # @return: the new id for the new item
 def generate_id(items):
     return items[-1]["id"] + 1
+
+# Function to convert the item details to a string
+# @param item: the item to be converted to a string
+# @return: the string representation of the item
+def stringify(item):
+    result = "A "
+    for color in item["color"]:
+        result += color + " "
+    for fabric in item["fabric"]["material"]:
+        result += fabric + " "
+    result += item["category"] + " with " + item["fabric"]["thickness"] + " thickness, "
+    result += item["name"] + ","
+    result += " suitable for "
+    for season in item["styling"]["season"]:
+        result += season + ", "
+    result += "and "
+    for occasion in item["styling"]["occasion"]:
+        result += occasion + ". "
+    result += "This item gives off a "
+    for tag in item["styling"]["tags"]:
+        result += tag + ", "
+    result += "vibe. "
+    result += "It can be worn especially when I'm "
+    moods = item["styling"]["mood"]
+    if len(moods) > 1:
+        result += ", ".join(moods[:-1]) + " and " + moods[-1] + ". "
+    elif moods:
+        result += moods[0] + ". "
+    result += "Note: " + item["note"]
+    return result
+    
 
 ## Basic API endpoints
 
@@ -60,6 +91,10 @@ def recommend_outfit():
 def add_item():
     new_item = request.get_json()
     items = load_clothing_data()
+    print(stringify(new_item))
+    # get the embedding for the new_item and turn the ndarray of NumPy into a normal array so that we can
+    # store it in the JSON file
+    new_item["embedding"] = getEmbedding(stringify(new_item)).tolist()
 
     # generate a new id for the item
     new_item["id"] = items[-1]["id"] + 1
