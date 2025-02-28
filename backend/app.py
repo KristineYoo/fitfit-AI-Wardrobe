@@ -54,7 +54,7 @@ def recommend_outfit():
     # choose 3 random items from the wardrobe data
     items = load_clothing_data() # array of objects
     # filter non-visible items
-    filtered = filters.filter_visibility(items)
+    filtered = filters.filter(items)
     # TODO: filter by weather
     random_items = random.sample(filtered, 3)
     return jsonify({"items": random_items})
