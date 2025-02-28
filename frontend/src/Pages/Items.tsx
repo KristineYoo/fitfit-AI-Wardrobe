@@ -1,7 +1,6 @@
 // import data from '../../data/WardrobeData.json'
 import ItemThumbnail from '../components/ItemThumbnail.tsx'
 import LogItemModal from '../components/ClothingItemLog.tsx'
-import DeleteItemModal from '../components/ClothingItemDelete.tsx'
 import Grid from "@mui/material/Grid2";
 import Box from "@mui/material/Box";
 import axios from 'axios';
@@ -25,14 +24,13 @@ export function Items() {
       <>
         <h1>Items Page</h1>
         <LogItemModal></LogItemModal>
-        <DeleteItemModal></DeleteItemModal>
         <Box sx={{ m: 4 }}>
           <Grid container spacing={3}>
                 {
                 data.map((item: Item) => (
-                    <Grid size={2} key={item.id}>
-                    <ItemThumbnail item={item} />
-                    </Grid>
+                  <Grid size={2} key={item.id}>
+                  <ItemThumbnail item={item} />
+                  </Grid>
                 ))
                 }
             </Grid>
