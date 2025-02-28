@@ -5,17 +5,19 @@ import AddIcon from '@mui/icons-material/Add';
 import Typography from '@mui/material/Typography';
 import Modal from '@mui/material/Modal';
 import TextField from '@mui/material/TextField';
-import ThicknessSelect from './thicknessSelect-logItem';
-import SelectStyleTagList from './styleTag'
-import SeasonTagList from './seasonTag'
-import OccasionTagList from './occasionTag'
-import MoodTagList from './moodTag'
-import SelectCurrency from './currencySelect'
-import SelectDate from './dateInput'
-import DamageScale from './damage-logclothingitem';
-import DisplayButton from './displaySwitch-logItem'
-import FabricSelect from './fabricSelect';
-import TypeSelect from './typeSelect';
+import ThicknessSelect from './LogClothingItemform-Components/thicknessSelect-logItem';
+import SelectStyleTagList from './LogClothingItemform-Components/styleTag'
+import SeasonTagList from './LogClothingItemform-Components/seasonTag'
+import OccasionTagList from './LogClothingItemform-Components/occasionTag'
+import MoodTagList from './LogClothingItemform-Components/moodTag'
+import SelectCurrency from './LogClothingItemform-Components/currencySelect'
+import SelectDate from './LogClothingItemform-Components/dateInput'
+import DamageScale from './LogClothingItemform-Components/damage-logclothingitem';
+import DisplayButton from './LogClothingItemform-Components/displaySwitch-logItem'
+import FabricSelect from '../../fabricSelect';
+import TypeSelect from './LogClothingItemform-Components/typeSelect';
+
+
 
 const style = {
   position: 'absolute' as const,
@@ -60,8 +62,8 @@ export default function LogItemModal() {
         aria-labelledby="clothingItemLogModalTitle"
       >
         <Box sx={style}>
-          <Typography id="clothingItemLogModalTitle" variant="h6" component="h2">
-            Uplaod Clothing Item
+          <Typography id="clothingItemLogModalTitle" variant="h6" component="h2" sx={{ color: 'black' }}>
+            Upload Clothing Item
           </Typography>
           <TextField id="uploadItem-name" label="Name of Item" variant="outlined" fullWidth sx={{ my: 2 }} />
           <TextField id="uploadItem-Notes" label="Notes" variant="outlined" fullWidth sx={{ my: 2 }} />
