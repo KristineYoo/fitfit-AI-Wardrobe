@@ -1,6 +1,7 @@
 import {Paper, Grid2, Typography} from '@mui/material';
 import { FitThumbnail } from './FitThumbnail';
 import { Fit } from '../types/jsonDataTypes';
+import PromptBox from './PromptBox';
 
 export default function FitRecWindow( {recs} : {recs:Fit[]} ) {
   return (
@@ -30,6 +31,7 @@ export default function FitRecWindow( {recs} : {recs:Fit[]} ) {
             ))
           }
         </Grid2>
+        <PromptBox></PromptBox>
       </Paper>
   );
 }

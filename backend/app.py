@@ -92,5 +92,13 @@ def update_item(item_id):
         return jsonify(item)
     return jsonify({"message": "Item not found"}), 404
 
+# POST /api/post-prompt: takes the prompt from the text field
+@app.route("/api/post-prompt", methods=["POST"])
+def get_prompt():
+    data=request.get_json()
+    prompt=data.get('text')
+    return(prompt)
+
+
 if __name__ == "__main__":
     app.run(debug=True, host="0.0.0.0", port=5000)
