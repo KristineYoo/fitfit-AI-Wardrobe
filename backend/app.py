@@ -19,7 +19,7 @@ def load_clothing_data():
 # @param item: the new item to be added to the wardrobe data
 # @return: True if the item is valid, False otherwise
 def validate_item(item):
-    required_fields = ["id", "name", "note", "category", "color", "image", "styling", "visibility", "fabric"]
+    required_fields = ["name", "note", "category", "color", "image", "styling", "visibility", "fabric"]
     for field in required_fields:
         if field not in item:
             return False
@@ -90,6 +90,9 @@ def recommend_outfit():
 @app.route("/api/add-item", methods=["POST"])
 def add_item():
     new_item = request.get_json()
+    if not validate_item(new_item):
+        return jsonify({"message": "Invalid item"}), 400
+    
     items = load_clothing_data()
     print(stringify(new_item))
     # get the embedding for the new_item and turn the ndarray of NumPy into a normal array so that we can
@@ -113,6 +116,7 @@ def add_item():
 @app.route("/api/update-item/<int:item_id>", methods=["PUT"])
 def update_item(item_id):
     updated_item = request.get_json()
+    updated_item["embedding"] = getEmbedding(stringify(updated_item)).tolist()
     items = load_clothing_data()
     item = next((item for item in items if item["id"] == item_id), None)
     if item:
