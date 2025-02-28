@@ -4,6 +4,7 @@ import CardMedia from '@mui/material/CardMedia';
 import Chip from '@mui/material/Chip';
 import Stack from '@mui/material/Stack';
 import { Fit } from '../types/jsonDataTypes';
+import { Item } from "../types/jsonDataTypes";
 import { ImageList, ImageListItem, ImageListItemBar } from '@mui/material';
 
 export function FitThumbnail({rec} : {rec:Fit}){
@@ -14,7 +15,7 @@ export function FitThumbnail({rec} : {rec:Fit}){
     return (
     <Card sx={{ maxWidth: 345 }}>
         <CardMedia>
-            <ImageList 
+        <ImageList 
                 sx={{ 
                     width: '100%',
                     height: 'auto',  // height will adjust based on images inside
@@ -23,7 +24,7 @@ export function FitThumbnail({rec} : {rec:Fit}){
                 cols={2} 
                 gap={8}
             >
-                {itemData.map((item) => (
+                {itemData.map((item: Item) => (
                     <ImageListItem key={item.image} sx={{height: '100% !important'}}>
                     <ImageListItemBar
                         sx={{
