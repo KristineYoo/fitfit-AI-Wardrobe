@@ -1,7 +1,7 @@
 import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
 import MenuItem from '@mui/material/MenuItem';
-import data from '../../data/logItemsFormData.json'; // Assuming your JSON file is named logItemsFormData.json
+import data from '../../data/logItemsFormData.json';
 
 interface ClothingType {
     value: number;
