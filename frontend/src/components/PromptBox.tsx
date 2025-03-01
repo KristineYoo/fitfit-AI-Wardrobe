@@ -2,6 +2,7 @@ import Box from "@mui/material/Box";
 import TextField from '@mui/material/TextField';
 import { useState } from "react";
 import axios from 'axios';
+import React from "react";
 
 
 export default function PromptBox() {
