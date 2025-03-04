@@ -5,12 +5,24 @@ import Typography from '@mui/material/Typography';
 import Chip from '@mui/material/Chip';
 import Stack from '@mui/material/Stack';
 import { Item } from '../types/jsonDataTypes.ts'
+import { Box, Button } from '@mui/material';
+import axios from 'axios';
+import RemoveIcon from '@mui/icons-material/Remove';
 
 
 
 export default function ItemThumbnail({ item }:{ item:Item}) {
-  return (
-      <Card sx={{ maxWidth: 300 }}>
+
+  const deleted = () => {
+    axios.delete("/api/delete-item/"+String(item.id));
+    window.location.reload();
+  }
+  if (item.deleted==false && item.visibility=="shown")
+    return (
+        <Card sx={{ maxWidth: 300 }}>
+          <Box textAlign='right'>
+            <Button onClick={deleted} startIcon={<RemoveIcon/>} variant='contained' style={{height: '30px', width : '20px'}}></Button>
+          </Box>
         <CardMedia
           component="img"
           alt={item.name}
