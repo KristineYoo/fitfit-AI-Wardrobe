@@ -1,13 +1,13 @@
 // import data from '../../data/WardrobeData.json'
 import ItemThumbnail from '../components/ItemThumbnail.tsx'
 import LogItemModal from '../components/ClothingItemLog.tsx'
-import DeleteItemModal from '../components/ClothingItemDelete.tsx'
 import Grid from "@mui/material/Grid2";
 import Box from "@mui/material/Box";
 import axios from 'axios';
 import { useEffect } from "react";
 import { useState } from "react";
 import { Item } from "../types/jsonDataTypes";
+import DeleteItemModal from '../components/ClothingItemDelete.tsx';
 
 export function Items() {
     const [data, setData] = useState([]);
@@ -30,9 +30,9 @@ export function Items() {
           <Grid container spacing={3}>
                 {
                 data.map((item: Item) => (
-                    <Grid size={2} key={item.id}>
-                    <ItemThumbnail item={item} />
-                    </Grid>
+                  <Grid size={2} key={item.id}>
+                  <ItemThumbnail item={item} />
+                  </Grid>
                 ))
                 }
             </Grid>
