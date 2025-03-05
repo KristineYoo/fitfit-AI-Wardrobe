@@ -2,6 +2,8 @@ from flask import Flask, jsonify, request
 from flask_cors import CORS
 import json
 import random
+import filters
+import os
 from transformer import getEmbedding
 app = Flask(__name__)
 CORS(app) # Allows Frontend to make requests to Backend
@@ -82,8 +84,11 @@ def get_item(item_id):
 @app.route("/api/recommend", methods=["GET"])
 def recommend_outfit():
     # choose 3 random items from the wardrobe data
-    items = load_clothing_data()
-    random_items = random.sample(items, 3)
+    items = load_clothing_data() # array of objects
+    # filter non-visible items
+    filtered = filters.filter(items)
+    # TODO: filter by weather
+    random_items = random.sample(filtered, 3)
     return jsonify({"items": random_items})
 
 # POST /api/add-item: add a new clothing item to the wardrobe data when request is made
