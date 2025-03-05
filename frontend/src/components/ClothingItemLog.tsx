@@ -14,7 +14,7 @@ import SelectCurrency from './LogClothingItemform-Components/currencySelect'
 import SelectDate from './LogClothingItemform-Components/dateInput'
 import DamageScale from './LogClothingItemform-Components/damage-logclothingitem';
 import DisplayButton from './LogClothingItemform-Components/displaySwitch-logItem'
-import FabricSelect from '../../fabricSelect';
+import FabricSelect from './LogClothingItemform-Components/fabricSelect';
 import TypeSelect from './LogClothingItemform-Components/typeSelect';
 
 
