@@ -12,7 +12,7 @@ import OccasionTagList from './LogClothingItemform-Components/occasionTag'
 import MoodTagList from './LogClothingItemform-Components/moodTag'
 import FabricSelect from './LogClothingItemform-Components/fabricSelect';
 import ThicknessSelect from './LogClothingItemform-Components/thicknessSelect-logItem';
-
+import ColorSelector from './LogClothingItemform-Components/clothingColor';
 
 import TypeSelect from './LogClothingItemform-Components/typeSelect';
 
@@ -76,6 +76,7 @@ export default function LogItemModal() {
           <OccasionTagList />
           <MoodTagList />
           <p style={{ color: "black" }}>Fabric </p>
+          <ColorSelector />
           <FabricSelect />
           <ThicknessSelect />
 
