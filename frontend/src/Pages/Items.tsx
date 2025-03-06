@@ -6,7 +6,8 @@ import Box from "@mui/material/Box";
 import axios from 'axios';
 import { useEffect } from "react";
 import { useState } from "react";
-import { ClothingItem } from "../types/ClothingItem";
+import { Item } from "../types/jsonDataTypes";
+import DeleteItemModal from '../components/ClothingItemDelete.tsx';
 
 export function Items() {
     const [data, setData] = useState([]);
@@ -24,10 +25,11 @@ export function Items() {
       <>
         <h1>Items Page</h1>
         <LogItemModal></LogItemModal>
+        <DeleteItemModal></DeleteItemModal>
         <Box sx={{ m: 4 }}>
           <Grid container spacing={3}>
                 {
-                data.map((item: ClothingItem) => (
+                data.map((item: Item) => (
                   <Grid size={2} key={item.id}>
                   <ItemThumbnail item={item} />
                   </Grid>

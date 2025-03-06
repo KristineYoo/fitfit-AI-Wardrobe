@@ -10,6 +10,9 @@ import SelectStyleTagList from './LogClothingItemform-Components/styleTag'
 import SeasonTagList from './LogClothingItemform-Components/seasonTag'
 import OccasionTagList from './LogClothingItemform-Components/occasionTag'
 import MoodTagList from './LogClothingItemform-Components/moodTag'
+import FabricSelect from './LogClothingItemform-Components/fabricSelect';
+import ThicknessSelect from './LogClothingItemform-Components/thicknessSelect-logItem';
+
 
 import TypeSelect from './LogClothingItemform-Components/typeSelect';
 
@@ -64,13 +67,18 @@ export default function LogItemModal() {
           <TextField id="uploadItem-name" label="Name of Item" variant="outlined" fullWidth sx={{ my: 2 }} />
           <TextField id="uploadItem-Notes" label="Notes" variant="outlined" fullWidth sx={{ my: 2 }} />
           <TypeSelect />
-          <TextField id="uploadclothing-brand" label="Brand" variant="outlined" fullWidth sx={{ my: 2 }} />
           <p style={{ color: "black" }}>Clothing Styles</p>
+
+
 
           <SelectStyleTagList />
           <SeasonTagList />
           <OccasionTagList />
           <MoodTagList />
+          <p style={{ color: "black" }}>Fabric </p>
+          <FabricSelect />
+          <ThicknessSelect />
+
 
 
 
