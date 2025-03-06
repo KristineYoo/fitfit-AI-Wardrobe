@@ -5,16 +5,13 @@ import AddIcon from '@mui/icons-material/Add';
 import Typography from '@mui/material/Typography';
 import Modal from '@mui/material/Modal';
 import TextField from '@mui/material/TextField';
-import ThicknessSelect from './LogClothingItemform-Components/thicknessSelect-logItem';
 import SelectStyleTagList from './LogClothingItemform-Components/styleTag'
 import SeasonTagList from './LogClothingItemform-Components/seasonTag'
 import OccasionTagList from './LogClothingItemform-Components/occasionTag'
 import MoodTagList from './LogClothingItemform-Components/moodTag'
-import SelectCurrency from './LogClothingItemform-Components/currencySelect'
-import SelectDate from './LogClothingItemform-Components/dateInput'
-import DamageScale from './LogClothingItemform-Components/damage-logclothingitem';
-import DisplayButton from './LogClothingItemform-Components/displaySwitch-logItem'
 import FabricSelect from './LogClothingItemform-Components/fabricSelect';
+import ThicknessSelect from './LogClothingItemform-Components/thicknessSelect-logItem';
+
 import TypeSelect from './LogClothingItemform-Components/typeSelect';
 
 
@@ -68,31 +65,19 @@ export default function LogItemModal() {
           <TextField id="uploadItem-name" label="Name of Item" variant="outlined" fullWidth sx={{ my: 2 }} />
           <TextField id="uploadItem-Notes" label="Notes" variant="outlined" fullWidth sx={{ my: 2 }} />
           <TypeSelect />
-          <TextField id="uploadclothing-brand" label="Brand" variant="outlined" fullWidth sx={{ my: 2 }} />
+          <p style={{ color: "black" }}>Clothing Styles</p>
 
-          Clothing Styles
+
 
           <SelectStyleTagList />
           <SeasonTagList />
           <OccasionTagList />
           <MoodTagList />
-
-          Purchase Info
-          <TextField id="purchaseInfo-price" label="Price" variant="outlined" fullWidth sx={{ my: 2 }} />
-          <SelectCurrency />
-
-          <TextField id="purchaseInfo-link" label="Link to Shop" variant="outlined" fullWidth sx={{ my: 2 }} />
-          Enter Date Purchased
-          <SelectDate />
-          <TextField id="purchaseInfo-resaleVal" label="Resale Value" variant="outlined" fullWidth sx={{ my: 2 }} />
-          Select Condition of Clothing Article
-          <DamageScale />
-          <TextField id="Status-location" label="Where is this clothing item" variant="outlined" fullWidth sx={{ my: 2 }} />
-          Reccomend this piece of clothing in outfits?
-          <DisplayButton />
+          <p style={{ color: "black" }}>Fabric </p>
           <FabricSelect />
-          <TextField id="fabric-material" label="What are the care instructions for this clothing item" variant="outlined" fullWidth sx={{ my: 2 }} />
           <ThicknessSelect />
+
+
 
 
 
