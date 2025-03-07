@@ -90,7 +90,7 @@ def configure_fit(items, similarities):
     footwear = []
     # sort similarities
     sorted_similarities = [(id, similarities[id]) for id in similarities]
-    sorted_similarities = sorted(sorted_similarities, key=lambda item: item[1])
+    sorted_similarities = sorted(sorted_similarities, key=lambda item: item[1])[::-1]
     # iterate through most similar items, populate ranked lists
     for id, score in sorted_similarities:
         # find item with given id
@@ -106,31 +106,28 @@ def configure_fit(items, similarities):
         elif category in ['boots', 'sneakers']:
             footwear.append((item, score))
 
-    print(tops[0][0])
     # figure out top fits of each type
     # create fit object (fields: items, tags)
+    fit_1_tags = list(set(tops[0][0]["styling"]["tags"]+
+            bottoms[0][0]["styling"]["tags"]+
+            footwear[0][0]["styling"]["tags"]))
     fit_1 = {
         "items":[
             tops[0][0],
             bottoms[0][0],
             footwear[0][0]
         ],
-        "tags":[
-            tops[0][0]["styling"]["tags"],
-            bottoms[0][0]["styling"]["tags"],
-            footwear[0][0]["styling"]["tags"]
-        ]
+        "tags":fit_1_tags
     }
     # don't forget about tops made up of top_bottoms like dresses or onesies! (not used currently)
+    fit_2_tags = list(set(top_bottom[0][0]["styling"]["tags"]+
+            footwear[0][0]["styling"]["tags"]))
     fit_2 = {
         "items":[
             top_bottom[0][0],
             footwear[0][0]
         ],
-        "tags":[
-            top_bottom[0][0]["styling"]["tags"],
-            footwear[0][0]["styling"]["tags"]
-        ]
+        "tags":fit_2_tags
     }
     # return fit
     return [fit_1]
