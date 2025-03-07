@@ -5,6 +5,9 @@ import random
 import filters
 import os
 from transformer import getEmbedding
+from sklearn.metrics.pairwise import cosine_similarity
+import numpy as np
+
 app = Flask(__name__)
 CORS(app) # Allows Frontend to make requests to Backend
 
@@ -63,6 +66,21 @@ def stringify(item):
     result += "Note: " + item["note"]
     return result
     
+# Function to compute cosine similarites between the prompt and item embeddings
+# @param item: user prompt from frontend (string)
+# @return: list of similarities (each floats between 0 and 1) for each item in order of id's
+def get_similarities(prompt):
+    # embed the prompt
+    prompt_emb = getEmbedding(prompt)
+    # compare embedding of prompt to each item and store in list
+    similarities = {}
+    items = load_clothing_data()
+    for i in items:
+        i_emb = np.array(i['embedding'])
+        i_id = i['id']
+        # compute cosine similarity (as a regular float)
+        similarities[i_id] = float(cosine_similarity(i_emb.reshape(1, -1), prompt_emb.reshape(1, -1))[0][0])
+    return similarities
 
 ## Basic API endpoints
 
@@ -81,8 +99,12 @@ def get_item(item_id):
     return jsonify({"message": "Item not found"}), 404
 
 # GET /api/recommend: return 3 random clothing items to form an outfit when request is made
-@app.route("/api/recommend", methods=["GET"])
+@app.route("/api/recommend", methods=["GET", "POST"])
 def recommend_outfit():
+    # retireve prompt
+    prompt = request.get_json()['prompt']
+    # get similarities and store in a dictionary
+    similarities = get_similarities(prompt)
     # choose 3 random items from the wardrobe data
     items = load_clothing_data() # array of objects
     # filter non-visible items
@@ -151,3 +173,11 @@ def delete_item(item_id):
 
 if __name__ == "__main__":
     app.run(debug=True, host="0.0.0.0", port=5000)
+    
+    """Use this code to TEST the comparison function 
+    (keyboard shortcut to uncomment is Ctrl+/ after selecting all lines)"""
+    # # retireve prompt
+    #prompt = "I'd like to wear something that is pink, cutesie and happy. I am going to work meeting formal"
+    # # get similarities and store in a *list*
+    #similarities = get_similarities(prompt)
+    #print(similarities)
