@@ -14,8 +14,11 @@ import RemoveIcon from '@mui/icons-material/Remove';
 export default function ItemThumbnail({ item }:{ item:Item}) {
 
   const deleted = () => {
-    axios.delete("/api/delete-item/"+String(item.id));
-    window.location.reload();
+    axios.delete("/api/delete-item/"+String(item.id))
+      .then(() => {
+        window.location.reload();
+      })
+      .catch((err) => console.log(err));
   }
   if (item.deleted==false && item.visibility=="shown")
     return (
