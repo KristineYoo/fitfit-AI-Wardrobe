@@ -20,8 +20,11 @@ export default function ItemThumbnail({ item }: { item: Item }) {
   const handleCloseModal = () => setOpenModal(false);
 
   const deleted = () => {
-    axios.delete("/api/delete-item/" + String(item.id));
-    window.location.reload();
+    axios.delete("/api/delete-item/" + String(item.id))
+      .then(() => {
+        window.location.reload();
+      })
+      .catch((err) => console.log(err));
   }
   if (item.deleted == false && item.visibility == "shown")
     return (

@@ -81,12 +81,40 @@
             "label": "Cargo pants"
         },
         {
+            "value": 24,
+            "label": "Overalls"
+        },
+        {
             "value": 28,
             "label": "Jacket"
         },
         {
             "value": 29,
             "label": "Coat"
+        },
+        {
+            "value": 30,
+            "label": "Blazer"
+        },
+        {
+            "value": 31,
+            "label": "Cardigan"
+        },
+        {
+            "value": 33,
+            "label": "Windbreaker"
+        },
+        {
+            "value": 37,
+            "label": "Poncho"
+        },
+        {
+            "value": 38,
+            "label": "Cloak"
+        },
+        {
+            "value": 39,
+            "label": "Cape"
         },
         {
             "value": 42,
@@ -101,10 +129,6 @@
             "label": "Romper"
         },
         {
-            "value": 45,
-            "label": "Overalls"
-        },
-        {
             "value": 46,
             "label": "Ball gown"
         },
@@ -117,7 +141,23 @@
             "label": "Chef’s uniform"
         },
         {
-            "value": 74,
+            "value": 51,
+            "label": "Dress"
+        },
+        {
+            "value": 52,
+            "label": "Pajamas"
+        },
+        {
+            "value": 54,
+            "label": "Slip"
+        },
+        {
+            "value": 55,
+            "label": "Robe"
+        },
+        {
+            "value": 56,
             "label": "Business suit"
         },
         {
@@ -125,44 +165,16 @@
             "label": "Coveralls"
         },
         {
-            "value": 76,
-            "label": "Flight suit"
-        },
-        {
-            "value": 77,
-            "label": "Military uniform"
-        },
-        {
-            "value": 78,
-            "label": "Police uniform"
-        },
-        {
             "value": 79,
-            "label": "Firefighter uniform"
+            "label": "Uniform"
         },
         {
             "value": 80,
             "label": "Sports jersey"
         },
         {
-            "value": 81,
-            "label": "Compression shirt"
-        },
-        {
-            "value": 82,
-            "label": "Compression leggings"
-        },
-        {
-            "value": 83,
-            "label": "Yoga pants"
-        },
-        {
             "value": 84,
             "label": "Gym shorts"
-        },
-        {
-            "value": 87,
-            "label": "Ski jacket"
         },
         {
             "value": 88,

@@ -5,6 +5,7 @@ import axios from 'axios';
 import Typography from '@mui/material/Typography';
 import Modal from '@mui/material/Modal';
 import TextField from '@mui/material/TextField';
+
 import SelectStyleTagList from './LogClothingItemform-Components/styleTag'
 import SeasonTagList from './LogClothingItemform-Components/seasonTag'
 import OccasionTagList from './LogClothingItemform-Components/occasionTag'
@@ -14,6 +15,7 @@ import { Item } from '../types/jsonDataTypes';
 import TypeSelect from './LogClothingItemform-Components/typeSelect';
 import ThicknessSelect from './LogClothingItemform-Components/thicknessSelect-logItem';
 //import { Category } from '@mui/icons-material';
+import ColorSelector from './LogClothingItemform-Components/clothingColor';
 
 
 
@@ -135,6 +137,7 @@ export default function LogItemModal({ open, onClose, item }: LogItemModalProps)
           onChange={(e) => setNotes(e.target.value)} />
         <TypeSelect value={category}
           onChange={(category) => setCategory(category)} />
+        <ColorSelector />
         <p style={{ color: "black" }}>Clothing Styles</p>
         <SelectStyleTagList
           selectedStyles={styleTags}
