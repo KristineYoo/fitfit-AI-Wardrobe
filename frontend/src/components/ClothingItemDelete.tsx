@@ -50,7 +50,7 @@ export default function DeleteItemModal() {
 
   const deleted = () => {
     axios.delete("/api/delete-item/"+id);
-    window.location.reload();
+    // window.location.reload();
   }
 
 

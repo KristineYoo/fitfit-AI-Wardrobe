@@ -15,7 +15,7 @@ export default function ItemThumbnail({ item }:{ item:Item}) {
 
   const deleted = () => {
     axios.delete("/api/delete-item/"+String(item.id));
-    window.location.reload();
+    // window.location.reload();
   }
   if (item.deleted==false && item.visibility=="shown")
     return (
