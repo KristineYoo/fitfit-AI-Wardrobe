@@ -29,13 +29,16 @@ export function Items() {
         <Box sx={{ m: 4 }}>
           <Grid container spacing={3}>
                 {
-                data.map((item: Item) => (
-                  (<Grid size={2} key={item.id}>
+                data.map((item: Item) => {
+                  if (item.deleted==false && item.visibility=="shown") {
+                    return (
+                  <Grid size={2} key={item.id}>
                   <ItemThumbnail item={item} />
                   </Grid>
-                )
-                ))
-                } 
+                    )
+                  }
+                })
+                }
             </Grid>
         </Box>
       </>
