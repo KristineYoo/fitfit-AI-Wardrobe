@@ -67,6 +67,7 @@ export default function LogItemModal() {
           <TextField id="uploadItem-name" label="Name of Item" variant="outlined" fullWidth sx={{ my: 2 }} />
           <TextField id="uploadItem-Notes" label="Notes" variant="outlined" fullWidth sx={{ my: 2 }} />
           <TypeSelect />
+          <ColorSelector />
           <p style={{ color: "black" }}>Clothing Styles</p>
 
 
@@ -76,7 +77,6 @@ export default function LogItemModal() {
           <OccasionTagList />
           <MoodTagList />
           <p style={{ color: "black" }}>Fabric </p>
-          <ColorSelector />
           <FabricSelect />
           <ThicknessSelect />
 
