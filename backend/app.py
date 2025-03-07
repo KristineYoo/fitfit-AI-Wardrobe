@@ -5,6 +5,8 @@ import random
 import filters
 import os
 from transformer import getEmbedding
+from sklearn.metrics.pairwise import cosine_similarity
+
 app = Flask(__name__)
 CORS(app) # Allows Frontend to make requests to Backend
 
@@ -63,6 +65,20 @@ def stringify(item):
     result += "Note: " + item["note"]
     return result
     
+# Function to compute cosine similarites between the prompt and item embeddings
+# @param item: user prompt from frontend (string)
+# @return: list of similarities (each floats between 0 and 1) for each item in order of id's
+def get_similarities(prompt):
+    # embed the prompt
+    prompt_emb = getEmbedding(prompt)
+    # compare embedding of prompt to each item and store in list
+    similarities = []
+    items = load_clothing_data()
+    for i in items:
+        i_emb = i['embedding']
+        # compute cosine similarity
+        similarities.append(cosine_similarity(i_emb, prompt_emb)[0][0])
+    return similarities
 
 ## Basic API endpoints
 
@@ -81,8 +97,12 @@ def get_item(item_id):
     return jsonify({"message": "Item not found"}), 404
 
 # GET /api/recommend: return 3 random clothing items to form an outfit when request is made
-@app.route("/api/recommend", methods=["GET"])
+@app.route("/api/recommend", methods=["GET", "POST"])
 def recommend_outfit():
+    # retireve prompt
+    prompt = request.json()['prompt']
+    # get similarities
+    similarities = get_similarities(prompt)
     # choose 3 random items from the wardrobe data
     items = load_clothing_data() # array of objects
     # filter non-visible items
