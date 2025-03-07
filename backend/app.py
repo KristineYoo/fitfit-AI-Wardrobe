@@ -73,12 +73,13 @@ def get_similarities(prompt):
     # embed the prompt
     prompt_emb = getEmbedding(prompt)
     # compare embedding of prompt to each item and store in list
-    similarities = []
+    similarities = {}
     items = load_clothing_data()
     for i in items:
         i_emb = np.array(i['embedding'])
+        i_id = i['id']
         # compute cosine similarity (as a regular float)
-        similarities.append(float(cosine_similarity(i_emb.reshape(1, -1), prompt_emb.reshape(1, -1))[0][0]))
+        similarities[i_id] = float(cosine_similarity(i_emb.reshape(1, -1), prompt_emb.reshape(1, -1))[0][0])
     return similarities
 
 ## Basic API endpoints
@@ -102,7 +103,7 @@ def get_item(item_id):
 def recommend_outfit():
     # retireve prompt
     prompt = request.json()['prompt']
-    # get similarities and store in a *list*
+    # get similarities and store in a dictionary
     similarities = get_similarities(prompt)
     # choose 3 random items from the wardrobe data
     items = load_clothing_data() # array of objects
@@ -171,7 +172,7 @@ def delete_item(item_id):
 
 
 if __name__ == "__main__":
-    # app.run(debug=True, host="0.0.0.0", port=5000)
+    app.run(debug=True, host="0.0.0.0", port=5000)
     
     """Use this code to TEST the comparison function 
     (keyboard shortcut to uncomment is Ctrl+/ after selecting all lines)"""
