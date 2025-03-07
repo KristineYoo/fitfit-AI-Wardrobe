@@ -35,7 +35,11 @@ function getStyles(name: string, personName: readonly string[], theme: Theme) {
     };
 }
 
-export default function SeasonTagList() {
+interface SeasonTagProps {
+    onSeasonChange: (season: string[]) => void;
+}
+
+export default function SeasonTagList({ onSeasonChange }: SeasonTagProps) {
     const theme = useTheme();
     const [personName, setPersonName] = React.useState<string[]>([]);
 
@@ -44,6 +48,9 @@ export default function SeasonTagList() {
             target: { value },
         } = event;
         setPersonName(
+            typeof value === 'string' ? value.split(',') : value,
+        );
+        onSeasonChange(
             typeof value === 'string' ? value.split(',') : value,
         );
     };

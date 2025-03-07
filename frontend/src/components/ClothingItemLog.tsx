@@ -5,6 +5,8 @@ import AddIcon from '@mui/icons-material/Add';
 import Typography from '@mui/material/Typography';
 import Modal from '@mui/material/Modal';
 import TextField from '@mui/material/TextField';
+import Button from '@mui/material/Button';
+import axios from 'axios';
 
 import SelectStyleTagList from './LogClothingItemform-Components/styleTag'
 import SeasonTagList from './LogClothingItemform-Components/seasonTag'
@@ -13,10 +15,7 @@ import MoodTagList from './LogClothingItemform-Components/moodTag'
 import FabricSelect from './LogClothingItemform-Components/fabricSelect';
 import ThicknessSelect from './LogClothingItemform-Components/thicknessSelect-logItem';
 import ColorSelector from './LogClothingItemform-Components/clothingColor';
-
 import TypeSelect from './LogClothingItemform-Components/typeSelect';
-
-
 
 const style = {
   position: 'absolute' as const,
@@ -38,9 +37,162 @@ export default function LogItemModal() {
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
 
+  // Form state
+  interface FormData {
+    name: string;
+    note: string;
+    category: string;
+    color: string[];
+    image: string;
+    styling: {
+      tags: string[];
+      season: string[];
+      occasion: string[];
+      mood: string[];
+    };
+    visibility: string;
+    fabric: {
+      material: string[];
+      thickness: string;
+    };
+    deleted: boolean;
+  }
 
+  const [formData, setFormData] = React.useState<FormData>({
+    name: '',
+    note: '',
+    category: '',
+    color: [],
+    image: '/img/default.png', 
+    styling: {
+      tags: [],
+      season: [],
+      occasion: [],
+      mood: []
+    },
+    visibility: 'shown',
+    fabric: {
+      material: [],
+      thickness: 'medium'
+    },
+    deleted: false
+  });
 
+  // Form field change handlers
+  const handleTextChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setFormData({
+      ...formData,
+      [e.target.id.replace('uploadItem-', '')]: e.target.value
+    });
+  };
 
+  const handleCategoryChange = (category: string) => {
+    setFormData({
+      ...formData,
+      category
+    });
+  };
+
+  const handleColorChange = (colors: string[]) => {
+    setFormData({
+      ...formData,
+      color: colors
+    });
+  };
+
+  const handleStyleTagsChange = (tags: string[]) => {
+    setFormData({
+      ...formData,
+      styling: {
+        ...formData.styling,
+        tags
+      }
+    });
+  };
+
+  const handleSeasonChange = (season: string[]) => {
+    setFormData({
+      ...formData,
+      styling: {
+        ...formData.styling,
+        season
+      }
+    });
+  };
+
+  const handleOccasionChange = (occasion: string[]) => {
+    setFormData({
+      ...formData,
+      styling: {
+        ...formData.styling,
+        occasion
+      }
+    });
+  };
+
+  const handleMoodChange = (mood: string[]) => {
+    setFormData({
+      ...formData,
+      styling: {
+        ...formData.styling,
+        mood
+      }
+    });
+  };
+
+  const handleFabricChange = (material: string[]) => {
+    setFormData({
+      ...formData,
+      fabric: {
+        ...formData.fabric,
+        material
+      }
+    });
+  };
+
+  const handleThicknessChange = (thickness: string) => {
+    setFormData({
+      ...formData,
+      fabric: {
+        ...formData.fabric,
+        thickness
+      }
+    });
+  };
+
+  // Form submission handler
+  const handleSubmit = async () => {
+    try {
+      console.log('Adding item:', formData);
+      const response = await axios.post('/api/add-item', formData);
+      console.log('Item added successfully:', response.data);
+      
+      // Reset form and close modal
+      setFormData({
+        name: '',
+        note: '',
+        category: '',
+        color: [],
+        image: '/img/default.png',
+        styling: {
+          tags: [],
+          season: [],
+          occasion: [],
+          mood: []
+        },
+        visibility: 'shown',
+        fabric: {
+          material: [],
+          thickness: 'medium'
+        },
+        deleted: false
+      });
+      handleClose();
+    } catch (error) {
+      console.error('Error adding item:', error);
+      alert('Failed to add item. Please try again.');
+    }
+  };
 
   return (
     <div>
@@ -64,26 +216,39 @@ export default function LogItemModal() {
           <Typography id="clothingItemLogModalTitle" variant="h6" component="h2" sx={{ color: 'black' }}>
             Upload Clothing Item
           </Typography>
-          <TextField id="uploadItem-name" label="Name of Item" variant="outlined" fullWidth sx={{ my: 2 }} />
-          <TextField id="uploadItem-Notes" label="Notes" variant="outlined" fullWidth sx={{ my: 2 }} />
-          <TypeSelect />
-          <ColorSelector />
+          <TextField id="uploadItem-name" label="Name of Item" variant="outlined" fullWidth sx={{ my: 2 }} value={formData.name} onChange={handleTextChange}/>
+          <TextField id="uploadItem-note" label="Notes" variant="outlined" fullWidth sx={{ my: 2 }} value={formData.note} onChange={handleTextChange}/>
+          <TypeSelect onCategoryChange={handleCategoryChange} />
+          <ColorSelector onColorChange={handleColorChange}/>
           <p style={{ color: "black" }}>Clothing Styles</p>
 
 
 
-          <SelectStyleTagList />
-          <SeasonTagList />
-          <OccasionTagList />
-          <MoodTagList />
+          <SelectStyleTagList onTagsChange={handleStyleTagsChange}/>
+          <SeasonTagList onSeasonChange={handleSeasonChange}/>
+          <OccasionTagList onOccasionChange={handleOccasionChange}/>
+          <MoodTagList onMoodChange={handleMoodChange}/>
           <p style={{ color: "black" }}>Fabric </p>
-          <FabricSelect />
-          <ThicknessSelect />
+          <FabricSelect onFabricChange={handleFabricChange}/>
+          <ThicknessSelect onThicknessChange={handleThicknessChange}/>
 
-
-
-
-
+          {/* Add Submit Button */}
+          <Box sx={{ mt: 3, display: 'flex', justifyContent: 'space-between' }}>
+            <Button 
+              variant="outlined" 
+              color="secondary" 
+              onClick={handleClose}
+            >
+              Cancel
+            </Button>
+            <Button 
+              variant="contained" 
+              color="primary" 
+              onClick={handleSubmit}
+            >
+              Save Item
+            </Button>
+          </Box>
 
         </Box>
       </Modal>

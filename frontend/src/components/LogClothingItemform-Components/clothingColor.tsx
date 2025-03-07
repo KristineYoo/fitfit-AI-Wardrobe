@@ -55,7 +55,10 @@ function getStyles(name: string, selectedLabels: readonly string[], theme: Theme
     };
 }
 
-export default function ColorSelector() {
+interface ColorSelectorProps{
+    onColorChange: (color: string[]) => void;
+}
+export default function ColorSelector({ onColorChange }: ColorSelectorProps) {
     const theme = useTheme();
     const [selectedLabels, setSelectedLabels] = React.useState<string[]>([]);
 
@@ -64,6 +67,9 @@ export default function ColorSelector() {
             target: { value },
         } = event;
         setSelectedLabels(
+            typeof value === 'string' ? value.split(',') : value,
+        );
+        onColorChange(
             typeof value === 'string' ? value.split(',') : value,
         );
     };
