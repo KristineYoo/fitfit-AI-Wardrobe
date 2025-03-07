@@ -5,11 +5,15 @@ import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select, { SelectChangeEvent } from '@mui/material/Select';
 
-export default function ThicknessSelect() {
+interface ThicknessSelectProps {
+    onThicknessChange: (thickness: string) => void;
+}
+export default function ThicknessSelect({ onThicknessChange} : ThicknessSelectProps) {
     const [age, setAge] = React.useState('');
 
     const handleChange = (event: SelectChangeEvent) => {
         setAge(event.target.value as string);
+        onThicknessChange(event.target.value as string);
     };
 
     return (
@@ -23,11 +27,11 @@ export default function ThicknessSelect() {
                     label="Age"
                     onChange={handleChange}
                 >
-                    <MenuItem value={1}>Mesh</MenuItem>
-                    <MenuItem value={2}>Thin</MenuItem>
-                    <MenuItem value={3}>Medium</MenuItem>
-                    <MenuItem value={4}>Thick</MenuItem>
-                    <MenuItem value={5}>Very Thick</MenuItem>
+                    <MenuItem value={'mesh'}>Mesh</MenuItem>
+                    <MenuItem value={'thin'}>Thin</MenuItem>
+                    <MenuItem value={'medium'}>Medium</MenuItem>
+                    <MenuItem value={'thick'}>Thick</MenuItem>
+                    <MenuItem value={'very thick'}>Very Thick</MenuItem>
                 </Select>
             </FormControl>
         </Box>
