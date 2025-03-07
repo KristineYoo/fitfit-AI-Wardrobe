@@ -49,8 +49,11 @@ export default function DeleteItemModal() {
   }, []);
 
   const deleted = () => {
-    axios.delete("/api/delete-item/"+id);
-    // window.location.reload();
+    axios.delete("/api/delete-item/"+id)
+      .then(() => {
+        window.location.reload();
+      })
+      .catch((err) => console.log(err));
   }
 
 
