@@ -49,8 +49,10 @@ def get_item(item_id):
     return jsonify({"message": "Item not found"}), 404
 
 # GET /api/recommend: return 3 random clothing items to form an outfit when request is made
-@app.route("/api/recommend", methods=["GET"])
+@app.route("/api/recommend", methods=["GET", "POST"])
 def recommend_outfit():
+    data=request.get_json()
+    prompt=data.get('text')
     # choose 3 random items from the wardrobe data
     items = load_clothing_data()
     random_items = random.sample(items, 3)

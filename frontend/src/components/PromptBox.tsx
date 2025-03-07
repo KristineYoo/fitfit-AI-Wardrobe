@@ -14,7 +14,7 @@ export default function PromptBox() {
         if (e.key === "Enter") {
           console.log(inputValue);
           const data={"text": inputValue}
-          axios.post("http://localhost:5000/api/post-prompt", data)
+          axios.post("http://localhost:5000/api/recommend", data)
           setInputValue('')
            
         }
