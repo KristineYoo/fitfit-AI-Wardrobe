@@ -37,7 +37,10 @@ function getStyles(name: string, personName: readonly string[], theme: Theme) {
     };
 }
 
-export default function SelectStyleTagList() {
+interface StyleSelectProps {
+    onTagsChange: (style: string[]) => void;
+}
+export default function SelectStyleTagList({ onTagsChange }: StyleSelectProps) {
     const theme = useTheme();
     const [personName, setPersonName] = React.useState<string[]>([]);
 
@@ -46,6 +49,9 @@ export default function SelectStyleTagList() {
             target: { value },
         } = event;
         setPersonName(
+            typeof value === 'string' ? value.split(',') : value,
+        );
+        onTagsChange(
             typeof value === 'string' ? value.split(',') : value,
         );
     };
