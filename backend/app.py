@@ -102,7 +102,7 @@ def get_item(item_id):
 @app.route("/api/recommend", methods=["GET", "POST"])
 def recommend_outfit():
     # retireve prompt
-    prompt = request.json()['prompt']
+    prompt = request.get_json()['prompt']
     # get similarities and store in a dictionary
     similarities = get_similarities(prompt)
     # choose 3 random items from the wardrobe data
@@ -177,7 +177,7 @@ if __name__ == "__main__":
     """Use this code to TEST the comparison function 
     (keyboard shortcut to uncomment is Ctrl+/ after selecting all lines)"""
     # # retireve prompt
-    # prompt = "I'd like to wear something that is pink, cutesie and happy. I am going to work meeting formal"
+    #prompt = "I'd like to wear something that is pink, cutesie and happy. I am going to work meeting formal"
     # # get similarities and store in a *list*
-    # similarities = get_similarities(prompt)
-    # print(similarities)
+    #similarities = get_similarities(prompt)
+    #print(similarities)
