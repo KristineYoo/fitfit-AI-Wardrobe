@@ -1,0 +1,661 @@
+{
+    "clothingTypes": [
+        {
+            "value": 1,
+            "label": "T-shirt"
+        },
+        {
+            "value": 2,
+            "label": "Tank top"
+        },
+        {
+            "value": 3,
+            "label": "Blouse"
+        },
+        {
+            "value": 4,
+            "label": "Button-up shirt"
+        },
+        {
+            "value": 5,
+            "label": "Polo shirt"
+        },
+        {
+            "value": 6,
+            "label": "Sweater"
+        },
+        {
+            "value": 7,
+            "label": "Hoodie"
+        },
+        {
+            "value": 8,
+            "label": "Sweatshirt"
+        },
+        {
+            "value": 9,
+            "label": "Crop top"
+        },
+        {
+            "value": 10,
+            "label": "Tunic"
+        },
+        {
+            "value": 11,
+            "label": "Camisole"
+        },
+        {
+            "value": 12,
+            "label": "Vest"
+        },
+        {
+            "value": 13,
+            "label": "Henley shirt"
+        },
+        {
+            "value": 14,
+            "label": "Jeans"
+        },
+        {
+            "value": 15,
+            "label": "Leggings"
+        },
+        {
+            "value": 16,
+            "label": "Shorts"
+        },
+        {
+            "value": 17,
+            "label": "Sweatpants"
+        },
+        {
+            "value": 18,
+            "label": "Skirt"
+        },
+        {
+            "value": 19,
+            "label": "Trousers"
+        },
+        {
+            "value": 20,
+            "label": "Joggers"
+        },
+        {
+            "value": 21,
+            "label": "Capris"
+        },
+        {
+            "value": 22,
+            "label": "Cargo pants"
+        },
+        {
+            "value": 23,
+            "label": "Chinos"
+        },
+        {
+            "value": 24,
+            "label": "Overalls (pants)"
+        },
+        {
+            "value": 25,
+            "label": "Culottes"
+        },
+        {
+            "value": 26,
+            "label": "Harem pants"
+        },
+        {
+            "value": 27,
+            "label": "Palazzo pants"
+        },
+        {
+            "value": 28,
+            "label": "Jacket"
+        },
+        {
+            "value": 29,
+            "label": "Coat"
+        },
+        {
+            "value": 30,
+            "label": "Blazer"
+        },
+        {
+            "value": 31,
+            "label": "Cardigan"
+        },
+        {
+            "value": 32,
+            "label": "Trench coat"
+        },
+        {
+            "value": 33,
+            "label": "Windbreaker"
+        },
+        {
+            "value": 34,
+            "label": "Puffer jacket"
+        },
+        {
+            "value": 35,
+            "label": "Parka"
+        },
+        {
+            "value": 36,
+            "label": "Peacoat"
+        },
+        {
+            "value": 37,
+            "label": "Poncho"
+        },
+        {
+            "value": 38,
+            "label": "Cloak"
+        },
+        {
+            "value": 39,
+            "label": "Cape"
+        },
+        {
+            "value": 40,
+            "label": "Bomber jacket"
+        },
+        {
+            "value": 41,
+            "label": "Duster coat"
+        },
+        {
+            "value": 42,
+            "label": "Dress"
+        },
+        {
+            "value": 43,
+            "label": "Jumpsuit"
+        },
+        {
+            "value": 44,
+            "label": "Romper"
+        },
+        {
+            "value": 45,
+            "label": "Overalls"
+        },
+        {
+            "value": 46,
+            "label": "Ball gown"
+        },
+        {
+            "value": 47,
+            "label": "Maxi dress"
+        },
+        {
+            "value": 48,
+            "label": "Sundress"
+        },
+        {
+            "value": 49,
+            "label": "Slip dress"
+        },
+        {
+            "value": 50,
+            "label": "Wrap dress"
+        },
+        {
+            "value": 51,
+            "label": "Tuxedo dress"
+        },
+        {
+            "value": 52,
+            "label": "Pajamas"
+        },
+        {
+            "value": 53,
+            "label": "Nightgown"
+        },
+        {
+            "value": 54,
+            "label": "Slip"
+        },
+        {
+            "value": 55,
+            "label": "Robe"
+        },
+        {
+            "value": 56,
+            "label": "Thermal underwear"
+        },
+        {
+            "value": 57,
+            "label": "Kimono (Japan)"
+        },
+        {
+            "value": 58,
+            "label": "Hanbok (Korea)"
+        },
+        {
+            "value": 59,
+            "label": "Sari (India)"
+        },
+        {
+            "value": 60,
+            "label": "Dhoti (India)"
+        },
+        {
+            "value": 61,
+            "label": "Kurta (South Asia)"
+        },
+        {
+            "value": 62,
+            "label": "Dirndl (Germany)"
+        },
+        {
+            "value": 63,
+            "label": "Lederhosen (Germany)"
+        },
+        {
+            "value": 64,
+            "label": "Kilt (Scotland)"
+        },
+        {
+            "value": 65,
+            "label": "Abaya (Middle East)"
+        },
+        {
+            "value": 66,
+            "label": "Thobe (Middle East)"
+        },
+        {
+            "value": 67,
+            "label": "Dashiki (West Africa)"
+        },
+        {
+            "value": 68,
+            "label": "Poncho (Latin America)"
+        },
+        {
+            "value": 69,
+            "label": "Barong Tagalog (Philippines)"
+        },
+        {
+            "value": 70,
+            "label": "Boubou (West Africa)"
+        },
+        {
+            "value": 71,
+            "label": "Scrubs (medical)"
+        },
+        {
+            "value": 72,
+            "label": "Lab coat"
+        },
+        {
+            "value": 73,
+            "label": "Chef’s uniform"
+        },
+        {
+            "value": 74,
+            "label": "Business suit"
+        },
+        {
+            "value": 75,
+            "label": "Coveralls"
+        },
+        {
+            "value": 76,
+            "label": "Flight suit"
+        },
+        {
+            "value": 77,
+            "label": "Military uniform"
+        },
+        {
+            "value": 78,
+            "label": "Police uniform"
+        },
+        {
+            "value": 79,
+            "label": "Firefighter uniform"
+        },
+        {
+            "value": 80,
+            "label": "Sports jersey"
+        },
+        {
+            "value": 81,
+            "label": "Compression shirt"
+        },
+        {
+            "value": 82,
+            "label": "Compression leggings"
+        },
+        {
+            "value": 83,
+            "label": "Yoga pants"
+        },
+        {
+            "value": 84,
+            "label": "Gym shorts"
+        },
+        {
+            "value": 85,
+            "label": "Rash guard"
+        },
+        {
+            "value": 86,
+            "label": "Cycling shorts"
+        },
+        {
+            "value": 87,
+            "label": "Ski jacket"
+        },
+        {
+            "value": 88,
+            "label": "Tracksuit"
+        }
+    ],
+    "currencies": [
+        {
+            "value": "USD",
+            "label": "$ (US Dollar)"
+        },
+        {
+            "value": "EUR",
+            "label": "€ (Euro)"
+        },
+        {
+            "value": "JPY",
+            "label": "¥ (Japanese Yen)"
+        },
+        {
+            "value": "GBP",
+            "label": "£ (British Pound)"
+        },
+        {
+            "value": "AUD",
+            "label": "A$ (Australian Dollar)"
+        },
+        {
+            "value": "CAD",
+            "label": "C$ (Canadian Dollar)"
+        },
+        {
+            "value": "CHF",
+            "label": "CHF (Swiss Franc)"
+        },
+        {
+            "value": "CNY",
+            "label": "¥ (Chinese Yuan)"
+        },
+        {
+            "value": "SEK",
+            "label": "kr (Swedish Krona)"
+        },
+        {
+            "value": "NZD",
+            "label": "NZ$ (New Zealand Dollar)"
+        },
+        {
+            "value": "INR",
+            "label": "₹ (Indian Rupee)"
+        },
+        {
+            "value": "BRL",
+            "label": "R$ (Brazilian Real)"
+        },
+        {
+            "value": "ZAR",
+            "label": "R (South African Rand)"
+        },
+        {
+            "value": "MXN",
+            "label": "$ (Mexican Peso)"
+        },
+        {
+            "value": "SGD",
+            "label": "S$ (Singapore Dollar)"
+        },
+        {
+            "value": "HKD",
+            "label": "HK$ (Hong Kong Dollar)"
+        },
+        {
+            "value": "KRW",
+            "label": "₩ (South Korean Won)"
+        },
+        {
+            "value": "NOK",
+            "label": "kr (Norwegian Krone)"
+        },
+        {
+            "value": "MYR",
+            "label": "RM (Malaysian Ringgit)"
+        },
+        {
+            "value": "PHP",
+            "label": "₱ (Philippine Peso)"
+        },
+        {
+            "value": "RUB",
+            "label": "₽ (Russian Ruble)"
+        },
+        {
+            "value": "TRY",
+            "label": "₺ (Turkish Lira)"
+        },
+        {
+            "value": "AED",
+            "label": "AED (United Arab Emirates Dirham)"
+        },
+        {
+            "value": "THB",
+            "label": "฿ (Thai Baht)"
+        },
+        {
+            "value": "IDR",
+            "label": "Rp (Indonesian Rupiah)"
+        },
+        {
+            "value": "PLN",
+            "label": "zł (Polish Zloty)"
+        },
+        {
+            "value": "SAR",
+            "label": "ر.س (Saudi Riyal)"
+        },
+        {
+            "value": "DKK",
+            "label": "kr (Danish Krone)"
+        },
+        {
+            "value": "HUF",
+            "label": "Ft (Hungarian Forint)"
+        },
+        {
+            "value": "CZK",
+            "label": "Kč (Czech Koruna)"
+        },
+        {
+            "value": "ISK",
+            "label": "kr (Icelandic Krona)"
+        },
+        {
+            "value": "EGP",
+            "label": "ج.م (Egyptian Pound)"
+        }
+    ],
+    "moodTags": [
+        "Happy",
+        "Relaxed",
+        "Confident",
+        "Chill",
+        "Romantic",
+        "Bold",
+        "Elegant",
+        "Cozy",
+        "Casual",
+        "Edgy",
+        "Playful",
+        "Sophisticated",
+        "Comfortable",
+        "Laid-back",
+        "Flirty",
+        "Minimalistic",
+        "Carefree",
+        "Classy",
+        "Trendy",
+        "Fresh",
+        "Sporty",
+        "Laid-back",
+        "Chic",
+        "Bright",
+        "Subtle",
+        "Vibrant",
+        "Quirky",
+        "Serene",
+        "Rebellious",
+        "Preppy",
+        "Inviting",
+        "Empowered",
+        "Modern",
+        "Vintage",
+        "Timeless",
+        "Adventurous",
+        "Warm",
+        "Optimistic",
+        "Sophisticated",
+        "Fun",
+        "Confident",
+        "Stylish"
+    ],
+    "stylingTags": [
+        "Formal",
+        "Semi-Formal",
+        "Business Casual",
+        "Casual",
+        "Lounge",
+        "Athleisure",
+        "Slim Fit",
+        "Regular Fit",
+        "Oversized",
+        "Tailored",
+        "Cropped",
+        "High-Waisted",
+        "Buttons",
+        "Zipper",
+        "Pockets",
+        "Belted",
+        "Hooded",
+        "Ruffled",
+        "Embroidered",
+        "Solid",
+        "Striped",
+        "Plaid",
+        "Floral",
+        "Polka Dot",
+        "Graphic",
+        "Abstract",
+        "Layered",
+        "Turtleneck",
+        "V-Neck",
+        "Crew Neck",
+        "Off-Shoulder",
+        "Halter Neck",
+        "Collared",
+        "Sleeveless",
+        "Short-Sleeved",
+        "Long-Sleeved",
+        "Bell Sleeves",
+        "Puff Sleeves",
+        "Backless",
+        "Cut-Out",
+        "Slit",
+        "Wrap Style",
+        "Pleated",
+        "Fringed",
+        "Sheer",
+        "Lace Detail",
+        "Mesh",
+        "Ruched",
+        "Cinched Waist",
+        "Asymmetrical",
+        "Double-Breasted",
+        "Single-Breasted",
+        "Peplum",
+        "Fitted",
+        "Relaxed Fit",
+        "Wide-Leg",
+        "Skinny Fit",
+        "Bootcut",
+        "Tapered",
+        "Straight Leg",
+        "Cuffed",
+        "Distressed",
+        "Frayed Hem",
+        "Cargo Style",
+        "Drawstring",
+        "Elastic Waist",
+        "High-Rise",
+        "Mid-Rise",
+        "Low-Rise",
+        "Quilted",
+        "Faux Fur",
+        "Studded",
+        "Beaded",
+        "Sequined",
+        "Glittery",
+        "Shimmer",
+        "Matte Finish",
+        "Glossy Finish",
+        "Reversible",
+        "Convertible",
+        "Snap Closure",
+        "Tie Closure",
+        "Buckled",
+        "Draped",
+        "Patchwork",
+        "Monogrammed",
+        "Vintage",
+        "Minimalist",
+        "Bohemian",
+        "Edgy",
+        "Sporty",
+        "Streetwear",
+        "Y2K",
+        "Preppy",
+        "Gothic",
+        "Cottagecore",
+        "Retro",
+        "Military Style"
+    ],
+    "occasionTags": [
+        "Work",
+        "School",
+        "Interview",
+        "Party",
+        "Wedding",
+        "Date Night",
+        "Casual Outing",
+        "Gym",
+        "Vacation",
+        "Beach",
+        "Formal Event",
+        "Business Meeting",
+        "Concert",
+        "Festival",
+        "Brunch",
+        "Dinner",
+        "Family Gathering",
+        "Holiday Celebration",
+        "Outdoor Adventure",
+        "Travel",
+        "Club Night",
+        "Relaxing at Home",
+        "Errands",
+        "Church",
+        "Funeral",
+        "Graduation",
+        "Sports Event",
+        "Yoga",
+        "Picnic"
+    ]
+}
