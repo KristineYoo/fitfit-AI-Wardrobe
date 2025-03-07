@@ -159,3 +159,11 @@ Updates the details of a specific clothing item.
     "message": "Item not found"
 }
 ```
+
+##
+### How to parse the json array into Ndarray embedding
+```
+import numpy as np
+
+a = np.array(jsonContent)
+```

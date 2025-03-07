@@ -2,7 +2,11 @@ from flask import Flask, jsonify, request
 from flask_cors import CORS
 import json
 import random
+import filters
 import os
+from transformer import getEmbedding
+from sklearn.metrics.pairwise import cosine_similarity
+import numpy as np
 
 app = Flask(__name__)
 CORS(app) # Allows Frontend to make requests to Backend
@@ -20,7 +24,7 @@ def load_clothing_data():
 # @param item: the new item to be added to the wardrobe data
 # @return: True if the item is valid, False otherwise
 def validate_item(item):
-    required_fields = ["id", "name", "note", "category", "color", "image", "styling", "visibility", "fabric"]
+    required_fields = ["name", "note", "category", "color", "image", "styling", "visibility", "fabric"]
     for field in required_fields:
         if field not in item:
             return False
@@ -31,6 +35,52 @@ def validate_item(item):
 # @return: the new id for the new item
 def generate_id(items):
     return items[-1]["id"] + 1
+
+# Function to convert the item details to a string
+# @param item: the item to be converted to a string
+# @return: the string representation of the item
+def stringify(item):
+    result = "A "
+    for color in item["color"]:
+        result += color + " "
+    for fabric in item["fabric"]["material"]:
+        result += fabric + " "
+    result += item["category"] + " with " + item["fabric"]["thickness"] + " thickness, "
+    result += item["name"] + ","
+    result += " suitable for "
+    for season in item["styling"]["season"]:
+        result += season + ", "
+    result += "and "
+    for occasion in item["styling"]["occasion"]:
+        result += occasion + ". "
+    result += "This item gives off a "
+    for tag in item["styling"]["tags"]:
+        result += tag + ", "
+    result += "vibe. "
+    result += "It can be worn especially when I'm "
+    moods = item["styling"]["mood"]
+    if len(moods) > 1:
+        result += ", ".join(moods[:-1]) + " and " + moods[-1] + ". "
+    elif moods:
+        result += moods[0] + ". "
+    result += "Note: " + item["note"]
+    return result
+    
+# Function to compute cosine similarites between the prompt and item embeddings
+# @param item: user prompt from frontend (string)
+# @return: list of similarities (each floats between 0 and 1) for each item in order of id's
+def get_similarities(prompt):
+    # embed the prompt
+    prompt_emb = getEmbedding(prompt)
+    # compare embedding of prompt to each item and store in list
+    similarities = {}
+    items = load_clothing_data()
+    for i in items:
+        i_emb = np.array(i['embedding'])
+        i_id = i['id']
+        # compute cosine similarity (as a regular float)
+        similarities[i_id] = float(cosine_similarity(i_emb.reshape(1, -1), prompt_emb.reshape(1, -1))[0][0])
+    return similarities
 
 ## Basic API endpoints
 
@@ -51,18 +101,31 @@ def get_item(item_id):
 # GET /api/recommend: return 3 random clothing items to form an outfit when request is made
 @app.route("/api/recommend", methods=["GET", "POST"])
 def recommend_outfit():
+    # retireve prompt
     data=request.get_json()
     prompt=data.get('text')
+    # get similarities and store in a dictionary
+    similarities = get_similarities(prompt)
     # choose 3 random items from the wardrobe data
-    items = load_clothing_data()
-    random_items = random.sample(items, 3)
+    items = load_clothing_data() # array of objects
+    # filter non-visible items
+    filtered = filters.filter(items)
+    # TODO: filter by weather
+    random_items = random.sample(filtered, 3)
     return jsonify({"items": random_items})
 
 # POST /api/add-item: add a new clothing item to the wardrobe data when request is made
 @app.route("/api/add-item", methods=["POST"])
 def add_item():
     new_item = request.get_json()
+    if not validate_item(new_item):
+        return jsonify({"message": "Invalid item"}), 400
+    
     items = load_clothing_data()
+    print(stringify(new_item))
+    # get the embedding for the new_item and turn the ndarray of NumPy into a normal array so that we can
+    # store it in the JSON file
+    new_item["embedding"] = getEmbedding(stringify(new_item)).tolist()
 
     # generate a new id for the item
     new_item["id"] = items[-1]["id"] + 1
@@ -81,6 +144,7 @@ def add_item():
 @app.route("/api/update-item/<int:item_id>", methods=["PUT"])
 def update_item(item_id):
     updated_item = request.get_json()
+    updated_item["embedding"] = getEmbedding(stringify(updated_item)).tolist()
     items = load_clothing_data()
     item = next((item for item in items if item["id"] == item_id), None)
     if item:
@@ -119,3 +183,11 @@ def get_prompt():
 
 if __name__ == "__main__":
     app.run(debug=True, host="0.0.0.0", port=5000)
+    
+    """Use this code to TEST the comparison function 
+    (keyboard shortcut to uncomment is Ctrl+/ after selecting all lines)"""
+    # # retireve prompt
+    #prompt = "I'd like to wear something that is pink, cutesie and happy. I am going to work meeting formal"
+    # # get similarities and store in a *list*
+    #similarities = get_similarities(prompt)
+    #print(similarities)
