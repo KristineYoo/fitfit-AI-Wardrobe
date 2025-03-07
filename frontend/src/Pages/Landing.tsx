@@ -9,6 +9,7 @@ export function Landing(){
     const [data, setData] = useState([]);
     const [loading, setLoading] = useState(true);  // loading is true at the beginning until data is fetched from the backend
     
+    
     useEffect(() => {
         axios.get('http://localhost:5000/api/items')
             .then((res) => {

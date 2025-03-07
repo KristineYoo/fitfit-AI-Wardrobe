@@ -8,7 +8,6 @@ import { useEffect } from "react";
 import { useState } from "react";
 import { Item } from "../types/jsonDataTypes";
 import DeleteItemModal from '../components/ClothingItemDelete.tsx';
-import DeleteItemModal from '../components/ClothingItemDelete.tsx';
 
 export function Items() {
     const [data, setData] = useState([]);
