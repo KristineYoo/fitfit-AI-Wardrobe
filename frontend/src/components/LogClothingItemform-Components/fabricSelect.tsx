@@ -1,4 +1,4 @@
-import * as React from 'react';
+
 import { Theme, useTheme } from '@mui/material/styles';
 import Box from '@mui/material/Box';
 import OutlinedInput from '@mui/material/OutlinedInput';
@@ -7,6 +7,14 @@ import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select, { SelectChangeEvent } from '@mui/material/Select';
 import Chip from '@mui/material/Chip';
+
+
+interface FabricSelectProps {
+    selectedFabrics: string[];
+    onChange: (fabrics: string[]) => void;
+}
+
+
 
 const ITEM_HEIGHT = 48;
 const ITEM_PADDING_TOP = 8;
@@ -60,27 +68,26 @@ const fabricList = [
     'Gore-Tex',
 ];
 
-function getStyles(name: string, personName: readonly string[], theme: Theme) {
+function getStyles(name: string, selectedFabrics: readonly string[], theme: Theme) {
     return {
-        fontWeight: personName.includes(name)
+        fontWeight: selectedFabrics.includes(name)
             ? theme.typography.fontWeightMedium
             : theme.typography.fontWeightRegular,
     };
 }
 
-export default function FabricSelect() {
+export default function FabricSelect({ selectedFabrics, onChange }: FabricSelectProps) {
     const theme = useTheme();
-    const [personName, setPersonName] = React.useState<string[]>([]);
 
-    const handleChange = (event: SelectChangeEvent<typeof personName>) => {
+
+    const handleChange = (event: SelectChangeEvent<typeof selectedFabrics>) => {
         const {
             target: { value },
         } = event;
-        setPersonName(
-            // On autofill we get a stringified value.
-            typeof value === 'string' ? value.split(',') : value,
-        );
+        onChange(typeof value === 'string' ? value.split(',') : value);
     };
+
+
 
     return (
         <div>
@@ -90,7 +97,7 @@ export default function FabricSelect() {
                     labelId="demo-multiple-chip-label"
                     id="demo-multiple-chip"
                     multiple
-                    value={personName}
+                    value={selectedFabrics}
                     onChange={handleChange}
                     input={<OutlinedInput id="select-multiple-chip" label="Chip" />}
                     renderValue={(selected) => (
@@ -106,7 +113,7 @@ export default function FabricSelect() {
                         <MenuItem
                             key={name}
                             value={name}
-                            style={getStyles(name, personName, theme)}
+                            style={getStyles(name, selectedFabrics, theme)}
                         >
                             {name}
                         </MenuItem>

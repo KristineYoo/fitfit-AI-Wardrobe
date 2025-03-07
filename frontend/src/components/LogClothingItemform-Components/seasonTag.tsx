@@ -1,4 +1,4 @@
-import * as React from 'react';
+
 import { Theme, useTheme } from '@mui/material/styles';
 import Box from '@mui/material/Box';
 import OutlinedInput from '@mui/material/OutlinedInput';
@@ -7,6 +7,11 @@ import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select, { SelectChangeEvent } from '@mui/material/Select';
 import Chip from '@mui/material/Chip';
+
+interface SeasonTagListProps {
+    selectedSeasons: string[];
+    onChange: (seasons: string[]) => void;
+}
 
 const ITEM_HEIGHT = 48;
 const ITEM_PADDING_TOP = 8;
@@ -26,39 +31,36 @@ const seasonTags = [
     'Winter',
 ];
 
-
-function getStyles(name: string, personName: readonly string[], theme: Theme) {
+function getStyles(name: string, selectedSeasons: readonly string[], theme: Theme) {
     return {
-        fontWeight: personName.includes(name)
+        fontWeight: selectedSeasons.includes(name)
             ? theme.typography.fontWeightMedium
             : theme.typography.fontWeightRegular,
     };
 }
 
-export default function SeasonTagList() {
+export default function SeasonTagList({ selectedSeasons, onChange }: SeasonTagListProps) {
     const theme = useTheme();
-    const [personName, setPersonName] = React.useState<string[]>([]);
 
-    const handleChange = (event: SelectChangeEvent<typeof personName>) => {
+    const handleChange = (event: SelectChangeEvent<typeof selectedSeasons>) => {
         const {
             target: { value },
         } = event;
-        setPersonName(
-            typeof value === 'string' ? value.split(',') : value,
-        );
+        const newSelectedSeasons = typeof value === 'string' ? value.split(',') : value;
+        onChange(newSelectedSeasons);
     };
 
     return (
         <div>
             <FormControl sx={{ my: 2, width: 400 }}>
-                <InputLabel id="demo-multiple-chip-label">Select Season</InputLabel>
+                <InputLabel id="season-multiple-chip-label">Select Season</InputLabel>
                 <Select
-                    labelId="demo-multiple-chip-label"
-                    id="demo-multiple-chip"
+                    labelId="season-multiple-chip-label"
+                    id="season-multiple-chip"
                     multiple
-                    value={personName}
+                    value={selectedSeasons}
                     onChange={handleChange}
-                    input={<OutlinedInput id="select-multiple-chip" label="Chip" />}
+                    input={<OutlinedInput id="select-multiple-season-chip" label="Season" />}
                     renderValue={(selected) => (
                         <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 0.5 }}>
                             {selected.map((value) => (
@@ -72,7 +74,7 @@ export default function SeasonTagList() {
                         <MenuItem
                             key={name}
                             value={name}
-                            style={getStyles(name, personName, theme)}
+                            style={getStyles(name, selectedSeasons, theme)}
                         >
                             {name}
                         </MenuItem>

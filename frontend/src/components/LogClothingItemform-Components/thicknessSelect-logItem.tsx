@@ -1,33 +1,43 @@
-import * as React from 'react';
 import Box from '@mui/material/Box';
 import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select, { SelectChangeEvent } from '@mui/material/Select';
 
-export default function ThicknessSelect() {
-    const [age, setAge] = React.useState('');
+interface ThicknessSelectProps {
+    value: string;
+    onChange: (thickness: string) => void;
+}
 
+const thicknessOptions = [
+    { value: 'mesh', label: 'Mesh' },
+    { value: 'thin', label: 'Thin' },
+    { value: 'medium', label: 'Medium' },
+    { value: 'thick', label: 'Thick' },
+    { value: 'very thick', label: 'Very Thick' },
+];
+
+export default function ThicknessSelect({ value, onChange }: ThicknessSelectProps) {
     const handleChange = (event: SelectChangeEvent) => {
-        setAge(event.target.value as string);
+        onChange(event.target.value);
     };
 
     return (
         <Box sx={{ minWidth: 400, my: 2 }}>
             <FormControl fullWidth>
-                <InputLabel id="demo-simple-select-label">Select Thickness</InputLabel>
+                <InputLabel id="thickness-select-label">Select Thickness</InputLabel>
                 <Select
-                    labelId="demo-simple-select-label"
-                    id="demo-simple-select"
-                    value={age}
-                    label="Age"
+                    labelId="thickness-select-label"
+                    id="thickness-select"
+                    value={value}
+                    label="Thickness"
                     onChange={handleChange}
                 >
-                    <MenuItem value={1}>Mesh</MenuItem>
-                    <MenuItem value={2}>Thin</MenuItem>
-                    <MenuItem value={3}>Medium</MenuItem>
-                    <MenuItem value={4}>Thick</MenuItem>
-                    <MenuItem value={5}>Very Thick</MenuItem>
+                    {thicknessOptions.map((option) => (
+                        <MenuItem key={option.value} value={option.value}>
+                            {option.label}
+                        </MenuItem>
+                    ))}
                 </Select>
             </FormControl>
         </Box>

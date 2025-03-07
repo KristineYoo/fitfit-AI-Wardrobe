@@ -1,4 +1,4 @@
-import * as React from 'react';
+
 import { Theme, useTheme } from '@mui/material/styles';
 import Box from '@mui/material/Box';
 import OutlinedInput from '@mui/material/OutlinedInput';
@@ -17,6 +17,10 @@ interface FormData {
     occasionTags: string[]
 }
 
+interface SelectStyleTagListProps {
+    selectedStyles: string[];
+    onChange: (styles: string[]) => void;
+}
 const ITEM_HEIGHT = 48;
 const ITEM_PADDING_TOP = 8;
 const MenuProps = {
@@ -37,18 +41,18 @@ function getStyles(name: string, personName: readonly string[], theme: Theme) {
     };
 }
 
-export default function SelectStyleTagList() {
+export default function SelectStyleTagList({ selectedStyles, onChange }: SelectStyleTagListProps) {
     const theme = useTheme();
-    const [personName, setPersonName] = React.useState<string[]>([]);
 
-    const handleChange = (event: SelectChangeEvent<typeof personName>) => {
+
+    const handleChange = (event: SelectChangeEvent<typeof selectedStyles>) => {
         const {
             target: { value },
         } = event;
-        setPersonName(
-            typeof value === 'string' ? value.split(',') : value,
-        );
+        const newSelectedStyles = typeof value === 'string' ? value.split(',') : value;
+        onChange(newSelectedStyles);
     };
+
 
     const stylingTags = (data as FormData).stylingTags;
 
@@ -60,7 +64,7 @@ export default function SelectStyleTagList() {
                     labelId="demo-multiple-chip-label"
                     id="demo-multiple-chip"
                     multiple
-                    value={personName}
+                    value={selectedStyles}
                     onChange={handleChange}
                     input={<OutlinedInput id="select-multiple-chip" label="Chip" />}
                     renderValue={(selected) => (
@@ -76,7 +80,7 @@ export default function SelectStyleTagList() {
                         <MenuItem
                             key={name}
                             value={name}
-                            style={getStyles(name, personName, theme)}
+                            style={getStyles(name, selectedStyles, theme)}
                         >
                             {name}
                         </MenuItem>

@@ -1,4 +1,4 @@
-import * as React from 'react';
+
 import { Theme, useTheme } from '@mui/material/styles';
 import Box from '@mui/material/Box';
 import OutlinedInput from '@mui/material/OutlinedInput';
@@ -18,6 +18,11 @@ interface FormData {
     occasionTags: string[]
 }
 
+interface OccasionTagListProps {
+    selectedOccasions: string[];
+    onChange: (occasions: string[]) => void;
+}
+
 const ITEM_HEIGHT = 48;
 const ITEM_PADDING_TOP = 8;
 const MenuProps = {
@@ -30,26 +35,26 @@ const MenuProps = {
 };
 
 
-function getStyles(name: string, personName: readonly string[], theme: Theme) {
+function getStyles(name: string, selectedOccasions: readonly string[], theme: Theme) {
     return {
-        fontWeight: personName.includes(name)
+        fontWeight: selectedOccasions.includes(name)
             ? theme.typography.fontWeightMedium
             : theme.typography.fontWeightRegular,
     };
 }
 
-export default function OccasionTagList() {
+export default function OccasionTagList({ selectedOccasions, onChange }: OccasionTagListProps) {
     const theme = useTheme();
-    const [personName, setPersonName] = React.useState<string[]>([]);
 
-    const handleChange = (event: SelectChangeEvent<typeof personName>) => {
+    const handleChange = (event: SelectChangeEvent<typeof selectedOccasions>) => {
         const {
             target: { value },
         } = event;
-        setPersonName(
-            typeof value === 'string' ? value.split(',') : value,
-        );
+        const newSelectedOccasions = typeof value === 'string' ? value.split(',') : value;
+        onChange(newSelectedOccasions);
     };
+
+
     const occasionTags = (data as FormData).occasionTags;
 
 
@@ -61,7 +66,7 @@ export default function OccasionTagList() {
                     labelId="demo-multiple-chip-label"
                     id="demo-multiple-chip"
                     multiple
-                    value={personName}
+                    value={selectedOccasions}
                     onChange={handleChange}
                     input={<OutlinedInput id="select-multiple-chip" label="Chip" />}
                     renderValue={(selected) => (
@@ -77,7 +82,7 @@ export default function OccasionTagList() {
                         <MenuItem
                             key={name}
                             value={name}
-                            style={getStyles(name, personName, theme)}
+                            style={getStyles(name, selectedOccasions, theme)}
                         >
                             {name}
                         </MenuItem>

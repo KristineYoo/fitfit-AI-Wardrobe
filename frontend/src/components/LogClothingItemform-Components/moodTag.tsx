@@ -1,4 +1,4 @@
-import * as React from 'react';
+
 import { Theme, useTheme } from '@mui/material/styles';
 import Box from '@mui/material/Box';
 import OutlinedInput from '@mui/material/OutlinedInput';
@@ -15,6 +15,10 @@ interface FormData {
     moodTags: string[];
     stylingTags: string[]
     occasionTags: string[]
+}
+interface MoodTagListProps {
+    selectedMoods: string[];
+    onChange: (moods: string[]) => void;
 }
 
 const ITEM_HEIGHT = 48;
@@ -36,17 +40,15 @@ function getStyles(name: string, personName: readonly string[], theme: Theme) {
     };
 }
 
-export default function MoodTagList() {
+export default function MoodTagList({ selectedMoods, onChange }: MoodTagListProps) {
     const theme = useTheme();
-    const [personName, setPersonName] = React.useState<string[]>([]);
 
-    const handleChange = (event: SelectChangeEvent<typeof personName>) => {
+    const handleChange = (event: SelectChangeEvent<typeof selectedMoods>) => {
         const {
             target: { value },
         } = event;
-        setPersonName(
-            typeof value === 'string' ? value.split(',') : value,
-        );
+        const newSelectedMoods = typeof value === 'string' ? value.split(',') : value;
+        onChange(newSelectedMoods);
     };
 
 
@@ -60,7 +62,7 @@ export default function MoodTagList() {
                     labelId="demo-multiple-chip-label"
                     id="demo-multiple-chip"
                     multiple
-                    value={personName}
+                    value={selectedMoods}
                     onChange={handleChange}
                     input={<OutlinedInput id="select-multiple-chip" label="Chip" />}
                     renderValue={(selected) => (
@@ -76,7 +78,7 @@ export default function MoodTagList() {
                         <MenuItem
                             key={name}
                             value={name}
-                            style={getStyles(name, personName, theme)}
+                            style={getStyles(name, selectedMoods, theme)}
                         >
                             {name}
                         </MenuItem>
