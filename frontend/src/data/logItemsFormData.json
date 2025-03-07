@@ -37,20 +37,12 @@
             "label": "Crop top"
         },
         {
-            "value": 10,
-            "label": "Tunic"
-        },
-        {
             "value": 11,
             "label": "Camisole"
         },
         {
             "value": 12,
             "label": "Vest"
-        },
-        {
-            "value": 13,
-            "label": "Henley shirt"
         },
         {
             "value": 14,
@@ -89,80 +81,12 @@
             "label": "Cargo pants"
         },
         {
-            "value": 23,
-            "label": "Chinos"
-        },
-        {
-            "value": 24,
-            "label": "Overalls (pants)"
-        },
-        {
-            "value": 25,
-            "label": "Culottes"
-        },
-        {
-            "value": 26,
-            "label": "Harem pants"
-        },
-        {
-            "value": 27,
-            "label": "Palazzo pants"
-        },
-        {
             "value": 28,
             "label": "Jacket"
         },
         {
             "value": 29,
             "label": "Coat"
-        },
-        {
-            "value": 30,
-            "label": "Blazer"
-        },
-        {
-            "value": 31,
-            "label": "Cardigan"
-        },
-        {
-            "value": 32,
-            "label": "Trench coat"
-        },
-        {
-            "value": 33,
-            "label": "Windbreaker"
-        },
-        {
-            "value": 34,
-            "label": "Puffer jacket"
-        },
-        {
-            "value": 35,
-            "label": "Parka"
-        },
-        {
-            "value": 36,
-            "label": "Peacoat"
-        },
-        {
-            "value": 37,
-            "label": "Poncho"
-        },
-        {
-            "value": 38,
-            "label": "Cloak"
-        },
-        {
-            "value": 39,
-            "label": "Cape"
-        },
-        {
-            "value": 40,
-            "label": "Bomber jacket"
-        },
-        {
-            "value": 41,
-            "label": "Duster coat"
         },
         {
             "value": 42,
@@ -183,106 +107,6 @@
         {
             "value": 46,
             "label": "Ball gown"
-        },
-        {
-            "value": 47,
-            "label": "Maxi dress"
-        },
-        {
-            "value": 48,
-            "label": "Sundress"
-        },
-        {
-            "value": 49,
-            "label": "Slip dress"
-        },
-        {
-            "value": 50,
-            "label": "Wrap dress"
-        },
-        {
-            "value": 51,
-            "label": "Tuxedo dress"
-        },
-        {
-            "value": 52,
-            "label": "Pajamas"
-        },
-        {
-            "value": 53,
-            "label": "Nightgown"
-        },
-        {
-            "value": 54,
-            "label": "Slip"
-        },
-        {
-            "value": 55,
-            "label": "Robe"
-        },
-        {
-            "value": 56,
-            "label": "Thermal underwear"
-        },
-        {
-            "value": 57,
-            "label": "Kimono (Japan)"
-        },
-        {
-            "value": 58,
-            "label": "Hanbok (Korea)"
-        },
-        {
-            "value": 59,
-            "label": "Sari (India)"
-        },
-        {
-            "value": 60,
-            "label": "Dhoti (India)"
-        },
-        {
-            "value": 61,
-            "label": "Kurta (South Asia)"
-        },
-        {
-            "value": 62,
-            "label": "Dirndl (Germany)"
-        },
-        {
-            "value": 63,
-            "label": "Lederhosen (Germany)"
-        },
-        {
-            "value": 64,
-            "label": "Kilt (Scotland)"
-        },
-        {
-            "value": 65,
-            "label": "Abaya (Middle East)"
-        },
-        {
-            "value": 66,
-            "label": "Thobe (Middle East)"
-        },
-        {
-            "value": 67,
-            "label": "Dashiki (West Africa)"
-        },
-        {
-            "value": 68,
-            "label": "Poncho (Latin America)"
-        },
-        {
-            "value": 69,
-            "label": "Barong Tagalog (Philippines)"
-        },
-        {
-            "value": 70,
-            "label": "Boubou (West Africa)"
-        },
-        {
-            "value": 71,
-            "label": "Scrubs (medical)"
         },
         {
             "value": 72,
@@ -337,20 +161,20 @@
             "label": "Gym shorts"
         },
         {
-            "value": 85,
-            "label": "Rash guard"
-        },
-        {
-            "value": 86,
-            "label": "Cycling shorts"
-        },
-        {
             "value": 87,
             "label": "Ski jacket"
         },
         {
             "value": 88,
             "label": "Tracksuit"
+        },
+        {
+            "value": 89,
+            "label": "Sneakers"
+        },
+        {
+            "value": 90,
+            "label": "Boots"
         }
     ],
     "currencies": [
