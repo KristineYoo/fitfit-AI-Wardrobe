@@ -68,7 +68,11 @@ function getStyles(name: string, personName: readonly string[], theme: Theme) {
     };
 }
 
-export default function FabricSelect() {
+interface FabricSelectProps {
+    onFabricChange: (fabric: string[]) => void;
+}
+
+export default function FabricSelect({ onFabricChange }: FabricSelectProps) {
     const theme = useTheme();
     const [personName, setPersonName] = React.useState<string[]>([]);
 
@@ -78,6 +82,9 @@ export default function FabricSelect() {
         } = event;
         setPersonName(
             // On autofill we get a stringified value.
+            typeof value === 'string' ? value.split(',') : value,
+        );
+        onFabricChange(
             typeof value === 'string' ? value.split(',') : value,
         );
     };

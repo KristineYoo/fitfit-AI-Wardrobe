@@ -37,8 +37,11 @@ function getStyles(name: string, personName: readonly string[], theme: Theme) {
             : theme.typography.fontWeightRegular,
     };
 }
+interface OccasionSelectProps {
+    onOccasionChange: (occasion: string[]) => void;
+}
 
-export default function OccasionTagList() {
+export default function OccasionTagList({ onOccasionChange }: OccasionSelectProps) {
     const theme = useTheme();
     const [personName, setPersonName] = React.useState<string[]>([]);
 
@@ -47,6 +50,9 @@ export default function OccasionTagList() {
             target: { value },
         } = event;
         setPersonName(
+            typeof value === 'string' ? value.split(',') : value,
+        );
+        onOccasionChange(
             typeof value === 'string' ? value.split(',') : value,
         );
     };

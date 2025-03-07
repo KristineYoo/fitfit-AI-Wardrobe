@@ -11,11 +11,16 @@ interface ClothingType {
     label: string;
 }
 
-export default function TypeSelect() {
+interface TypeSelectProps {
+    onCategoryChange: (category: string) => void;
+}
+
+export default function TypeSelect({ onCategoryChange }: TypeSelectProps) {
     const [age, setAge] = React.useState('');
 
     const handleChange = (event: SelectChangeEvent) => {
         setAge(event.target.value as string);
+        onCategoryChange(event.target.value as string);
     };
 
     return (

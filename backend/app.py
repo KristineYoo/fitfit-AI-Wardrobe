@@ -69,18 +69,68 @@ def stringify(item):
 # Function to compute cosine similarites between the prompt and item embeddings
 # @param item: user prompt from frontend (string)
 # @return: list of similarities (each floats between 0 and 1) for each item in order of id's
-def get_similarities(prompt):
+def get_similarities(prompt, filtered):
     # embed the prompt
     prompt_emb = getEmbedding(prompt)
     # compare embedding of prompt to each item and store in list
     similarities = {}
-    items = load_clothing_data()
+    items = filtered
     for i in items:
         i_emb = np.array(i['embedding'])
         i_id = i['id']
         # compute cosine similarity (as a regular float)
         similarities[i_id] = float(cosine_similarity(i_emb.reshape(1, -1), prompt_emb.reshape(1, -1))[0][0])
     return similarities
+
+def configure_fit(items, similarities):
+    # create ranked lists of tops, bottoms and shoes
+    tops = []
+    bottoms = []
+    top_bottom = []
+    footwear = []
+    # sort similarities
+    sorted_similarities = [(id, similarities[id]) for id in similarities]
+    sorted_similarities = sorted(sorted_similarities, key=lambda item: item[1])[::-1]
+    # iterate through most similar items, populate ranked lists
+    for id, score in sorted_similarities:
+        # find item with given id
+        item = next((item for item in items if item["id"] == id), None)
+        category = item['category']
+        # add to appropriate list
+        if category in ['sweater', 't-shirt']:
+            tops.append((item, score))
+        elif category in ['dress']:
+            top_bottom.append((item, score))
+        elif category in ['jeans']:
+            bottoms.append((item, score))
+        elif category in ['boots', 'sneakers']:
+            footwear.append((item, score))
+
+    # figure out top fits of each type
+    # create fit object (fields: items, tags)
+    fit_1_tags = list(set(tops[0][0]["styling"]["tags"]+
+            bottoms[0][0]["styling"]["tags"]+
+            footwear[0][0]["styling"]["tags"]))
+    fit_1 = {
+        "items":[
+            tops[0][0],
+            bottoms[0][0],
+            footwear[0][0]
+        ],
+        "tags":fit_1_tags
+    }
+    # don't forget about tops made up of top_bottoms like dresses or onesies! (not used currently)
+    fit_2_tags = list(set(top_bottom[0][0]["styling"]["tags"]+
+            footwear[0][0]["styling"]["tags"]))
+    fit_2 = {
+        "items":[
+            top_bottom[0][0],
+            footwear[0][0]
+        ],
+        "tags":fit_2_tags
+    }
+    # return fit
+    return [fit_1]
 
 ## Basic API endpoints
 
@@ -103,15 +153,15 @@ def get_item(item_id):
 def recommend_outfit():
     # retireve prompt
     prompt = request.get_json()['prompt']
-    # get similarities and store in a dictionary
-    similarities = get_similarities(prompt)
-    # choose 3 random items from the wardrobe data
+    # get items from JSON
     items = load_clothing_data() # array of objects
     # filter non-visible items
     filtered = filters.filter(items)
-    # TODO: filter by weather
-    random_items = random.sample(filtered, 3)
-    return jsonify({"items": random_items})
+    # get similarities and store in a dictionary
+    similarities = get_similarities(prompt, filtered)
+    # configure fits
+    fits = configure_fit(filtered, similarities)
+    return jsonify({"fits": fits})
 
 # POST /api/add-item: add a new clothing item to the wardrobe data when request is made
 @app.route("/api/add-item", methods=["POST"])
@@ -158,6 +208,7 @@ def update_item(item_id):
         return jsonify(item)
     return jsonify({"message": "Item not found"}), 404
 
+# DELETE /api/delete-item/<int:item_id>: marks item as deleted 
 @app.route("/api/delete-item/<int:item_id>", methods=["DELETE"])
 def delete_item(item_id):
     items = load_clothing_data()
@@ -169,6 +220,14 @@ def delete_item(item_id):
             json.dump(items, f, indent=4)
         return jsonify(item)
     return jsonify({"message": "Item not found"}), 404
+
+
+# POST /api/post-prompt: takes the prompt from the text field
+@app.route("/api/post-prompt", methods=["POST"])
+def get_prompt():
+    data=request.get_json()
+    prompt=data.get('text')
+    return(prompt)
 
 
 if __name__ == "__main__":
