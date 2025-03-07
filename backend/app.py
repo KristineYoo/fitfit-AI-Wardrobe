@@ -208,6 +208,7 @@ def update_item(item_id):
         return jsonify(item)
     return jsonify({"message": "Item not found"}), 404
 
+# DELETE /api/delete-item/<int:item_id>: marks item as deleted 
 @app.route("/api/delete-item/<int:item_id>", methods=["DELETE"])
 def delete_item(item_id):
     items = load_clothing_data()
@@ -219,6 +220,14 @@ def delete_item(item_id):
             json.dump(items, f, indent=4)
         return jsonify(item)
     return jsonify({"message": "Item not found"}), 404
+
+
+# POST /api/post-prompt: takes the prompt from the text field
+@app.route("/api/post-prompt", methods=["POST"])
+def get_prompt():
+    data=request.get_json()
+    prompt=data.get('text')
+    return(prompt)
 
 
 if __name__ == "__main__":
