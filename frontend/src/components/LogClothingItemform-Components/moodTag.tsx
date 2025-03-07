@@ -35,8 +35,11 @@ function getStyles(name: string, personName: readonly string[], theme: Theme) {
             : theme.typography.fontWeightRegular,
     };
 }
+interface MoodTagProps {
+    onMoodChange: (style: string[]) => void;
+}
 
-export default function MoodTagList() {
+export default function MoodTagList({ onMoodChange }: MoodTagProps) {
     const theme = useTheme();
     const [personName, setPersonName] = React.useState<string[]>([]);
 
@@ -46,6 +49,9 @@ export default function MoodTagList() {
         } = event;
         setPersonName(
             typeof value === 'string' ? value.split(',') : value,
+        );
+        onMoodChange(
+            typeof value === 'string' ? value.split(',') : value
         );
     };
 
