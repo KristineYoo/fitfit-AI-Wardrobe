@@ -6,6 +6,7 @@ import filters
 import os
 from transformer import getEmbedding
 from sklearn.metrics.pairwise import cosine_similarity
+import numpy as np
 
 app = Flask(__name__)
 CORS(app) # Allows Frontend to make requests to Backend
@@ -75,9 +76,9 @@ def get_similarities(prompt):
     similarities = []
     items = load_clothing_data()
     for i in items:
-        i_emb = i['embedding']
-        # compute cosine similarity
-        similarities.append(cosine_similarity(i_emb, prompt_emb)[0][0])
+        i_emb = np.array(i['embedding'])
+        # compute cosine similarity (as a regular float)
+        similarities.append(float(cosine_similarity(i_emb.reshape(1, -1), prompt_emb.reshape(1, -1))[0][0]))
     return similarities
 
 ## Basic API endpoints
@@ -101,7 +102,7 @@ def get_item(item_id):
 def recommend_outfit():
     # retireve prompt
     prompt = request.json()['prompt']
-    # get similarities
+    # get similarities and store in a *list*
     similarities = get_similarities(prompt)
     # choose 3 random items from the wardrobe data
     items = load_clothing_data() # array of objects
@@ -170,4 +171,12 @@ def delete_item(item_id):
 
 
 if __name__ == "__main__":
-    app.run(debug=True, host="0.0.0.0", port=5000)
+    # app.run(debug=True, host="0.0.0.0", port=5000)
+    
+    """Use this code to TEST the comparison function 
+    (keyboard shortcut to uncomment is Ctrl+/ after selecting all lines)"""
+    # # retireve prompt
+    # prompt = "I'd like to wear something that is pink, cutesie and happy. I am going to work meeting formal"
+    # # get similarities and store in a *list*
+    # similarities = get_similarities(prompt)
+    # print(similarities)
