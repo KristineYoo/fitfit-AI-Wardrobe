@@ -274,9 +274,20 @@ def login_user():
         with open(USER_DATA_FILE, 'w') as f:
             json.dump(users, f, indent=4)
 
-        return jsonify({"message": "Successfully loged in"}), 201
+        return jsonify({"message": "Successfully logged in"}), 201
     else:
         return jsonify({"message": "User name and or password does not exist"})
+
+@app.route("/api/logout", methods=["PUT"])
+def logout_user():
+    users=load_user_data()
+    user = next((user for user in users if user["activeUser"] == True), None)
+    user["activeUser"]=False
+    with open(USER_DATA_FILE, 'w') as f:
+            json.dump(users, f, indent=4)
+
+    return jsonify({"message": "Successfully logged out"}), 201
+    
          
     
 if __name__ == "__main__":
