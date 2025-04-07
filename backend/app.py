@@ -250,7 +250,8 @@ def register_user():
         "username": username,
         "password": password,
         "wardrobe_items": [],
-        "pastOutfits": []
+        "pastOutfits": [],
+        "activeUser": False
     }
 
     # Add the new user to the user data
@@ -259,6 +260,24 @@ def register_user():
         json.dump(users, f, indent=4)
 
     return jsonify({"message": "User registered successfully", "user": new_user}), 201
+
+@app.route("/api/login", methods=["PUT"])
+def login_user():
+    login=False
+    user_data = request.get_json()
+    users = load_user_data()
+    for user in users:
+        if ((user["username"]==user_data.get("username")) and user["password"]==user_data.get("password")):
+            user["activeUser"]=True
+            login=True
+    if login:
+        with open(USER_DATA_FILE, 'w') as f:
+            json.dump(users, f, indent=4)
+
+        return jsonify({"message": "Successfully loged in"}), 201
+    else:
+        return jsonify({"message": "User name and or password does not exist"})
+         
     
 if __name__ == "__main__":
     app.run(debug=True, host="0.0.0.0", port=5000)

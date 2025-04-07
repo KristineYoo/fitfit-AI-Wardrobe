@@ -4,6 +4,15 @@
         "username": "testuser",
         "password": "123456",
         "wardrobe_items": [],
-        "pastOutfits": []
+        "pastOutfits": [],
+        "activeUser": false
+    },
+    {
+        "id": 2,
+        "username": "abc123",
+        "password": "hello_there",
+        "wardrobe_items": [],
+        "pastOutfits": [],
+        "activeUser": false
     }
 ]
