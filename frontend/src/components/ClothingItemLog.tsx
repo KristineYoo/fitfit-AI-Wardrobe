@@ -16,6 +16,7 @@ import FabricSelect from './LogClothingItemform-Components/fabricSelect';
 import ThicknessSelect from './LogClothingItemform-Components/thicknessSelect-logItem';
 import ColorSelector from './LogClothingItemform-Components/clothingColor';
 import TypeSelect from './LogClothingItemform-Components/typeSelect';
+import FileUploader from './LogClothingItemform-Components/FileUploader';
 
 const style = {
   position: 'absolute' as const,
@@ -216,6 +217,7 @@ export default function LogItemModal() {
           <Typography id="clothingItemLogModalTitle" variant="h6" component="h2" sx={{ color: 'black' }}>
             Upload Clothing Item
           </Typography>
+          <FileUploader/>
           <TextField id="uploadItem-name" label="Name of Item" variant="outlined" fullWidth sx={{ my: 2 }} value={formData.name} onChange={handleTextChange}/>
           <TextField id="uploadItem-note" label="Notes" variant="outlined" fullWidth sx={{ my: 2 }} value={formData.note} onChange={handleTextChange}/>
           <TypeSelect onCategoryChange={handleCategoryChange} />
