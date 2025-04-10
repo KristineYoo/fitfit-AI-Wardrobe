@@ -20,6 +20,16 @@ USER_DATA_FILE = "./public/assets/data/UserData.json"
 def load_clothing_data():
     with open(WARDROBE_DATA_FILE) as f:
         return json.load(f)
+    
+def load_relevent_clothing_data():
+    with open(WARDROBE_DATA_FILE) as f:
+        items=json.load(f)
+    users=load_user_data()
+    user = next((user for user in users if user["activeUser"] == True), None) 
+    relevent=[]
+    for id in user["wardrobe_items"]:
+        relevent.append(items[id-1])
+    return relevent
 
 def load_user_data():
     with open(USER_DATA_FILE) as f:
@@ -144,6 +154,10 @@ def configure_fit(items, similarities):
 def get_items():
     return jsonify({"items": load_clothing_data()})
 
+@app.route("/api/relaventItems", methods=["GET"])
+def get_releventItems():
+    return jsonify({"items": load_relevent_clothing_data()})
+
 # GET /api/items/<item_id>: return details of a specific clothing item when request is made
 @app.route("/api/items/<int:item_id>", methods=["GET"])
 def get_item(item_id):
@@ -159,7 +173,7 @@ def recommend_outfit():
     # retireve prompt
     prompt = request.get_json()['prompt']
     # get items from JSON
-    items = load_clothing_data() # array of objects
+    items = load_relevent_clothing_data() # array of objects
     # filter non-visible items
     filtered = filters.filter(items)
     # get similarities and store in a dictionary
@@ -176,18 +190,25 @@ def add_item():
         return jsonify({"message": "Invalid item"}), 400
     
     items = load_clothing_data()
+    users=load_user_data()
+    user = next((user for user in users if user["activeUser"] == True), None) 
     print(stringify(new_item))
     # get the embedding for the new_item and turn the ndarray of NumPy into a normal array so that we can
     # store it in the JSON file
     new_item["embedding"] = getEmbedding(stringify(new_item)).tolist()
 
     # generate a new id for the item
-    new_item["id"] = items[-1]["id"] + 1
+    id = items[-1]["id"] + 1
+    new_item["id"] = id
+    user["wardrobe_items"].append(id)
+    users[user["id"]-1]=user
 
     # add the new item to the wardrobe data
     items.append(new_item)
     with open(WARDROBE_DATA_FILE, 'w') as f:
         json.dump(items, f, indent=4)
+    with open(USER_DATA_FILE, 'w') as f:
+        json.dump(users, f, indent=4)
     return jsonify(new_item), 201
 
 # PUT /api/update-item/<item_id>: update the details of a specific clothing item when request is made
@@ -195,7 +216,7 @@ def add_item():
 def update_item(item_id):
     updated_item = request.get_json()
     updated_item["embedding"] = getEmbedding(stringify(updated_item)).tolist()
-    items = load_clothing_data()
+    items = load_relevent_clothing_data()
     item = next((item for item in items if item["id"] == item_id), None)
     if item:
         # validate the updated item
@@ -212,7 +233,7 @@ def update_item(item_id):
 # DELETE /api/delete-item/<int:item_id>: marks item as deleted 
 @app.route("/api/delete-item/<int:item_id>", methods=["DELETE"])
 def delete_item(item_id):
-    items = load_clothing_data()
+    items = load_relevent_clothing_data()
     item = next((item for item in items if item["id"] == item_id), None)
     if item:
         #items.remove(item)

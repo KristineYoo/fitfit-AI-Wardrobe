@@ -3,15 +3,20 @@
         "id": 1,
         "username": "testuser",
         "password": "123456",
-        "wardrobe_items": [],
+        "wardrobe_items": [
+            2,
+            4,
+            6,
+            8
+        ],
         "pastOutfits": [],
-        "activeUser": false
+        "activeUser": true
     },
     {
         "id": 2,
         "username": "abc123",
         "password": "hello_there",
-        "wardrobe_items": [],
+        "wardrobe_items": [1,3,5,7],
         "pastOutfits": [],
         "activeUser": false
     }
