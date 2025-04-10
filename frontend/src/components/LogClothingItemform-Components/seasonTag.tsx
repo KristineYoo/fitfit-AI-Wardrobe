@@ -1,4 +1,3 @@
-
 import { Theme, useTheme } from '@mui/material/styles';
 import Box from '@mui/material/Box';
 import OutlinedInput from '@mui/material/OutlinedInput';
@@ -39,11 +38,7 @@ function getStyles(name: string, selectedSeasons: readonly string[], theme: Them
     };
 }
 
-interface SeasonTagProps {
-    onSeasonChange: (season: string[]) => void;
-}
-
-export default function SeasonTagList({ onSeasonChange }: SeasonTagProps, { selectedSeasons, onChange }: SeasonTagListProps) {
+export default function SeasonTagList({ selectedSeasons, onChange }: SeasonTagListProps) {
     const theme = useTheme();
 
     const handleChange = (event: SelectChangeEvent<typeof selectedSeasons>) => {
@@ -52,9 +47,6 @@ export default function SeasonTagList({ onSeasonChange }: SeasonTagProps, { sele
         } = event;
         const newSelectedSeasons = typeof value === 'string' ? value.split(',') : value;
         onChange(newSelectedSeasons);
-        onSeasonChange(
-            typeof value === 'string' ? value.split(',') : value,
-        );
     };
 
     return (
