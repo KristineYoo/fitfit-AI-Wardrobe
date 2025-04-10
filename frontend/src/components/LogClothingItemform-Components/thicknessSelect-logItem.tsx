@@ -1,3 +1,4 @@
+
 import Box from '@mui/material/Box';
 import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
@@ -6,7 +7,7 @@ import Select, { SelectChangeEvent } from '@mui/material/Select';
 
 interface ThicknessSelectProps {
     value: string;
-    onChange: (thickness: string) => void;
+    onChange: (thickness: string) => void; // Changed from onThicknessChange to match usage
 }
 
 const thicknessOptions = [
@@ -19,7 +20,7 @@ const thicknessOptions = [
 
 export default function ThicknessSelect({ value, onChange }: ThicknessSelectProps) {
     const handleChange = (event: SelectChangeEvent) => {
-        onChange(event.target.value);
+        onChange(event.target.value as string);
     };
 
     return (

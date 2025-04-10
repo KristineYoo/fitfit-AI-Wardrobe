@@ -39,7 +39,11 @@ function getStyles(name: string, selectedSeasons: readonly string[], theme: Them
     };
 }
 
-export default function SeasonTagList({ selectedSeasons, onChange }: SeasonTagListProps) {
+interface SeasonTagProps {
+    onSeasonChange: (season: string[]) => void;
+}
+
+export default function SeasonTagList({ onSeasonChange }: SeasonTagProps, { selectedSeasons, onChange }: SeasonTagListProps) {
     const theme = useTheme();
 
     const handleChange = (event: SelectChangeEvent<typeof selectedSeasons>) => {
@@ -48,6 +52,9 @@ export default function SeasonTagList({ selectedSeasons, onChange }: SeasonTagLi
         } = event;
         const newSelectedSeasons = typeof value === 'string' ? value.split(',') : value;
         onChange(newSelectedSeasons);
+        onSeasonChange(
+            typeof value === 'string' ? value.split(',') : value,
+        );
     };
 
     return (

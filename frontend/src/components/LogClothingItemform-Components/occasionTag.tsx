@@ -42,8 +42,11 @@ function getStyles(name: string, selectedOccasions: readonly string[], theme: Th
             : theme.typography.fontWeightRegular,
     };
 }
+interface OccasionSelectProps {
+    onOccasionChange: (occasion: string[]) => void;
+}
 
-export default function OccasionTagList({ selectedOccasions, onChange }: OccasionTagListProps) {
+export default function OccasionTagList({ selectedOccasions, onChange }: OccasionTagListProps, { onOccasionChange }: OccasionSelectProps) {
     const theme = useTheme();
 
     const handleChange = (event: SelectChangeEvent<typeof selectedOccasions>) => {
@@ -52,6 +55,9 @@ export default function OccasionTagList({ selectedOccasions, onChange }: Occasio
         } = event;
         const newSelectedOccasions = typeof value === 'string' ? value.split(',') : value;
         onChange(newSelectedOccasions);
+        onOccasionChange(
+            typeof value === 'string' ? value.split(',') : value,
+        );
     };
 
 

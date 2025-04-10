@@ -6,6 +6,7 @@ import FormControl from '@mui/material/FormControl';
 import Select, { SelectChangeEvent } from '@mui/material/Select';
 import data from '../../data/logItemsFormData.json';
 
+// Define interfaces for props and JSON structure
 interface TypeSelectProps {
     value: string;
     onChange: (category: string) => void;
@@ -18,14 +19,14 @@ interface ClothingType {
 
 interface LogItemsFormData {
     clothingTypes: ClothingType[];
-    // Add other properties if present in your JSON
 }
 
+// Cast imported JSON data to the defined interface
 const formData = data as LogItemsFormData;
 
 const TypeSelect: React.FC<TypeSelectProps> = ({ value, onChange }) => {
     const handleChange = (event: SelectChangeEvent) => {
-        onChange(event.target.value);
+        onChange(event.target.value as string);
     };
 
     return (

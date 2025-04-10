@@ -153,10 +153,38 @@ Updates the details of a specific clothing item.
 }
 ```
 
+### Register a User
+**POST** `/api/register`
+
+#### Description:
+Check if user exists in the database, if not, create a new user in the database
+
+#### Request Body Example:
+```json
+{
+  "username": "testuser123",
+  "password": "123456"
+}
+```
+
+#### Response Example:
+```json
+{
+    "message": "User registered successfully",
+    "user": {
+        "id": 2,
+        "password": "123456",
+        "pastOutfits": [],
+        "username": "testuser123",
+        "wardrobe_items": []
+    }
+}
+```
+
 #### Error Response:
 ```json
 {
-    "message": "Item not found"
+    "message": "User already exists"
 }
 ```
 

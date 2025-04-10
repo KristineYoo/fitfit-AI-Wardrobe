@@ -1,13 +1,14 @@
-import {Paper, Grid2, Typography} from '@mui/material';
+import {Paper, Grid2, Typography, Box, TextField} from '@mui/material';
 import { FitThumbnail } from './FitThumbnail';
 import { Fit } from '../types/jsonDataTypes';
+import axios from 'axios';
+import { useEffect, useState } from 'react';
 
 export default function FitRecWindow( {recs} : {recs:Fit[]} ) {
+
+  
   return (
-      <Paper 
-        elevation={5} 
-        sx={{pl:3, pr:3, pt:1, pb:1, m:2, width:'100%'}}
-      >
+    <Box>
         <Typography 
           variant="h3" 
           sx={{
@@ -30,6 +31,6 @@ export default function FitRecWindow( {recs} : {recs:Fit[]} ) {
             ))
           }
         </Grid2>
-      </Paper>
+      </Box>
   );
 }

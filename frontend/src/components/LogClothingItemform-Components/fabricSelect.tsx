@@ -5,7 +5,7 @@ import OutlinedInput from '@mui/material/OutlinedInput';
 import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
-import Select, { SelectChangeEvent } from '@mui/material/Select';
+import Select, { SelectChangeEvent, } from '@mui/material/Select';
 import Chip from '@mui/material/Chip';
 
 
@@ -76,7 +76,11 @@ function getStyles(name: string, selectedFabrics: readonly string[], theme: Them
     };
 }
 
-export default function FabricSelect({ selectedFabrics, onChange }: FabricSelectProps) {
+interface FabricSelectProps {
+    onFabricChange: (fabric: string[]) => void;
+}
+
+export default function FabricSelect({ selectedFabrics, onFabricChange }: FabricSelectProps) {
     const theme = useTheme();
 
 
@@ -84,7 +88,13 @@ export default function FabricSelect({ selectedFabrics, onChange }: FabricSelect
         const {
             target: { value },
         } = event;
-        onChange(typeof value === 'string' ? value.split(',') : value);
+        onFabricChange(
+            // On autofill we get a stringified value.
+            typeof value === 'string' ? value.split(',') : value,
+        );
+        onFabricChange(
+            typeof value === 'string' ? value.split(',') : value,
+        );
     };
 
 

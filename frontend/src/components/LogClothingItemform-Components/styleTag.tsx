@@ -41,7 +41,10 @@ function getStyles(name: string, personName: readonly string[], theme: Theme) {
     };
 }
 
-export default function SelectStyleTagList({ selectedStyles, onChange }: SelectStyleTagListProps) {
+interface StyleSelectProps {
+    onTagsChange: (style: string[]) => void;
+}
+export default function SelectStyleTagList({ selectedStyles, onChange }: SelectStyleTagListProps, { onTagsChange }: StyleSelectProps) {
     const theme = useTheme();
 
 
@@ -51,6 +54,9 @@ export default function SelectStyleTagList({ selectedStyles, onChange }: SelectS
         } = event;
         const newSelectedStyles = typeof value === 'string' ? value.split(',') : value;
         onChange(newSelectedStyles);
+        onTagsChange(
+            typeof value === 'string' ? value.split(',') : value,
+        );
     };
 
 

@@ -39,8 +39,11 @@ function getStyles(name: string, personName: readonly string[], theme: Theme) {
             : theme.typography.fontWeightRegular,
     };
 }
+interface MoodTagProps {
+    onMoodChange: (style: string[]) => void;
+}
 
-export default function MoodTagList({ selectedMoods, onChange }: MoodTagListProps) {
+export default function MoodTagList({ selectedMoods, onChange }: MoodTagListProps, { onMoodChange }: MoodTagProps) {
     const theme = useTheme();
 
     const handleChange = (event: SelectChangeEvent<typeof selectedMoods>) => {
@@ -49,6 +52,9 @@ export default function MoodTagList({ selectedMoods, onChange }: MoodTagListProp
         } = event;
         const newSelectedMoods = typeof value === 'string' ? value.split(',') : value;
         onChange(newSelectedMoods);
+        onMoodChange(
+            typeof value === 'string' ? value.split(',') : value
+        );
     };
 
 
