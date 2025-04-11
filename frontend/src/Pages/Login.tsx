@@ -18,7 +18,7 @@ export function Login() {
              axios.post("/api/recommend", data)
                .then((res) => {
                  console.log(res.data); // Log for debugging
-   
+                 sessionStorage.setItem("login", "True")
                })
                .catch((err) => console.log(err));
          }
@@ -76,7 +76,7 @@ export function Login() {
              axios.post("/api/recommend", data)
                .then((res) => {
                  console.log(res.data); // Log for debugging
-   
+                 sessionStorage.setItem("login", "True")
                })
                .catch((err) => console.log(err));
         }}
