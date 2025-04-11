@@ -276,7 +276,7 @@ def register_user():
         "username": username,
         "password": password,
         "wardrobe_items": [],
-        "pastOutfits": [],
+        "pastOutfits": []
     }
 
     # Add the new user to the user data
@@ -288,7 +288,6 @@ def register_user():
 
 @app.route("/api/login", methods=["PUT"])
 def login_user():
-    login=False
     user_data = request.get_json()
     users = load_user_data()
     for user in users:
