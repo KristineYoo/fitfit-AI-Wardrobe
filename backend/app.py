@@ -7,9 +7,12 @@ import os
 from transformer import getEmbedding
 from sklearn.metrics.pairwise import cosine_similarity
 import numpy as np
+from dotenv import load_dotenv
+
+load_dotenv()
 
 app = Flask(__name__)
-app.secret_key = 'hiohks%^jshd*fs/*?'
+app.config['SECRET_KEY'] = os.getenv('SECRET_KEY')
 CORS(app) # Allows Frontend to make requests to Backend
 
 # define constant for the wardrobe data file
@@ -156,7 +159,7 @@ def configure_fit(items, similarities):
 def get_items():
     return jsonify({"items": load_clothing_data()})
 
-@app.route("/api/relaventItems", methods=["GET"])
+@app.route("/api/releventItems", methods=["GET"])
 def get_releventItems():
     user=session.get("user", None)
     if user!=None:

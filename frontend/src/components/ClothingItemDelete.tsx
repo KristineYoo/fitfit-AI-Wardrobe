@@ -40,7 +40,7 @@ export default function DeleteItemModal() {
   const [data, setData] = useState([]);
 
   useEffect(() => {
-    axios.get("/api/relaventItems")
+    axios.get("/api/releventItems")
       .then((res) => {
         console.log(res.data); 
         setData(res.data.items || []); 
