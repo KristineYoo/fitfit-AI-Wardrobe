@@ -1,4 +1,4 @@
-from flask import Flask, jsonify, request
+from flask import Flask, jsonify, request, session
 from flask_cors import CORS
 import json
 import random
@@ -9,6 +9,7 @@ from sklearn.metrics.pairwise import cosine_similarity
 import numpy as np
 
 app = Flask(__name__)
+app.secret_key = 'this_is_test'
 CORS(app) # Allows Frontend to make requests to Backend
 
 # define constant for the wardrobe data file
@@ -24,9 +25,10 @@ def load_clothing_data():
 def load_relevent_clothing_data():
     with open(WARDROBE_DATA_FILE) as f:
         items=json.load(f)
-    users=load_user_data()
-    user = next((user for user in users if user["activeUser"] == True), None) 
+    user=session.get("user", None)
     relevent=[]
+    if user==None:
+        return(jsonify({"message": "No user logged in"}), 404)
     for id in user["wardrobe_items"]:
         relevent.append(items[id-1])
     return relevent
@@ -156,7 +158,10 @@ def get_items():
 
 @app.route("/api/relaventItems", methods=["GET"])
 def get_releventItems():
-    return jsonify({"items": load_relevent_clothing_data()})
+    user=session.get("user", None)
+    if user!=None:
+        return jsonify({"items": load_relevent_clothing_data()})
+    return jsonify({"message": "No user logged in"}), 404
 
 # GET /api/items/<item_id>: return details of a specific clothing item when request is made
 @app.route("/api/items/<int:item_id>", methods=["GET"])
@@ -191,7 +196,7 @@ def add_item():
     
     items = load_clothing_data()
     users=load_user_data()
-    user = next((user for user in users if user["activeUser"] == True), None) 
+    user = session.get("user")
     print(stringify(new_item))
     # get the embedding for the new_item and turn the ndarray of NumPy into a normal array so that we can
     # store it in the JSON file
@@ -202,7 +207,7 @@ def add_item():
     new_item["id"] = id
     user["wardrobe_items"].append(id)
     users[user["id"]-1]=user
-
+    session["user"]=user
     # add the new item to the wardrobe data
     items.append(new_item)
     with open(WARDROBE_DATA_FILE, 'w') as f:
@@ -289,13 +294,8 @@ def login_user():
     users = load_user_data()
     for user in users:
         if ((user["username"]==user_data.get("username")) and user["password"]==user_data.get("password")):
-            user["activeUser"]=True
-            login=True
-    if login:
-        with open(USER_DATA_FILE, 'w') as f:
-            json.dump(users, f, indent=4)
-
-        return jsonify({"message": "Successfully logged in"}), 201
+            session["user"]=user
+            return jsonify({"message": "Successfully logged in"}), 201
     else:
         return jsonify({"message": "User name and or password does not exist"})
 

@@ -20,6 +20,10 @@ export function Items() {
         })
         .catch((err) => console.log(err));
     }, []);
+    //Manually call login until login page is added
+    const log={"username": "abc123",
+        "password": "hello_there"}
+    axios.put("/api/login", log)
     
     return (
       <>
