@@ -13,6 +13,7 @@ CORS(app) # Allows Frontend to make requests to Backend
 
 # define constant for the wardrobe data file
 WARDROBE_DATA_FILE = "./public/assets/data/WardrobeData.json"
+USER_DATA_FILE = "./public/assets/data/UserData.json"
 
 # Function to load the wardrobe data from the JSON file
 # @return: the wardrobe data
@@ -20,6 +21,10 @@ def load_clothing_data():
     with open(WARDROBE_DATA_FILE) as f:
         return json.load(f)
 
+def load_user_data():
+    with open(USER_DATA_FILE) as f:
+        return json.load(f)
+    
 # Function to validate the new item
 # @param item: the new item to be added to the wardrobe data
 # @return: True if the item is valid, False otherwise
@@ -179,10 +184,6 @@ def add_item():
     # generate a new id for the item
     new_item["id"] = items[-1]["id"] + 1
 
-    # validate the new item
-    if not validate_item(new_item):
-        return jsonify({"message": "Invalid item"}), 400
-    
     # add the new item to the wardrobe data
     items.append(new_item)
     with open(WARDROBE_DATA_FILE, 'w') as f:
@@ -229,7 +230,36 @@ def get_prompt():
     prompt=data.get('text')
     return(prompt)
 
+# POST /api/register: register a new user
+@app.route("/api/register", methods=["POST"])
+def register_user():
+    user_data = request.get_json()
+    username = user_data.get("username")
+    # password should be hashed in frontend (not here)
+    password = user_data.get("password")
 
+    # Check if user exists
+    users = load_user_data()
+    for user in users:
+        if user["username"] == username:
+            return jsonify({"message": "User already exists"}), 400
+    
+    # Create a new user
+    new_user = {
+        "id": users[-1]["id"] + 1 if users else 1,
+        "username": username,
+        "password": password,
+        "wardrobe_items": [],
+        "pastOutfits": []
+    }
+
+    # Add the new user to the user data
+    users.append(new_user)
+    with open(USER_DATA_FILE, 'w') as f:
+        json.dump(users, f, indent=4)
+
+    return jsonify({"message": "User registered successfully", "user": new_user}), 201
+    
 if __name__ == "__main__":
     app.run(debug=True, host="0.0.0.0", port=5000)
     
