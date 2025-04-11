@@ -7,6 +7,8 @@ import os
 from transformer import getEmbedding
 from sklearn.metrics.pairwise import cosine_similarity
 import numpy as np
+import base64
+from werkzeug.utils import secure_filename
 
 app = Flask(__name__)
 CORS(app) # Allows Frontend to make requests to Backend
@@ -14,6 +16,7 @@ CORS(app) # Allows Frontend to make requests to Backend
 # define constant for the wardrobe data file
 WARDROBE_DATA_FILE = "./public/assets/data/WardrobeData.json"
 USER_DATA_FILE = "./public/assets/data/UserData.json"
+IMAGE_UPLOAD_FOLDER = './public/assets/data/images'
 
 # Function to load the wardrobe data from the JSON file
 # @return: the wardrobe data
@@ -184,10 +187,38 @@ def add_item():
     # generate a new id for the item
     new_item["id"] = items[-1]["id"] + 1
 
+    """Dealing with the image upload"""
+    # Extract the base64 image string
+    image_data_url = new_item.get('image')
+    
+    if image_data_url and isinstance(image_data_url, str) and image_data_url.startswith('data:'):
+        # Split the base64 string to get the actual data after the prefix
+        # Format is typically: data:image/jpeg;base64,/9j/4AAQSkZJRgABAQEASABIAAD/2wBD...
+        header, encoded = image_data_url.split(',', 1)
+        
+        # Get the file extension from the MIME type
+        mime_type = header.split(';')[0].split(':')[1]
+        file_ext = mime_type.split('/')[1]
+        
+        # Decode the base64 string (to binary)
+        binary_data = base64.b64decode(encoded)
+        
+        # Create a unique filename
+        filename = secure_filename(f"{new_item.get('name', 'untitled')}_{os.urandom(8).hex()}.{file_ext}")
+        
+        # Save the file
+        file_path = os.path.join(IMAGE_UPLOAD_FOLDER, filename)
+        with open(file_path, 'wb') as f:
+            f.write(binary_data)
+        
+        # Update the item data with the file path instead of the base64 string
+        new_item['image'] = filename
+
     # add the new item to the wardrobe data
     items.append(new_item)
     with open(WARDROBE_DATA_FILE, 'w') as f:
         json.dump(items, f, indent=4)
+    
     return jsonify(new_item), 201
 
 # PUT /api/update-item/<item_id>: update the details of a specific clothing item when request is made

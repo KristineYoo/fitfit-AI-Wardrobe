@@ -4,7 +4,7 @@ export interface Item {
     note: string;
     category: string;
     color: string[];
-    image: string;
+    image: string | null;
     styling: {
       tags: string[];
       season: string[];

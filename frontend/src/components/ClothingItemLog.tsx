@@ -16,7 +16,6 @@ import FabricSelect from './LogClothingItemform-Components/fabricSelect';
 import ThicknessSelect from './LogClothingItemform-Components/thicknessSelect-logItem';
 import ColorSelector from './LogClothingItemform-Components/clothingColor';
 import TypeSelect from './LogClothingItemform-Components/typeSelect';
-import FileUploader from './LogClothingItemform-Components/FileUploader';
 
 const style = {
   position: 'absolute' as const,
@@ -35,16 +34,17 @@ const style = {
 
 export default function LogItemModal() {
   const [open, setOpen] = React.useState<boolean>(false);
+  const [imagePreview, setImagePreview] = React.useState<string | null>(null);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
 
   // Form state
-  interface FormData {
+  interface ItemFormData {
     name: string;
     note: string;
     category: string;
     color: string[];
-    image: string;
+    image: string | null;
     styling: {
       tags: string[];
       season: string[];
@@ -59,12 +59,12 @@ export default function LogItemModal() {
     deleted: boolean;
   }
 
-  const [formData, setFormData] = React.useState<FormData>({
+  const [formData, setFormData] = React.useState<ItemFormData>({
     name: '',
     note: '',
     category: '',
     color: [],
-    image: '/img/default.png', 
+    image: '/public/assets/data/images/default.png',
     styling: {
       tags: [],
       season: [],
@@ -80,6 +80,35 @@ export default function LogItemModal() {
   });
 
   // Form field change handlers
+  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (e.target.files && e.target.files.length > 0) {
+      const file = e.target.files[0];
+
+      // Create a URL for the file preview
+      const previewUrl = URL.createObjectURL(file);
+      
+      // Create a FileReader to convert the file to base64 (this is needed to send it as a string)
+      const reader = new FileReader();
+      
+      reader.onloadend = () => {
+        // reader.result contains the base64 string representation of the file
+        setFormData({
+          ...formData,
+          image: reader.result as string
+        });
+      };
+      
+      // Start reading the file as a data URL (base64)
+      reader.readAsDataURL(file);
+
+      // Store the preview URL in a separate state variable
+      setImagePreview(previewUrl);
+    
+      // Remember to revoke the URL when no longer needed to prevent memory leaks
+      return () => URL.revokeObjectURL(previewUrl);
+    }
+  };
+
   const handleTextChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setFormData({
       ...formData,
@@ -174,7 +203,7 @@ export default function LogItemModal() {
         note: '',
         category: '',
         color: [],
-        image: '/img/default.png',
+        image: '/public/assets/data/images/default.png',
         styling: {
           tags: [],
           season: [],
@@ -217,7 +246,17 @@ export default function LogItemModal() {
           <Typography id="clothingItemLogModalTitle" variant="h6" component="h2" sx={{ color: 'black' }}>
             Upload Clothing Item
           </Typography>
-          <FileUploader/>
+          <input id="image" type="file" accept="image/*" onChange={handleFileChange}/>
+          {imagePreview && (
+            <div id="image-preview-div">
+              <img src={imagePreview} alt="Preview" style={{
+                                                    width: '100%',
+                                                    maxHeight: '250px',
+                                                    objectFit: 'contain',
+                                                    marginTop: '16px'
+                                                  }}/>
+            </div>
+          )}
           <TextField id="uploadItem-name" label="Name of Item" variant="outlined" fullWidth sx={{ my: 2 }} value={formData.name} onChange={handleTextChange}/>
           <TextField id="uploadItem-note" label="Notes" variant="outlined" fullWidth sx={{ my: 2 }} value={formData.note} onChange={handleTextChange}/>
           <TypeSelect onCategoryChange={handleCategoryChange} />
