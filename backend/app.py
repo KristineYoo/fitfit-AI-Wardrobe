@@ -277,7 +277,6 @@ def register_user():
         "password": password,
         "wardrobe_items": [],
         "pastOutfits": [],
-        "activeUser": False
     }
 
     # Add the new user to the user data
@@ -301,12 +300,7 @@ def login_user():
 
 @app.route("/api/logout", methods=["PUT"])
 def logout_user():
-    users=load_user_data()
-    user = next((user for user in users if user["activeUser"] == True), None)
-    user["activeUser"]=False
-    with open(USER_DATA_FILE, 'w') as f:
-            json.dump(users, f, indent=4)
-
+    session["user"]=None
     return jsonify({"message": "Successfully logged out"}), 201
     
          
