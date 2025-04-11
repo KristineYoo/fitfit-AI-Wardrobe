@@ -25,16 +25,16 @@ def load_clothing_data():
     with open(WARDROBE_DATA_FILE) as f:
         return json.load(f)
     
-def load_relevent_clothing_data():
+def load_relevant_clothing_data():
     with open(WARDROBE_DATA_FILE) as f:
         items=json.load(f)
     user=session.get("user", None)
-    relevent=[]
+    relevant=[]
     if user==None:
         return(jsonify({"message": "No user logged in"}), 404)
     for id in user["wardrobe_items"]:
-        relevent.append(items[id-1])
-    return relevent
+        relevant.append(items[id-1])
+    return relevant
 
 def load_user_data():
     with open(USER_DATA_FILE) as f:
@@ -159,11 +159,11 @@ def configure_fit(items, similarities):
 def get_items():
     return jsonify({"items": load_clothing_data()})
 
-@app.route("/api/releventItems", methods=["GET"])
-def get_releventItems():
+@app.route("/api/relevantItems", methods=["GET"])
+def get_relevantItems():
     user=session.get("user", None)
     if user!=None:
-        return jsonify({"items": load_relevent_clothing_data()})
+        return jsonify({"items": load_relevant_clothing_data()})
     return jsonify({"message": "No user logged in"}), 404
 
 # GET /api/items/<item_id>: return details of a specific clothing item when request is made
@@ -181,7 +181,7 @@ def recommend_outfit():
     # retireve prompt
     prompt = request.get_json()['prompt']
     # get items from JSON
-    items = load_relevent_clothing_data() # array of objects
+    items = load_relevant_clothing_data() # array of objects
     # filter non-visible items
     filtered = filters.filter(items)
     # get similarities and store in a dictionary
@@ -224,7 +224,7 @@ def add_item():
 def update_item(item_id):
     updated_item = request.get_json()
     updated_item["embedding"] = getEmbedding(stringify(updated_item)).tolist()
-    items = load_relevent_clothing_data()
+    items = load_relevant_clothing_data()
     item = next((item for item in items if item["id"] == item_id), None)
     if item:
         # validate the updated item
@@ -241,7 +241,7 @@ def update_item(item_id):
 # DELETE /api/delete-item/<int:item_id>: marks item as deleted 
 @app.route("/api/delete-item/<int:item_id>", methods=["DELETE"])
 def delete_item(item_id):
-    items = load_relevent_clothing_data()
+    items = load_relevant_clothing_data()
     item = next((item for item in items if item["id"] == item_id), None)
     if item:
         #items.remove(item)

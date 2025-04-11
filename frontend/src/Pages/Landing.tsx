@@ -32,7 +32,7 @@ export function Landing(){
   }
     
     useEffect(() => {
-        axios.get('/api/releventItems')
+        axios.get('/api/relevantItems')
             .then((res) => {
                 console.log(res.data);
                 setData(res.data.items || []);

@@ -13,7 +13,7 @@ export function Items() {
     const [data, setData] = useState([]);
     
     useEffect(() => {
-      axios.get("/api/releventItems")
+      axios.get("/api/relevantItems")
         .then((res) => {
           console.log(res.data); // Log for debugging
           setData(res.data.items || []); // Assuming the response is like { items: [...] }
