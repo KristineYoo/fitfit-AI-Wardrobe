@@ -9,15 +9,18 @@
             6,
             8
         ],
-        "pastOutfits": [],
-        "activeUser": true
+        "pastOutfits": []
     },
     {
         "id": 2,
-        "username": "abc123",
         "password": "hello_there",
-        "wardrobe_items": [1,3,5,7],
         "pastOutfits": [],
-        "activeUser": false
+        "username": "abc123",
+        "wardrobe_items": [
+            1,
+            3,
+            5,
+            7
+        ]
     }
 ]
