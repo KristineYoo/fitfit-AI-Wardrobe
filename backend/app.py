@@ -9,7 +9,7 @@ from sklearn.metrics.pairwise import cosine_similarity
 import numpy as np
 
 app = Flask(__name__)
-app.secret_key = 'this_is_test'
+app.secret_key = 'hiohks%^jshd*fs/*?'
 CORS(app) # Allows Frontend to make requests to Backend
 
 # define constant for the wardrobe data file
