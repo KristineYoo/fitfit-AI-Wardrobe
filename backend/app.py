@@ -296,14 +296,14 @@ def login_user():
     for user in users:
         if ((user["username"]==user_data.get("username")) and user["password"]==user_data.get("password")):
             session["user"]=user
-            return jsonify({"message": "Successfully logged in"}), 201
+            return jsonify({"message": "Successfully logged in"})
     else:
         return jsonify({"message": "User name and or password does not exist"})
 
 @app.route("/api/logout", methods=["PUT"])
 def logout_user():
     session["user"]=None
-    return jsonify({"message": "Successfully logged out"}), 201
+    return jsonify({"message": "Successfully logged out"})
     
          
     
