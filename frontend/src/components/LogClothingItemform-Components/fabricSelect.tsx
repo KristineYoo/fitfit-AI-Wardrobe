@@ -1,12 +1,20 @@
-import * as React from 'react';
+
 import { Theme, useTheme } from '@mui/material/styles';
 import Box from '@mui/material/Box';
 import OutlinedInput from '@mui/material/OutlinedInput';
 import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
-import Select, { SelectChangeEvent } from '@mui/material/Select';
+import Select, { SelectChangeEvent, } from '@mui/material/Select';
 import Chip from '@mui/material/Chip';
+
+
+interface FabricSelectProps {
+    selectedFabrics: string[];
+    onChange: (fabrics: string[]) => void;
+}
+
+
 
 const ITEM_HEIGHT = 48;
 const ITEM_PADDING_TOP = 8;
@@ -60,9 +68,9 @@ const fabricList = [
     'Gore-Tex',
 ];
 
-function getStyles(name: string, personName: readonly string[], theme: Theme) {
+function getStyles(name: string, selectedFabrics: readonly string[], theme: Theme) {
     return {
-        fontWeight: personName.includes(name)
+        fontWeight: selectedFabrics.includes(name)
             ? theme.typography.fontWeightMedium
             : theme.typography.fontWeightRegular,
     };
@@ -72,54 +80,54 @@ interface FabricSelectProps {
     onFabricChange: (fabric: string[]) => void;
 }
 
-export default function FabricSelect({ onFabricChange }: FabricSelectProps) {
-    const theme = useTheme();
-    const [personName, setPersonName] = React.useState<string[]>([]);
 
-    const handleChange = (event: SelectChangeEvent<typeof personName>) => {
-        const {
-            target: { value },
-        } = event;
-        setPersonName(
-            // On autofill we get a stringified value.
-            typeof value === 'string' ? value.split(',') : value,
-        );
-        onFabricChange(
-            typeof value === 'string' ? value.split(',') : value,
-        );
+
+export default function FabricSelect({ selectedFabrics, onFabricChange }: FabricSelectProps) {
+    const theme = useTheme();
+
+    const handleChange = (event: SelectChangeEvent<typeof selectedFabrics>) => {
+        const value = event.target.value;
+        onFabricChange(typeof value === "string" ? value.split(",") : value);
+    };
+
+    const handleDelete = (fabricToDelete: string) => (event: React.MouseEvent) => {
+        event.stopPropagation(); // Prevent Select from opening
+        onFabricChange(selectedFabrics.filter((fabric) => fabric !== fabricToDelete));
     };
 
     return (
-        <div>
-            <FormControl sx={{ my: 2, width: 400 }}>
-                <InputLabel id="demo-multiple-chip-label">Select Fabric</InputLabel>
-                <Select
-                    labelId="demo-multiple-chip-label"
-                    id="demo-multiple-chip"
-                    multiple
-                    value={personName}
-                    onChange={handleChange}
-                    input={<OutlinedInput id="select-multiple-chip" label="Chip" />}
-                    renderValue={(selected) => (
-                        <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 0.5 }}>
-                            {selected.map((value) => (
-                                <Chip key={value} label={value} />
-                            ))}
-                        </Box>
-                    )}
-                    MenuProps={MenuProps}
-                >
-                    {fabricList.map((name) => (
-                        <MenuItem
-                            key={name}
-                            value={name}
-                            style={getStyles(name, personName, theme)}
-                        >
-                            {name}
-                        </MenuItem>
-                    ))}
-                </Select>
-            </FormControl>
-        </div>
+        <FormControl sx={{ my: 2, width: 400 }}>
+            <InputLabel>Select Fabric</InputLabel>
+            <Select
+                multiple
+                value={selectedFabrics}
+                onChange={handleChange}
+                input={<OutlinedInput label="Chip" />}
+                renderValue={(selected) => (
+                    <Box sx={{ display: "flex", flexWrap: "wrap", gap: 0.5 }}>
+                        {selected.map((value) => (
+                            <Chip
+                                key={value}
+                                label={value}
+                                onDelete={handleDelete(value)}
+                                onClick={(e) => e.stopPropagation()} // Prevent menu open
+                                onMouseDown={(e) => e.stopPropagation()} // Critical for delete
+                            />
+                        ))}
+                    </Box>
+                )}
+                MenuProps={MenuProps}
+            >
+                {fabricList.map((name) => (
+                    <MenuItem
+                        key={name}
+                        value={name}
+                        style={getStyles(name, selectedFabrics, theme)}
+                    >
+                        {name}
+                    </MenuItem>
+                ))}
+            </Select>
+        </FormControl>
     );
 }

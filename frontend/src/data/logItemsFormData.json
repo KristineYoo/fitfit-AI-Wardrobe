@@ -37,6 +37,10 @@
             "label": "Crop top"
         },
         {
+            "value": 11,
+            "label": "Camisole"
+        },
+        {
             "value": 12,
             "label": "Vest"
         },
@@ -73,12 +77,20 @@
             "label": "Capris"
         },
         {
+            "value": 22,
+            "label": "Cargo pants"
+        },
+        {
             "value": 24,
             "label": "Overalls"
         },
         {
             "value": 28,
             "label": "Jacket"
+        },
+        {
+            "value": 29,
+            "label": "Coat"
         },
         {
             "value": 30,
@@ -121,6 +133,14 @@
             "label": "Ball gown"
         },
         {
+            "value": 72,
+            "label": "Lab coat"
+        },
+        {
+            "value": 73,
+            "label": "Chef’s uniform"
+        },
+        {
             "value": 51,
             "label": "Dress"
         },
@@ -159,6 +179,14 @@
         {
             "value": 88,
             "label": "Tracksuit"
+        },
+        {
+            "value": 89,
+            "label": "Sneakers"
+        },
+        {
+            "value": 90,
+            "label": "Boots"
         }
     ],
     "currencies": [
