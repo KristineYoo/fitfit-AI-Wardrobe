@@ -42,44 +42,48 @@ export default function SeasonTagList({ selectedSeasons, onChange }: SeasonTagLi
     const theme = useTheme();
 
     const handleChange = (event: SelectChangeEvent<typeof selectedSeasons>) => {
-        const {
-            target: { value },
-        } = event;
-        const newSelectedSeasons = typeof value === 'string' ? value.split(',') : value;
-        onChange(newSelectedSeasons);
+        const value = event.target.value;
+        onChange(typeof value === 'string' ? value.split(',') : value);
+    };
+
+    const handleDelete = (seasonToDelete: string) => (event: React.MouseEvent) => {
+        event.stopPropagation();
+        onChange(selectedSeasons.filter(season => season !== seasonToDelete));
     };
 
     return (
-        <div>
-            <FormControl sx={{ my: 2, width: 400 }}>
-                <InputLabel id="season-multiple-chip-label">Select Season</InputLabel>
-                <Select
-                    labelId="season-multiple-chip-label"
-                    id="season-multiple-chip"
-                    multiple
-                    value={selectedSeasons}
-                    onChange={handleChange}
-                    input={<OutlinedInput id="select-multiple-season-chip" label="Season" />}
-                    renderValue={(selected) => (
-                        <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 0.5 }}>
-                            {selected.map((value) => (
-                                <Chip key={value} label={value} />
-                            ))}
-                        </Box>
-                    )}
-                    MenuProps={MenuProps}
-                >
-                    {seasonTags.map((name) => (
-                        <MenuItem
-                            key={name}
-                            value={name}
-                            style={getStyles(name, selectedSeasons, theme)}
-                        >
-                            {name}
-                        </MenuItem>
-                    ))}
-                </Select>
-            </FormControl>
-        </div>
+        <FormControl sx={{ my: 2, width: 400 }}>
+            <InputLabel>Select Season</InputLabel>
+            <Select
+                multiple
+                value={selectedSeasons}
+                onChange={handleChange}
+                input={<OutlinedInput label="Season" />}
+                renderValue={(selected) => (
+                    <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 0.5 }}>
+                        {selected.map((value) => (
+                            <Chip
+                                key={value}
+                                label={value}
+                                onDelete={handleDelete(value)}
+                                onClick={(e) => e.stopPropagation()}
+                                onMouseDown={(e) => e.stopPropagation()}
+                            />
+                        ))}
+                    </Box>
+                )}
+                MenuProps={MenuProps}
+            >
+                {seasonTags.map((name) => (
+                    <MenuItem
+                        key={name}
+                        value={name}
+                        style={getStyles(name, selectedSeasons, theme)}
+                    >
+                        {name}
+                    </MenuItem>
+                ))}
+            </Select>
+        </FormControl>
     );
 }

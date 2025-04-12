@@ -1,4 +1,3 @@
-
 import { Theme, useTheme } from '@mui/material/styles';
 import Box from '@mui/material/Box';
 import OutlinedInput from '@mui/material/OutlinedInput';
@@ -13,9 +12,10 @@ interface FormData {
     clothingTypes: { value: number; label: string }[];
     currencies: { value: string; label: string }[];
     moodTags: string[];
-    stylingTags: string[]
-    occasionTags: string[]
+    stylingTags: string[];
+    occasionTags: string[];
 }
+
 interface MoodTagListProps {
     selectedMoods: string[];
     onChange: (moods: string[]) => void;
@@ -32,65 +32,61 @@ const MenuProps = {
     },
 };
 
-function getStyles(name: string, personName: readonly string[], theme: Theme) {
+function getStyles(name: string, selectedMoods: readonly string[], theme: Theme) {
     return {
-        fontWeight: personName.includes(name)
+        fontWeight: selectedMoods.includes(name)
             ? theme.typography.fontWeightMedium
             : theme.typography.fontWeightRegular,
     };
 }
-interface MoodTagProps {
-    onMoodChange: (style: string[]) => void;
-}
 
-export default function MoodTagList({ selectedMoods, onChange }: MoodTagListProps, { onMoodChange }: MoodTagProps) {
+export default function MoodTagList({ selectedMoods, onChange }: MoodTagListProps) {
     const theme = useTheme();
-
-    const handleChange = (event: SelectChangeEvent<typeof selectedMoods>) => {
-        const {
-            target: { value },
-        } = event;
-        const newSelectedMoods = typeof value === 'string' ? value.split(',') : value;
-        onChange(newSelectedMoods);
-        onMoodChange(
-            typeof value === 'string' ? value.split(',') : value
-        );
-    };
-
-
     const moodTags = (data as FormData).moodTags;
 
+    const handleChange = (event: SelectChangeEvent<typeof selectedMoods>) => {
+        const value = event.target.value;
+        onChange(typeof value === 'string' ? value.split(',') : value);
+    };
+
+    const handleDelete = (moodToDelete: string) => (event: React.MouseEvent) => {
+        event.stopPropagation();
+        onChange(selectedMoods.filter(mood => mood !== moodToDelete));
+    };
+
     return (
-        <div>
-            <FormControl sx={{ my: 2, width: 400 }}>
-                <InputLabel id="demo-multiple-chip-label">Select Mood</InputLabel>
-                <Select
-                    labelId="demo-multiple-chip-label"
-                    id="demo-multiple-chip"
-                    multiple
-                    value={selectedMoods}
-                    onChange={handleChange}
-                    input={<OutlinedInput id="select-multiple-chip" label="Chip" />}
-                    renderValue={(selected) => (
-                        <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 0.5 }}>
-                            {selected.map((value) => (
-                                <Chip key={value} label={value} />
-                            ))}
-                        </Box>
-                    )}
-                    MenuProps={MenuProps}
-                >
-                    {moodTags.map((name: string) => (
-                        <MenuItem
-                            key={name}
-                            value={name}
-                            style={getStyles(name, selectedMoods, theme)}
-                        >
-                            {name}
-                        </MenuItem>
-                    ))}
-                </Select>
-            </FormControl>
-        </div>
+        <FormControl sx={{ my: 2, width: 400 }}>
+            <InputLabel>Select Mood</InputLabel>
+            <Select
+                multiple
+                value={selectedMoods}
+                onChange={handleChange}
+                input={<OutlinedInput label="Chip" />}
+                renderValue={(selected) => (
+                    <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 0.5 }}>
+                        {selected.map((value) => (
+                            <Chip
+                                key={value}
+                                label={value}
+                                onDelete={handleDelete(value)}
+                                onClick={(e) => e.stopPropagation()}
+                                onMouseDown={(e) => e.stopPropagation()}
+                            />
+                        ))}
+                    </Box>
+                )}
+                MenuProps={MenuProps}
+            >
+                {moodTags.map((name) => (
+                    <MenuItem
+                        key={name}
+                        value={name}
+                        style={getStyles(name, selectedMoods, theme)}
+                    >
+                        {name}
+                    </MenuItem>
+                ))}
+            </Select>
+        </FormControl>
     );
 }

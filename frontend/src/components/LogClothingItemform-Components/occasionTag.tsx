@@ -1,4 +1,3 @@
-
 import { Theme, useTheme } from '@mui/material/styles';
 import Box from '@mui/material/Box';
 import OutlinedInput from '@mui/material/OutlinedInput';
@@ -9,13 +8,12 @@ import Select, { SelectChangeEvent } from '@mui/material/Select';
 import Chip from '@mui/material/Chip';
 import data from '../../data/logItemsFormData.json';
 
-
 interface FormData {
     clothingTypes: { value: number; label: string }[];
     currencies: { value: string; label: string }[];
     moodTags: string[];
-    stylingTags: string[]
-    occasionTags: string[]
+    stylingTags: string[];
+    occasionTags: string[];
 }
 
 interface OccasionTagListProps {
@@ -34,7 +32,6 @@ const MenuProps = {
     },
 };
 
-
 function getStyles(name: string, selectedOccasions: readonly string[], theme: Theme) {
     return {
         fontWeight: selectedOccasions.includes(name)
@@ -42,59 +39,54 @@ function getStyles(name: string, selectedOccasions: readonly string[], theme: Th
             : theme.typography.fontWeightRegular,
     };
 }
-interface OccasionSelectProps {
-    onOccasionChange: (occasion: string[]) => void;
-}
 
-export default function OccasionTagList({ selectedOccasions, onChange }: OccasionTagListProps, { onOccasionChange }: OccasionSelectProps) {
+export default function OccasionTagList({ selectedOccasions, onChange }: OccasionTagListProps) {
     const theme = useTheme();
-
-    const handleChange = (event: SelectChangeEvent<typeof selectedOccasions>) => {
-        const {
-            target: { value },
-        } = event;
-        const newSelectedOccasions = typeof value === 'string' ? value.split(',') : value;
-        onChange(newSelectedOccasions);
-        onOccasionChange(
-            typeof value === 'string' ? value.split(',') : value,
-        );
-    };
-
-
     const occasionTags = (data as FormData).occasionTags;
 
+    const handleChange = (event: SelectChangeEvent<typeof selectedOccasions>) => {
+        const value = event.target.value;
+        onChange(typeof value === 'string' ? value.split(',') : value);
+    };
+
+    const handleDelete = (occasionToDelete: string) => (event: React.MouseEvent) => {
+        event.stopPropagation();
+        onChange(selectedOccasions.filter(occasion => occasion !== occasionToDelete));
+    };
 
     return (
-        <div>
-            <FormControl sx={{ my: 2, width: 400 }}>
-                <InputLabel id="demo-multiple-chip-label">Select Occasion</InputLabel>
-                <Select
-                    labelId="demo-multiple-chip-label"
-                    id="demo-multiple-chip"
-                    multiple
-                    value={selectedOccasions}
-                    onChange={handleChange}
-                    input={<OutlinedInput id="select-multiple-chip" label="Chip" />}
-                    renderValue={(selected) => (
-                        <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 0.5 }}>
-                            {selected.map((value) => (
-                                <Chip key={value} label={value} />
-                            ))}
-                        </Box>
-                    )}
-                    MenuProps={MenuProps}
-                >
-                    {occasionTags.map((name: string) => (
-                        <MenuItem
-                            key={name}
-                            value={name}
-                            style={getStyles(name, selectedOccasions, theme)}
-                        >
-                            {name}
-                        </MenuItem>
-                    ))}
-                </Select>
-            </FormControl>
-        </div>
+        <FormControl sx={{ my: 2, width: 400 }}>
+            <InputLabel>Select Occasion</InputLabel>
+            <Select
+                multiple
+                value={selectedOccasions}
+                onChange={handleChange}
+                input={<OutlinedInput label="Occasion" />}
+                renderValue={(selected) => (
+                    <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 0.5 }}>
+                        {selected.map((value) => (
+                            <Chip
+                                key={value}
+                                label={value}
+                                onDelete={handleDelete(value)}
+                                onClick={(e) => e.stopPropagation()}
+                                onMouseDown={(e) => e.stopPropagation()}
+                            />
+                        ))}
+                    </Box>
+                )}
+                MenuProps={MenuProps}
+            >
+                {occasionTags.map((name) => (
+                    <MenuItem
+                        key={name}
+                        value={name}
+                        style={getStyles(name, selectedOccasions, theme)}
+                    >
+                        {name}
+                    </MenuItem>
+                ))}
+            </Select>
+        </FormControl>
     );
 }

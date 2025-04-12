@@ -8,6 +8,7 @@ import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 import axios from 'axios';
 
+
 import SelectStyleTagList from './LogClothingItemform-Components/styleTag';
 import SeasonTagList from './LogClothingItemform-Components/seasonTag';
 import OccasionTagList from './LogClothingItemform-Components/occasionTag';
@@ -17,6 +18,7 @@ import ThicknessSelect from './LogClothingItemform-Components/thicknessSelect-lo
 import ColorSelector from './LogClothingItemform-Components/clothingColor';
 import TypeSelect from './LogClothingItemform-Components/typeSelect';
 import { Item } from '../types/jsonDataTypes';
+
 
 const style = {
   position: 'absolute' as const,
@@ -32,11 +34,13 @@ const style = {
   overflowY: 'auto',
 };
 
+
 interface LogItemModalProps {
   open: boolean;
   onClose: () => void;
   item?: Item;
 }
+
 
 const LogItemModal: React.FC<LogItemModalProps> = ({ open, onClose, item }) => {
   const [name, setName] = useState<string>('');
@@ -54,22 +58,81 @@ const LogItemModal: React.FC<LogItemModalProps> = ({ open, onClose, item }) => {
   });
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
 
+
+  // New state to store initial values
+  const [initialValues, setInitialValues] = useState<{
+    name: string;
+    notes: string;
+    category: string;
+    color: string[];
+    image: string;
+    styleTags: string[];
+    seasonTags: string[];
+    occasionTags: string[];
+    moodTags: string[];
+    fabric: { material: string[]; thickness: string };
+  }>({
+    name: '',
+    notes: '',
+    category: '',
+    color: [],
+    image: '/img/default.png',
+    styleTags: [],
+    seasonTags: [],
+    occasionTags: [],
+    moodTags: [],
+    fabric: { material: [], thickness: 'medium' },
+  });
+
+
   useEffect(() => {
     if (item) {
-      setName(item.name);
-      setNotes(item.note || '');
-      setCategory(item.category || '');
-      setColor(item.color || []);
-      setImage(item.image || '/img/default.png');
-      setStyleTags(item.styling?.tags || []);
-      setSeasonTags(item.styling?.season || []);
-      setOccasionTags(item.styling?.occasion || []);
-      setMoodTags(item.styling?.mood || []);
-      setFabric({
-        material: item.fabric?.material || [],
-        thickness: item.fabric?.thickness || 'medium',
-      });
+      const initial = {
+        name: item.name,
+        notes: item.note || '',
+        category: item.category || '',
+        color: item.color || [],
+        image: item.image || '/img/default.png',
+        styleTags: item.styling?.tags || [],
+        seasonTags: item.styling?.season || [],
+        occasionTags: item.styling?.occasion || [],
+        moodTags: item.styling?.mood || [],
+        fabric: {
+          material: item.fabric?.material || [],
+          thickness: item.fabric?.thickness || 'medium',
+        },
+      };
+
+
+      setInitialValues(initial);
+
+
+      setName(initial.name);
+      setNotes(initial.notes);
+      setCategory(initial.category);
+      setColor(initial.color);
+      setImage(initial.image);
+      setStyleTags(initial.styleTags);
+      setSeasonTags(initial.seasonTags);
+      setOccasionTags(initial.occasionTags);
+      setMoodTags(initial.moodTags);
+      setFabric(initial.fabric);
     } else {
+      const initial = {
+        name: '',
+        notes: '',
+        category: '',
+        color: [],
+        image: '/img/default.png',
+        styleTags: [],
+        seasonTags: [],
+        occasionTags: [],
+        moodTags: [],
+        fabric: { material: [], thickness: 'medium' },
+      };
+      setInitialValues(initial);
+
+
       setName('');
       setNotes('');
       setCategory('');
@@ -83,8 +146,10 @@ const LogItemModal: React.FC<LogItemModalProps> = ({ open, onClose, item }) => {
     }
   }, [item]);
 
+
   const handleSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
+
 
     const itemData = {
       name,
@@ -97,6 +162,7 @@ const LogItemModal: React.FC<LogItemModalProps> = ({ open, onClose, item }) => {
       visibility: 'shown',
       deleted: false,
     };
+
 
     try {
       if (item && item.id) {
@@ -114,15 +180,36 @@ const LogItemModal: React.FC<LogItemModalProps> = ({ open, onClose, item }) => {
     }
   };
 
+
   const handleOpen = () => setIsModalOpen(true);
+
+
   const handleClose = () => {
     setIsModalOpen(false);
     onClose();
   };
 
+
+  // New function to handle cancel
+  const handleCancel = () => {
+    setName(initialValues.name);
+    setNotes(initialValues.notes);
+    setCategory(initialValues.category);
+    setColor(initialValues.color);
+    setImage(initialValues.image);
+    setStyleTags(initialValues.styleTags);
+    setSeasonTags(initialValues.seasonTags);
+    setOccasionTags(initialValues.occasionTags);
+    setMoodTags(initialValues.moodTags);
+    setFabric(initialValues.fabric);
+    onClose();
+  };
+
+
   const handleSeasonChange = (seasons: string[]) => {
     setSeasonTags(seasons);
   };
+
 
   const handleFabricChange = (material: string[]) => {
     setFabric({ ...fabric, material });
@@ -130,6 +217,7 @@ const LogItemModal: React.FC<LogItemModalProps> = ({ open, onClose, item }) => {
   const handleThicknessChange = (thickness: string) => {
     setFabric({ ...fabric, thickness: thickness });
   };
+
 
   return (
     <div>
@@ -181,10 +269,15 @@ const LogItemModal: React.FC<LogItemModalProps> = ({ open, onClose, item }) => {
           <MoodTagList selectedMoods={moodTags} onChange={(moods) => setMoodTags(moods)} />
           <p style={{ color: 'black' }}>Fabric </p>
           <FabricSelect selectedFabrics={fabric.material} onFabricChange={handleFabricChange} onChange={handleFabricChange} />
+
+
+
+
           <ThicknessSelect value={fabric.thickness} onChange={handleThicknessChange} />
 
+
           <Box sx={{ mt: 3, display: 'flex', justifyContent: 'space-between' }}>
-            <Button variant="outlined" color="secondary" onClick={handleClose}>
+            <Button variant="outlined" color="secondary" onClick={handleCancel}>
               Cancel
             </Button>
             <Button variant="contained" color="primary" type="submit">
@@ -197,4 +290,5 @@ const LogItemModal: React.FC<LogItemModalProps> = ({ open, onClose, item }) => {
   );
 };
 
-export default LogItemModal;
+
+export default LogItemModal
