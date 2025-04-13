@@ -1,4 +1,3 @@
-import * as React from 'react';
 import { Theme, useTheme } from '@mui/material/styles';
 import Box from '@mui/material/Box';
 import OutlinedInput from '@mui/material/OutlinedInput';
@@ -13,8 +12,13 @@ interface FormData {
     clothingTypes: { value: number; label: string }[];
     currencies: { value: string; label: string }[];
     moodTags: string[];
-    stylingTags: string[]
-    occasionTags: string[]
+    stylingTags: string[];
+    occasionTags: string[];
+}
+
+interface SelectStyleTagListProps {
+    selectedStyles: string[];
+    onChange: (styles: string[]) => void;
 }
 
 const ITEM_HEIGHT = 48;
@@ -28,67 +32,61 @@ const MenuProps = {
     },
 };
 
-
-function getStyles(name: string, personName: readonly string[], theme: Theme) {
+function getStyles(name: string, selectedStyles: readonly string[], theme: Theme) {
     return {
-        fontWeight: personName.includes(name)
+        fontWeight: selectedStyles.includes(name)
             ? theme.typography.fontWeightMedium
             : theme.typography.fontWeightRegular,
     };
 }
 
-interface StyleSelectProps {
-    onTagsChange: (style: string[]) => void;
-}
-export default function SelectStyleTagList({ onTagsChange }: StyleSelectProps) {
+export default function SelectStyleTagList({ selectedStyles, onChange }: SelectStyleTagListProps) {
     const theme = useTheme();
-    const [personName, setPersonName] = React.useState<string[]>([]);
-
-    const handleChange = (event: SelectChangeEvent<typeof personName>) => {
-        const {
-            target: { value },
-        } = event;
-        setPersonName(
-            typeof value === 'string' ? value.split(',') : value,
-        );
-        onTagsChange(
-            typeof value === 'string' ? value.split(',') : value,
-        );
-    };
-
     const stylingTags = (data as FormData).stylingTags;
 
+    const handleChange = (event: SelectChangeEvent<typeof selectedStyles>) => {
+        const value = event.target.value;
+        onChange(typeof value === 'string' ? value.split(',') : value);
+    };
+
+    const handleDelete = (styleToDelete: string) => (event: React.MouseEvent) => {
+        event.stopPropagation();
+        onChange(selectedStyles.filter(style => style !== styleToDelete));
+    };
+
     return (
-        <div>
-            <FormControl sx={{ my: 2, width: 400 }}>
-                <InputLabel id="demo-multiple-chip-label">Select Styles</InputLabel>
-                <Select
-                    labelId="demo-multiple-chip-label"
-                    id="demo-multiple-chip"
-                    multiple
-                    value={personName}
-                    onChange={handleChange}
-                    input={<OutlinedInput id="select-multiple-chip" label="Chip" />}
-                    renderValue={(selected) => (
-                        <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 0.5 }}>
-                            {selected.map((value) => (
-                                <Chip key={value} label={value} />
-                            ))}
-                        </Box>
-                    )}
-                    MenuProps={MenuProps}
-                >
-                    {stylingTags.map((name: string) => (
-                        <MenuItem
-                            key={name}
-                            value={name}
-                            style={getStyles(name, personName, theme)}
-                        >
-                            {name}
-                        </MenuItem>
-                    ))}
-                </Select>
-            </FormControl>
-        </div>
+        <FormControl sx={{ my: 2, width: 400 }}>
+            <InputLabel>Select Styles</InputLabel>
+            <Select
+                multiple
+                value={selectedStyles}
+                onChange={handleChange}
+                input={<OutlinedInput label="Styles" />}
+                renderValue={(selected) => (
+                    <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 0.5 }}>
+                        {selected.map((value) => (
+                            <Chip
+                                key={value}
+                                label={value}
+                                onDelete={handleDelete(value)}
+                                onClick={(e) => e.stopPropagation()}
+                                onMouseDown={(e) => e.stopPropagation()}
+                            />
+                        ))}
+                    </Box>
+                )}
+                MenuProps={MenuProps}
+            >
+                {stylingTags.map((name) => (
+                    <MenuItem
+                        key={name}
+                        value={name}
+                        style={getStyles(name, selectedStyles, theme)}
+                    >
+                        {name}
+                    </MenuItem>
+                ))}
+            </Select>
+        </FormControl>
     );
 }

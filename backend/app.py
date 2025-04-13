@@ -1,4 +1,4 @@
-from flask import Flask, jsonify, request
+from flask import Flask, jsonify, request, session
 from flask_cors import CORS
 import json
 import random
@@ -9,11 +9,15 @@ from sklearn.metrics.pairwise import cosine_similarity
 import numpy as np
 from flask_sqlalchemy import SQLAlchemy
 from models import db, User, ClothingItem
+from dotenv import load_dotenv
+
+load_dotenv()
 
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///wardrobe.db'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db.init_app(app)  # Initialize SQLAlchemy
+app.config['SECRET_KEY'] = os.getenv('SECRET_KEY')
 CORS(app) # Allows Frontend to make requests to Backend
 
 # define constant for the wardrobe data file
@@ -25,6 +29,17 @@ USER_DATA_FILE = "./public/assets/data/UserData.json"
 def load_clothing_data():
     with open(WARDROBE_DATA_FILE) as f:
         return json.load(f)
+    
+def load_relevant_clothing_data():
+    with open(WARDROBE_DATA_FILE) as f:
+        items=json.load(f)
+    user=session.get("user", None)
+    relevant=[]
+    if user==None:
+        return(jsonify({"message": "No user logged in"}), 404)
+    for id in user["wardrobe_items"]:
+        relevant.append(items[id-1])
+    return relevant
 
 def load_user_data():
     with open(USER_DATA_FILE) as f:
@@ -147,9 +162,7 @@ def configure_fit(items, similarities):
 # GET /api/items: return all clothing items when request is made
 @app.route("/api/items", methods=["GET"])
 def get_items():
-    items = ClothingItem.query.all()
-    # serialize SQLAlchemy objects into array of Python dictionaries in order to jsonify
-    return jsonify({"items": [item.serialize() for item in items]})
+    return jsonify({"items": load_clothing_data()})
 
 # GET /api/items/<item_id>: return details of a specific clothing item when request is made
 @app.route("/api/items/<int:item_id>", methods=["GET"])
@@ -165,7 +178,7 @@ def recommend_outfit():
     # retireve prompt
     prompt = request.get_json()['prompt']
     # get items from JSON
-    items = load_clothing_data() # array of objects
+    items = load_relevant_clothing_data() # array of objects
     # filter non-visible items
     filtered = filters.filter(items)
     # get similarities and store in a dictionary
@@ -201,7 +214,7 @@ def add_item():
 def update_item(item_id):
     updated_item = request.get_json()
     updated_item["embedding"] = getEmbedding(stringify(updated_item)).tolist()
-    items = load_clothing_data()
+    items = load_relevant_clothing_data()
     item = next((item for item in items if item["id"] == item_id), None)
     if item:
         # validate the updated item
@@ -218,7 +231,7 @@ def update_item(item_id):
 # DELETE /api/delete-item/<int:item_id>: marks item as deleted 
 @app.route("/api/delete-item/<int:item_id>", methods=["DELETE"])
 def delete_item(item_id):
-    items = load_clothing_data()
+    items = load_relevant_clothing_data()
     item = next((item for item in items if item["id"] == item_id), None)
     if item:
         #items.remove(item)
@@ -261,6 +274,24 @@ def register_user():
     db.session.commit()
 
     return jsonify({"message": "User registered successfully", "user": {"username": new_user.username, "user_id": new_user.id}}), 201
+
+@app.route("/api/login", methods=["PUT"])
+def login_user():
+    user_data = request.get_json()
+    users = load_user_data()
+    for user in users:
+        if ((user["username"]==user_data.get("username")) and user["password"]==user_data.get("password")):
+            session["user"]=user
+            return jsonify({"message": "Successfully logged in"})
+    else:
+        return jsonify({"message": "User name and or password does not exist"})
+
+@app.route("/api/logout", methods=["PUT"])
+def logout_user():
+    session["user"]=None
+    return jsonify({"message": "Successfully logged out"})
+    
+         
 
 # Create the database tables if they don't exist when app first starts
 with app.app_context():
