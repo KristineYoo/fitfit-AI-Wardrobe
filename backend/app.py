@@ -162,7 +162,9 @@ def configure_fit(items, similarities):
 # GET /api/items: return all clothing items when request is made
 @app.route("/api/items", methods=["GET"])
 def get_items():
-    return jsonify({"items": load_clothing_data()})
+    items = ClothingItem.query.all()
+    # serialize the items into dictionary in order to jsonify because we cannot jsonify SQLAlchemy objects directly
+    return jsonify([item.serialize() for item in items])
 
 # GET /api/items/<item_id>: return details of a specific clothing item when request is made
 @app.route("/api/items/<int:item_id>", methods=["GET"])
