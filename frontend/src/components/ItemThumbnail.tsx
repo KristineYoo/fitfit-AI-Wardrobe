@@ -8,33 +8,40 @@ import { Item } from '../types/jsonDataTypes.ts'
 import { Box, Button } from '@mui/material';
 import axios from 'axios';
 import RemoveIcon from '@mui/icons-material/Remove';
+import LogItemModal from './ClothingItemLog.tsx';
+import React from 'react';
+import EditIcon from '@mui/icons-material/Edit';
 
 
+export default function ItemThumbnail({ item }: { item: Item }) {
+  const [openModal, setOpenModal] = React.useState(false);
 
-export default function ItemThumbnail({ item }:{ item:Item}) {
+  const handleOpenModal = () => setOpenModal(true);
+  const handleCloseModal = () => setOpenModal(false);
 
   const deleted = () => {
-    axios.delete("/api/delete-item/"+String(item.id))
+    axios.delete("/api/delete-item/" + String(item.id))
       .then(() => {
         window.location.reload();
       })
       .catch((err) => console.log(err));
   }
-  if (item.deleted==false && item.visibility=="shown")
+  if (item.deleted == false && item.visibility == "shown")
     return (
-        <Card sx={{ maxWidth: 300 }}>
-          <Box textAlign='right'>
-            <Button onClick={deleted} startIcon={<RemoveIcon/>} variant='contained' style={{height: '30px', width : '20px'}}></Button>
-          </Box>
+      <Card sx={{ maxWidth: 300 }}>
+        <Box textAlign='right'>
+          <Button onClick={deleted} startIcon={<RemoveIcon />} variant='contained' style={{ height: '30px', width: '20px' }}></Button>
+          <Button onClick={handleOpenModal} startIcon={<EditIcon />} variant='contained' style={{ height: '30px', width: '20px' }}></Button>
+        </Box>
         <CardMedia
           component="img"
           alt={item.name}
           height="140"
           image={item.image}
           //This is what should be sizing the photos
-          sx={{p:1, objectFit:"contain", mx:"auto"}}
+          sx={{ p: 1, objectFit: "contain", mx: "auto" }}
         />
-        <CardContent sx={{ mt: 2}}>
+        <CardContent sx={{ mt: 2 }}>
           <Typography gutterBottom variant="h5" component="div">
             {item.name}
           </Typography>
@@ -42,15 +49,16 @@ export default function ItemThumbnail({ item }:{ item:Item}) {
             {item.note}
           </Typography>
         </CardContent>
-        <Stack direction="row" spacing={1} sx={{p:1}}>
-          
+        <Stack direction="row" spacing={1} sx={{ p: 1 }}>
+
           {
             item.styling.tags.map((tag: string, i: number) => (
-              <Chip label={tag} color="success" variant="outlined" key={"stylingTag"+i}/>
+              <Chip label={tag} color="success" variant="outlined" key={"stylingTag" + i} />
             ))
           }
-          
+
         </Stack>
+        <LogItemModal open={openModal} onClose={handleCloseModal} item={item} />
       </Card>
-  );
+    );
 }
