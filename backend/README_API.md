@@ -263,6 +263,7 @@ Returns the items registered to the active user
         }
     ]
 }
+```
 
 
 ##
