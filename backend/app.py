@@ -201,7 +201,7 @@ def add_item():
     # get the embedding for the new_item and turn the ndarray of NumPy into a normal array so that we can
     # store it in the JSON file
     new_item_data["embedding"] = getEmbedding(stringify(new_item_data)).tolist()
-
+    new_item_data["user_id"] = session["user"]["id"]
     # Create new instance of the ClothingItem model
     new_item = ClothingItem.from_dict(new_item_data)
 
@@ -293,8 +293,6 @@ def logout_user():
     session["user"]=None
     return jsonify({"message": "Successfully logged out"})
     
-         
-
 # Create the database tables if they don't exist when app first starts
 with app.app_context():
     db.create_all()
