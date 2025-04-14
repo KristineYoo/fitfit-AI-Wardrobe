@@ -7,11 +7,16 @@ import os
 from transformer import getEmbedding
 from sklearn.metrics.pairwise import cosine_similarity
 import numpy as np
+from flask_sqlalchemy import SQLAlchemy
+from models import db, User, ClothingItem
 from dotenv import load_dotenv
 
 load_dotenv()
 
 app = Flask(__name__)
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///wardrobe.db'
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+db.init_app(app)  # Initialize SQLAlchemy
 app.config['SECRET_KEY'] = os.getenv('SECRET_KEY')
 CORS(app) # Allows Frontend to make requests to Backend
 
@@ -157,7 +162,9 @@ def configure_fit(items, similarities):
 # GET /api/items: return all clothing items when request is made
 @app.route("/api/items", methods=["GET"])
 def get_items():
-    return jsonify({"items": load_clothing_data()})
+    items = ClothingItem.query.all()
+    # serialize the items into dictionary in order to jsonify because we cannot jsonify SQLAlchemy objects directly
+    return jsonify([item.serialize() for item in items])
 
 @app.route("/api/relevantItems", methods=["GET"])
 def get_relevantItems():
@@ -169,10 +176,9 @@ def get_relevantItems():
 # GET /api/items/<item_id>: return details of a specific clothing item when request is made
 @app.route("/api/items/<int:item_id>", methods=["GET"])
 def get_item(item_id):
-    items = load_clothing_data()
-    item = next((item for item in items if item["id"] == item_id), None)
+    item = ClothingItem.query.get(item_id)
     if item:
-        return jsonify(item)
+        return jsonify(item.serialize())
     return jsonify({"message": "Item not found"}), 404
 
 # GET /api/recommend: return 3 random clothing items to form an outfit when request is made
@@ -193,31 +199,24 @@ def recommend_outfit():
 # POST /api/add-item: add a new clothing item to the wardrobe data when request is made
 @app.route("/api/add-item", methods=["POST"])
 def add_item():
-    new_item = request.get_json()
-    if not validate_item(new_item):
+    new_item_data = request.get_json()
+    if not validate_item(new_item_data):
         return jsonify({"message": "Invalid item"}), 400
     
-    items = load_clothing_data()
-    users=load_user_data()
-    user = session.get("user")
-    print(stringify(new_item))
+    
+    print(stringify(new_item_data))
     # get the embedding for the new_item and turn the ndarray of NumPy into a normal array so that we can
     # store it in the JSON file
-    new_item["embedding"] = getEmbedding(stringify(new_item)).tolist()
+    new_item_data["embedding"] = getEmbedding(stringify(new_item_data)).tolist()
+    new_item_data["user_id"] = session["user"]["id"]
+    # Create new instance of the ClothingItem model
+    new_item = ClothingItem.from_dict(new_item_data)
 
-    # generate a new id for the item
-    id = items[-1]["id"] + 1
-    new_item["id"] = id
-    user["wardrobe_items"].append(id)
-    users[user["id"]-1]=user
-    session["user"]=user
-    # add the new item to the wardrobe data
-    items.append(new_item)
-    with open(WARDROBE_DATA_FILE, 'w') as f:
-        json.dump(items, f, indent=4)
-    with open(USER_DATA_FILE, 'w') as f:
-        json.dump(users, f, indent=4)
-    return jsonify(new_item), 201
+    # Add the new item to the session
+    db.session.add(new_item)
+    db.session.commit()
+
+    return jsonify(new_item.serialize()), 201
 
 # PUT /api/update-item/<item_id>: update the details of a specific clothing item when request is made
 @app.route("/api/update-item/<int:item_id>", methods=["PUT"])
@@ -268,26 +267,22 @@ def register_user():
     password = user_data.get("password")
 
     # Check if user exists
-    users = load_user_data()
-    for user in users:
-        if user["username"] == username:
-            return jsonify({"message": "User already exists"}), 400
+    existing_user = User.query.filter_by(username=username).first()
+    if existing_user:
+        return jsonify({"message": "User already exists"}), 400
+    
     
     # Create a new user
-    new_user = {
-        "id": users[-1]["id"] + 1 if users else 1,
-        "username": username,
-        "password": password,
-        "wardrobe_items": [],
-        "pastOutfits": []
-    }
+    new_user = User(
+        username=username,
+        password=password
+    )
 
     # Add the new user to the user data
-    users.append(new_user)
-    with open(USER_DATA_FILE, 'w') as f:
-        json.dump(users, f, indent=4)
+    db.session.add(new_user)
+    db.session.commit()
 
-    return jsonify({"message": "User registered successfully", "user": new_user}), 201
+    return jsonify({"message": "User registered successfully", "user": {"username": new_user.username, "user_id": new_user.id}}), 201
 
 @app.route("/api/login", methods=["PUT"])
 def login_user():
@@ -305,7 +300,9 @@ def logout_user():
     session["user"]=None
     return jsonify({"message": "Successfully logged out"})
     
-         
+# Create the database tables if they don't exist when app first starts
+with app.app_context():
+    db.create_all()
     
 if __name__ == "__main__":
     app.run(debug=True, host="0.0.0.0", port=5000)
