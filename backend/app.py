@@ -166,6 +166,13 @@ def get_items():
     # serialize the items into dictionary in order to jsonify because we cannot jsonify SQLAlchemy objects directly
     return jsonify([item.serialize() for item in items])
 
+@app.route("/api/relevantItems", methods=["GET"])
+def get_relevantItems():
+    user=session.get("user", None)
+    if user!=None:
+        return jsonify({"items": load_relevant_clothing_data()})
+    return jsonify({"message": "No user logged in"}), 404
+
 # GET /api/items/<item_id>: return details of a specific clothing item when request is made
 @app.route("/api/items/<int:item_id>", methods=["GET"])
 def get_item(item_id):
