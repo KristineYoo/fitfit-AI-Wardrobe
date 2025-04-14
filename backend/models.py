@@ -11,8 +11,8 @@ class User(db.Model):
     username = db.Column(db.String(CHAR_LIMIT), unique=True, nullable=False)
     password = db.Column(db.String(128), nullable=False)
 
-    # backref owner so that we can access the user from a clothing item using 'clothing_item.owner'
-    wardrobe_items = db.relationship('ClothingItem', backref='owner')
+    # back_populates owner so that we can access the user from a clothing item using 'clothing_item.owner'
+    wardrobe_items = db.relationship('ClothingItem', back_populates='owner')
     past_outfits = db.Column(JSON, default=[])
 
 
@@ -27,6 +27,9 @@ class ClothingItem(db.Model):
     color = db.Column(JSON, default=[])  # List of strings
 
     image = db.Column(db.String(255))
+
+    # back_populates owner so that we can access the clothing items from a user using 'user.wardrobe_items'
+    owner = db.relationship('User', back_populates='wardrobe_items')
 
     styling = db.Column(JSON, default={
         "tags": [],
