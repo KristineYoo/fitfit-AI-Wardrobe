@@ -13,13 +13,17 @@ export function Items() {
   const [data, setData] = useState([]);
 
   useEffect(() => {
-    axios.get("/api/items")
+    axios.get("/api/relevantItems")
       .then((res) => {
         console.log(res.data); // Log for debugging
         setData(res.data.items || []); // Assuming the response is like { items: [...] }
       })
       .catch((err) => console.log(err));
   }, []);
+
+  const log={"username": "abc123",
+    "password": "hello_there"}
+  axios.put("/api/login", log)
 
   return (
     <>

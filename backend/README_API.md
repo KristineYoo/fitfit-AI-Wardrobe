@@ -188,6 +188,84 @@ Check if user exists in the database, if not, create a new user in the database
 }
 ```
 
+
+### Login a user
+**PUT** `/api/login`
+
+### Descriptions:
+Check to see if a username and password exsits and if they do sets that user as the active user
+
+#### Request Body Example:
+```json
+{
+  "username": "testuser123",
+  "password": "123456"
+}
+
+
+```
+
+#### Response Example:
+```json
+
+{
+    "message": "Successfully logged in"
+}
+
+```
+
+#### Error Response:
+```json
+{
+    "message": "User name and or password does not exist"
+}
+```
+
+### Logout a user
+**PUT** `/api/logout`
+
+### Descriptions:
+Logs out the active user
+
+
+#### Response Example:
+```json
+
+{
+    "message": "Successfully logged out"
+}
+
+```
+
+### Gets the items of the user
+**GET** `/api/relevantItems`
+
+### Descriptions:
+Returns the items registered to the active user
+
+
+#### Response Example:
+```json
+{
+    "items": [
+        {
+            "id": 1,
+            "name": "Pink Sweater",
+            "category": "sweater",
+            "brand": "Zara",
+            "size": "M",
+            "color": "pink",
+            "image": "/img/pink_sweater.jpeg",
+            "styling": { ... },
+            "purchaseInfo": { ... },
+            "status": { ... },
+            "fabric": { ... }
+        }
+    ]
+}
+```
+
+
 ##
 ### How to parse the json array into Ndarray embedding
 ```
