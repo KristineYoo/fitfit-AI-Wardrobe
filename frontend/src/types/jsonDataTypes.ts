@@ -5,6 +5,7 @@ export interface Item {
     category: string;
     color: string[];
     image: string | null;
+    imageData: string | null;
     styling: {
       tags: string[];
       season: string[];

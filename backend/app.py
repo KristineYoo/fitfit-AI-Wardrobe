@@ -9,6 +9,7 @@ from sklearn.metrics.pairwise import cosine_similarity
 import numpy as np
 import base64
 from werkzeug.utils import secure_filename
+import mimetypes
 
 app = Flask(__name__)
 CORS(app) # Allows Frontend to make requests to Backend
@@ -145,7 +146,29 @@ def configure_fit(items, similarities):
 # GET /api/items: return all clothing items when request is made
 @app.route("/api/items", methods=["GET"])
 def get_items():
-    return jsonify({"items": load_clothing_data()})
+    # handling the image
+    items = load_clothing_data()
+    for item in items:
+        # get image path
+        filename = os.path.basename(item["image"])
+        img_path = os.path.join("public","assets","data","images",filename)
+        # detect MIME type
+        mime_type, _ = mimetypes.guess_type(img_path)
+        # fallback if mime_type is not detected
+        if mime_type is None:
+            mime_type = "image/png"
+        # get file data
+        file_data = None
+        # Open and read the file in binary mode
+        with open(img_path, 'rb') as file:
+            file_data = file.read()
+        # encode
+        encoded_data = base64.b64encode(file_data)
+        # make it a string to be used in JSON
+        encoded_string = encoded_data.decode('utf-8')
+        # replace image url with the encoded string
+        item["imageData"] = f"data:{mime_type};base64,{encoded_string}"
+    return jsonify({"items": items})
 
 # GET /api/items/<item_id>: return details of a specific clothing item when request is made
 @app.route("/api/items/<int:item_id>", methods=["GET"])
@@ -190,13 +213,14 @@ def add_item():
     """Dealing with the image upload"""
     # Extract the base64 image string
     image_data_url = new_item.get('image')
+    print(f"image data url: {image_data_url}")
     
     if image_data_url and isinstance(image_data_url, str) and image_data_url.startswith('data:'):
         # Split the base64 string to get the actual data after the prefix
         # Format is typically: data:image/jpeg;base64,/9j/4AAQSkZJRgABAQEASABIAAD/2wBD...
         header, encoded = image_data_url.split(',', 1)
         
-        # Get the file extension from the MIME type
+        # Get the file extension from the MIME type (image/some extension)
         mime_type = header.split(';')[0].split(':')[1]
         file_ext = mime_type.split('/')[1]
         

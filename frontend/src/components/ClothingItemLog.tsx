@@ -104,7 +104,7 @@ export default function LogItemModal() {
       // Store the preview URL in a separate state variable
       setImagePreview(previewUrl);
     
-      // Remember to revoke the URL when no longer needed to prevent memory leaks
+      // Revoke the URL when no longer needed to prevent memory leaks
       return () => URL.revokeObjectURL(previewUrl);
     }
   };

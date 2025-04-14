@@ -30,7 +30,7 @@ export default function ItemThumbnail({ item }:{ item:Item}) {
           component="img"
           alt={item.name}
           height="140"
-          image={item.image}
+          image={item.imageData ?? undefined}
           //This is what should be sizing the photos
           sx={{p:1, objectFit:"contain", mx:"auto"}}
         />

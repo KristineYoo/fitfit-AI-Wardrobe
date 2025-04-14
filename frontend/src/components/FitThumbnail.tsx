@@ -38,9 +38,17 @@ export function FitThumbnail({rec} : {rec:Fit}){
                         }}
                         title={item.name}
                     />
+                    <div style={{
+                            width: 164,
+                            height: 164,
+                            display: 'flex',
+                            alignItems: 'center',
+                            justifyContent: 'center',
+                            backgroundColor: '#f9f9f9', // optional
+                            overflow: 'hidden'
+                            }}>
                     <img
-                        srcSet={`${item.image}?w=164&h=164&fit=contain&auto=format&dpr=2 2x`}
-                        src={`${item.image}?w=164&h=164&fit=contain&auto=format`}
+                        src={item.imageData ?? undefined}
                         alt={item.name}
                         loading="lazy"
                         style={{
@@ -49,6 +57,7 @@ export function FitThumbnail({rec} : {rec:Fit}){
                             height: '100%'
                         }}
                     />
+                    </div>
                     </ImageListItem>
                 ))}
             </ImageList>
