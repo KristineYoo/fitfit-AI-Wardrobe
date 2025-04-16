@@ -2,10 +2,12 @@ import { Box, Button, Container, TextField } from "@mui/material";
 import Paper from "@mui/material/Paper";
 import axios from "axios";
 import { useState } from "react";
+import { useNavigate, useLocation } from 'react-router-dom';
 
 export function Login() {
    const [userInputValue, setUserInputValue] = useState('');
    const [passInputValue, setPassInputValue] = useState('');
+   const navigate = useNavigate();
   
 
    const handleKeyPress = (e: React.KeyboardEvent<HTMLInputElement>) => {
@@ -15,7 +17,8 @@ export function Login() {
            console.log(passInputValue);
            const data={"username": userInputValue, "password": passInputValue}
            setUserInputValue('')
-             axios.post("/api/recommend", data)
+           setPassInputValue('')
+             axios.put("/api/login", data)
                .then((res) => {
                  console.log(res.data); // Log for debugging
                  sessionStorage.setItem("login", "True")
@@ -73,10 +76,12 @@ export function Login() {
            console.log(passInputValue);
            const data={"username": userInputValue, "password": passInputValue}
            setUserInputValue('')
-             axios.post("/api/recommend", data)
+           setPassInputValue('')
+             axios.put("/api/login", data)
                .then((res) => {
                  console.log(res.data); // Log for debugging
                  sessionStorage.setItem("login", "True")
+                 navigate('/#/');
                })
                .catch((err) => console.log(err));
         }}
