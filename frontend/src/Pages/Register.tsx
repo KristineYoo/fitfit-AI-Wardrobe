@@ -9,9 +9,6 @@ const RegisterPage = () => {
     const [error, setError] = useState('');
     const [success, setSuccess] = useState('');
 
-    // Optional: Hash password before sending (using a library like bcryptjs)
-    //import bcrypt from 'bcryptjs';
-    //const hashedPassword = bcrypt.hashSync(password, 10);
 
     const handleRegister = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
