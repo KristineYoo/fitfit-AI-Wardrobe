@@ -240,7 +240,7 @@ def update_item(item_id):
 # DELETE /api/delete-item/<int:item_id>: marks item as deleted 
 @app.route("/api/delete-item/<int:item_id>", methods=["DELETE"])
 def delete_item(item_id):
-    items = load_relevant_clothing_data()
+    items = load_clothing_data()
     item = next((item for item in items if item["id"] == item_id), None)
     if item:
         #items.remove(item)
