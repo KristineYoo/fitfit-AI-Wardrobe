@@ -1,4 +1,4 @@
-from flask import Flask, jsonify, request
+from flask import Flask, jsonify, request, session
 from flask_cors import CORS
 import json
 import random
@@ -10,8 +10,17 @@ import numpy as np
 import base64
 from werkzeug.utils import secure_filename
 import mimetypes
+from flask_sqlalchemy import SQLAlchemy
+from models import db, User, ClothingItem
+from dotenv import load_dotenv
+
+load_dotenv()
 
 app = Flask(__name__)
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///wardrobe.db'
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+db.init_app(app)  # Initialize SQLAlchemy
+app.config['SECRET_KEY'] = os.getenv('SECRET_KEY')
 CORS(app) # Allows Frontend to make requests to Backend
 
 # define constant for the wardrobe data file
@@ -24,6 +33,17 @@ IMAGE_UPLOAD_FOLDER = './public/assets/data/images'
 def load_clothing_data():
     with open(WARDROBE_DATA_FILE) as f:
         return json.load(f)
+    
+def load_relevant_clothing_data():
+    with open(WARDROBE_DATA_FILE) as f:
+        items=json.load(f)
+    user=session.get("user", None)
+    relevant=[]
+    if user==None:
+        return(jsonify({"message": "No user logged in"}), 404)
+    for id in user["wardrobe_items"]:
+        relevant.append(items[id-1])
+    return relevant
 
 def load_user_data():
     with open(USER_DATA_FILE) as f:
@@ -205,14 +225,24 @@ def get_items():
     add_img_encodings(items)
     return jsonify({"items": items})
 
+@app.route("/api/relevantItems", methods=["GET"])
+def get_relevantItems():
+    user=session.get("user", None)
+    if user!=None:
+        items = load_relevant_clothing_data()
+        # adding imgData
+        add_img_encodings(items)
+        return jsonify({"items": items})
+    return jsonify({"message": "No user logged in"}), 404
+
 # GET /api/items/<item_id>: return details of a specific clothing item when request is made
 @app.route("/api/items/<int:item_id>", methods=["GET"])
 def get_item(item_id):
-    items = load_clothing_data()
-    item = next((item for item in items if item["id"] == item_id), None)
+    item = ClothingItem.query.get(item_id) # uses DB, but we're not using this function rn
     if item:
         add_img_encodings([item])
         return jsonify(item)
+        # return jsonify(item.serialize())
     return jsonify({"message": "Item not found"}), 404
 
 # GET /api/recommend: return 3 random clothing items to form an outfit when request is made
@@ -221,7 +251,7 @@ def recommend_outfit():
     # retireve prompt
     prompt = request.get_json()['prompt']
     # get items from JSON
-    items = load_clothing_data() # array of objects
+    items = load_relevant_clothing_data() # array of objects
     # filter non-visible items
     filtered = filters.filter(items)
     # get similarities and store in a dictionary
@@ -238,37 +268,64 @@ def recommend_outfit():
 # POST /api/add-item: add a new clothing item to the wardrobe data when request is made
 @app.route("/api/add-item", methods=["POST"])
 def add_item():
-    new_item = request.get_json()
-    if not validate_item(new_item):
+    new_item_data = request.get_json()
+    current_user = session.get("user", None)
+    # check if item is valid
+    if not validate_item(new_item_data):
         return jsonify({"message": "Invalid item"}), 400
+    
+    # check if user exists
+    if current_user == None:
+        return jsonify({"message": "No user logged in"}), 404
+    current_uid = current_user["id"]
     
     items = load_clothing_data()
     # get the embedding for the new_item and turn the ndarray of NumPy into a normal array so that we can
     # store it in the JSON file
-    new_item["embedding"] = getEmbedding(stringify(new_item)).tolist()
-
-    # generate a new id for the item
-    new_item["id"] = items[-1]["id"] + 1
+    new_item_data["embedding"] = getEmbedding(stringify(new_item_data)).tolist()
+    # assign a user id to the item
+    new_item_data["user_id"] = session["user"]["id"]
+    # assign an id to the item
+    new_item_data["id"] = int(items[-1]["id"]) + 1
 
     # Dealing with the image upload
-    filename = save_image(new_item)
+    filename = save_image(new_item_data)
         
     # Update the item data with the file path instead of the base64 string
-    new_item['image'] = filename
+    new_item_data['image'] = filename
 
     # add the new item to the wardrobe data
-    items.append(new_item)
+    items.append(new_item_data)
     with open(WARDROBE_DATA_FILE, 'w') as f:
         json.dump(items, f, indent=4)
+
+    # add the new item to the user data
+    users = load_user_data()
+    user = next((user for user in users if user["id"] == current_uid), None)
+    print(f"User: {user}, Current UID: {current_uid}")
+    if user:
+        user["wardrobe_items"].append(new_item_data["id"])
+        print(f"Updated User: {user}")
+        user.update(user)
+        with open(USER_DATA_FILE, 'w') as f:
+            json.dump(users, f, indent=4)
     
-    return jsonify(new_item), 201
+    return jsonify(new_item_data), 201
+    
+    # # Create new instance of the ClothingItem model
+    # new_item = ClothingItem.from_dict(new_item_data)
+
+    # # Add the new item to the session
+    # db.session.add(new_item)
+    # db.session.commit()
+    # return jsonify(new_item.serialize()), 201
 
 # PUT /api/update-item/<item_id>: update the details of a specific clothing item when request is made
 @app.route("/api/update-item/<int:item_id>", methods=["PUT"])
 def update_item(item_id):
     updated_item = request.get_json()
     updated_item["embedding"] = getEmbedding(stringify(updated_item)).tolist()
-    items = load_clothing_data()
+    items = load_relevant_clothing_data()
     item = next((item for item in items if item["id"] == item_id), None)
     if item:
         # validate the updated item
@@ -312,26 +369,42 @@ def register_user():
     password = user_data.get("password")
 
     # Check if user exists
-    users = load_user_data()
-    for user in users:
-        if user["username"] == username:
-            return jsonify({"message": "User already exists"}), 400
+    existing_user = User.query.filter_by(username=username).first()
+    if existing_user:
+        return jsonify({"message": "User already exists"}), 400
+    
     
     # Create a new user
-    new_user = {
-        "id": users[-1]["id"] + 1 if users else 1,
-        "username": username,
-        "password": password,
-        "wardrobe_items": [],
-        "pastOutfits": []
-    }
+    new_user = User(
+        username=username,
+        password=password
+    )
 
     # Add the new user to the user data
-    users.append(new_user)
-    with open(USER_DATA_FILE, 'w') as f:
-        json.dump(users, f, indent=4)
+    db.session.add(new_user)
+    db.session.commit()
 
-    return jsonify({"message": "User registered successfully", "user": new_user}), 201
+    return jsonify({"message": "User registered successfully", "user": {"username": new_user.username, "user_id": new_user.id}}), 201
+
+@app.route("/api/login", methods=["PUT"])
+def login_user():
+    user_data = request.get_json()
+    users = load_user_data()
+    for user in users:
+        if ((user["username"]==user_data.get("username")) and user["password"]==user_data.get("password")):
+            session["user"]=user
+            return jsonify({"message": "Successfully logged in"})
+    else:
+        return jsonify({"message": "User name and or password does not exist"})
+
+@app.route("/api/logout", methods=["PUT"])
+def logout_user():
+    session["user"]=None
+    return jsonify({"message": "Successfully logged out"})
+    
+# Create the database tables if they don't exist when app first starts
+with app.app_context():
+    db.create_all()
     
 if __name__ == "__main__":
     app.run(debug=True, host="0.0.0.0", port=5000)
