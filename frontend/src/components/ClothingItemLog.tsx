@@ -221,18 +221,6 @@ const LogItemModal: React.FC<LogItemModalProps> = ({ open, onClose, item }) => {
 
   return (
     <div>
-      <Fab
-        sx={{
-          position: 'fixed',
-          bottom: 16,
-          right: 16,
-        }}
-        color="primary"
-        aria-label="add"
-        onClick={handleOpen}
-      >
-        <AddIcon />
-      </Fab>
       <Modal
         open={open || isModalOpen}
         onClose={handleClose}
