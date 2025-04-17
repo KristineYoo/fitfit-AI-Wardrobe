@@ -115,7 +115,9 @@ Adds a new clothing item to the wardrobe.
     "brand": "Nike",
     "size": "L",
     "color": "blue",
-    "image": "9f553c0630fd6dec.jpeg"
+    "image": "9f553c0630fd6dec.jpeg",
+    "user_id":2,
+    "embedding":[-0.03667972609400749,...]
 }
 ```
 
@@ -123,6 +125,12 @@ Adds a new clothing item to the wardrobe.
 ```json
 {
     "message": "Invalid item"
+}
+```
+or
+```json
+{
+    "message": "No user logged in"
 }
 ```
 
