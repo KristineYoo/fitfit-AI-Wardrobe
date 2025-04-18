@@ -325,7 +325,7 @@ def add_item():
 def update_item(item_id):
     updated_item = request.get_json()
     updated_item["embedding"] = getEmbedding(stringify(updated_item)).tolist()
-    items = load_relevant_clothing_data()
+    items = load_clothing_data()
     item = next((item for item in items if item["id"] == item_id), None)
     if item:
         # validate the updated item
