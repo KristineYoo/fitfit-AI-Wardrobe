@@ -7,6 +7,9 @@ import os
 from transformer import getEmbedding
 from sklearn.metrics.pairwise import cosine_similarity
 import numpy as np
+import base64
+from werkzeug.utils import secure_filename
+import mimetypes
 from flask_sqlalchemy import SQLAlchemy
 from models import db, User, ClothingItem
 from dotenv import load_dotenv
@@ -23,6 +26,7 @@ CORS(app) # Allows Frontend to make requests to Backend
 # define constant for the wardrobe data file
 WARDROBE_DATA_FILE = "./public/assets/data/WardrobeData.json"
 USER_DATA_FILE = "./public/assets/data/UserData.json"
+IMAGE_UPLOAD_FOLDER = './public/assets/data/images'
 
 # Function to load the wardrobe data from the JSON file
 # @return: the wardrobe data
@@ -91,6 +95,60 @@ def stringify(item):
     result += "Note: " + item["note"]
     return result
     
+# function to save an uploaded image to the backend image directory
+# @param new_item: JSON file of the item with the image to be saved
+# @return: the generated filename for the image that was saved
+def save_image(new_item):
+    # Extract the base64 image string
+    image_data_url = new_item.get('image')
+    
+    if image_data_url and isinstance(image_data_url, str) and image_data_url.startswith('data:'):
+        # Split the base64 string to get the actual data after the prefix
+        # Format is typically: data:image/jpeg;base64,/9j/4AAQSkZJRgABAQEASABIAAD/2wBD...
+        header, encoded = image_data_url.split(',', 1)
+        
+        # Get the file extension from the MIME type (image/some extension)
+        mime_type = header.split(';')[0].split(':')[1]
+        file_ext = mime_type.split('/')[1]
+        
+        # Decode the base64 string (to binary)
+        binary_data = base64.b64decode(encoded)
+        
+        # Create a unique filename
+        filename = secure_filename(f"{new_item.get('name', 'untitled')}_{os.urandom(8).hex()}.{file_ext}")
+        
+        # Save the file
+        file_path = os.path.join(IMAGE_UPLOAD_FOLDER, filename)
+        with open(file_path, 'wb') as f:
+            f.write(binary_data)
+
+        return filename
+
+# Function to add a "imageData" field to the JSON, with an image encoding
+# @param items: JSON of all loaded clothing items
+# @return: None
+def add_img_encodings(items):
+    for item in items:
+        # get image path
+        filename = os.path.basename(item["image"])
+        img_path = os.path.join("public","assets","data","images",filename)
+        # detect MIME type
+        mime_type, _ = mimetypes.guess_type(img_path)
+        # fallback if mime_type is not detected
+        if mime_type is None:
+            mime_type = "image/png"
+        # get file data
+        file_data = None
+        # Open and read the file in binary mode
+        with open(img_path, 'rb') as file:
+            file_data = file.read()
+        # encode
+        encoded_data = base64.b64encode(file_data)
+        # make it a string to be used in JSON
+        encoded_string = encoded_data.decode('utf-8')
+        # Add encoded string as image data
+        item["imageData"] = f"data:{mime_type};base64,{encoded_string}"
+
 # Function to compute cosine similarites between the prompt and item embeddings
 # @param item: user prompt from frontend (string)
 # @return: list of similarities (each floats between 0 and 1) for each item in order of id's
@@ -162,23 +220,29 @@ def configure_fit(items, similarities):
 # GET /api/items: return all clothing items when request is made
 @app.route("/api/items", methods=["GET"])
 def get_items():
-    items = ClothingItem.query.all()
-    # serialize the items into dictionary in order to jsonify because we cannot jsonify SQLAlchemy objects directly
-    return jsonify([item.serialize() for item in items])
+    items = load_clothing_data()
+    # adding imgData
+    add_img_encodings(items)
+    return jsonify({"items": items})
 
 @app.route("/api/relevantItems", methods=["GET"])
 def get_relevantItems():
     user=session.get("user", None)
     if user!=None:
-        return jsonify({"items": load_relevant_clothing_data()})
+        items = load_relevant_clothing_data()
+        # adding imgData
+        add_img_encodings(items)
+        return jsonify({"items": items})
     return jsonify({"message": "No user logged in"}), 404
 
 # GET /api/items/<item_id>: return details of a specific clothing item when request is made
 @app.route("/api/items/<int:item_id>", methods=["GET"])
 def get_item(item_id):
-    item = ClothingItem.query.get(item_id)
+    item = ClothingItem.query.get(item_id) # uses DB, but we're not using this function rn
     if item:
-        return jsonify(item.serialize())
+        add_img_encodings([item])
+        return jsonify(item)
+        # return jsonify(item.serialize())
     return jsonify({"message": "Item not found"}), 404
 
 # GET /api/recommend: return 3 random clothing items to form an outfit when request is made
@@ -194,36 +258,74 @@ def recommend_outfit():
     similarities = get_similarities(prompt, filtered)
     # configure fits
     fits = configure_fit(filtered, similarities)
+    # add image data
+    for i, fit in enumerate(fits):
+        items = fits[i]["items"]
+        add_img_encodings(items)
+        fits[i]["items"] = items
     return jsonify({"fits": fits})
 
 # POST /api/add-item: add a new clothing item to the wardrobe data when request is made
 @app.route("/api/add-item", methods=["POST"])
 def add_item():
     new_item_data = request.get_json()
+    current_user = session.get("user", None)
+    # check if item is valid
     if not validate_item(new_item_data):
         return jsonify({"message": "Invalid item"}), 400
     
+    # check if user exists
+    if current_user == None:
+        return jsonify({"message": "No user logged in"}), 404
+    current_uid = current_user["id"]
     
-    print(stringify(new_item_data))
+    items = load_clothing_data()
     # get the embedding for the new_item and turn the ndarray of NumPy into a normal array so that we can
     # store it in the JSON file
     new_item_data["embedding"] = getEmbedding(stringify(new_item_data)).tolist()
+    # assign a user id to the item
     new_item_data["user_id"] = session["user"]["id"]
-    # Create new instance of the ClothingItem model
-    new_item = ClothingItem.from_dict(new_item_data)
+    # assign an id to the item
+    new_item_data["id"] = int(items[-1]["id"]) + 1
 
-    # Add the new item to the session
-    db.session.add(new_item)
-    db.session.commit()
+    # Dealing with the image upload
+    filename = save_image(new_item_data)
+        
+    # Update the item data with the file path instead of the base64 string
+    new_item_data['image'] = filename
 
-    return jsonify(new_item.serialize()), 201
+    # add the new item to the wardrobe data
+    items.append(new_item_data)
+    with open(WARDROBE_DATA_FILE, 'w') as f:
+        json.dump(items, f, indent=4)
+
+    # add the new item to the user data
+    users = load_user_data()
+    user = next((user for user in users if user["id"] == current_uid), None)
+    print(f"User: {user}, Current UID: {current_uid}")
+    if user:
+        user["wardrobe_items"].append(new_item_data["id"])
+        print(f"Updated User: {user}")
+        user.update(user)
+        with open(USER_DATA_FILE, 'w') as f:
+            json.dump(users, f, indent=4)
+    
+    return jsonify(new_item_data), 201
+    
+    # # Create new instance of the ClothingItem model
+    # new_item = ClothingItem.from_dict(new_item_data)
+
+    # # Add the new item to the session
+    # db.session.add(new_item)
+    # db.session.commit()
+    # return jsonify(new_item.serialize()), 201
 
 # PUT /api/update-item/<item_id>: update the details of a specific clothing item when request is made
 @app.route("/api/update-item/<int:item_id>", methods=["PUT"])
 def update_item(item_id):
     updated_item = request.get_json()
     updated_item["embedding"] = getEmbedding(stringify(updated_item)).tolist()
-    items = load_relevant_clothing_data()
+    items = load_clothing_data()
     item = next((item for item in items if item["id"] == item_id), None)
     if item:
         # validate the updated item
