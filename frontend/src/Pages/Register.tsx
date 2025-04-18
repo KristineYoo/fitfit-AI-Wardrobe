@@ -1,7 +1,10 @@
+//imports
 import { useState } from 'react';
 import { Box, TextField, Button, Typography, Alert } from '@mui/material';
 
+// component declaration 
 const RegisterPage = () => {
+    // use state variables 
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
     const [confirmPassword, setConfirmPassword] = useState('');
@@ -10,12 +13,13 @@ const RegisterPage = () => {
     const [success, setSuccess] = useState('');
 
 
+    // form submission handling 
     const handleRegister = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         setError('');
         setSuccess('');
 
-
+        // password and username 
         if (!username || !password || !confirmPassword) {
             setError('Please fill in all fields.');
             return;
@@ -24,7 +28,7 @@ const RegisterPage = () => {
             setError('Passwords do not match.');
             return;
         }
-
+        // api 
         setLoading(true);
         try {
             const response = await fetch('/api/register', {
@@ -37,7 +41,7 @@ const RegisterPage = () => {
                     password,
                 }),
             });
-
+            // error handling
             const data = await response.json();
             if (response.ok) {
                 setSuccess('Registration successful! You can now log in.');
@@ -53,7 +57,7 @@ const RegisterPage = () => {
             setLoading(false);
         }
     };
-
+    // front end 
     return (
         <Box
             sx={{
@@ -73,7 +77,7 @@ const RegisterPage = () => {
                     boxShadow: 3
                 }}
             >
-                <Typography variant="h5" align="center" mb={3}>
+                <Typography variant="h5" align="center" sx={{ mb: 3, color: 'black' }} >
                     Register for FitFit
                 </Typography>
 
@@ -128,7 +132,7 @@ const RegisterPage = () => {
                     </Button>
                 </form>
 
-                <Typography variant="body2" align="center" mt={2} >
+                <Typography variant="body2" align="center" sx={{ mb: 3, color: 'black' }} >
                     Have an account? <Button variant="text" size="small" sx={{ color: '#8AA899' }}>Login</Button>
                 </Typography>
             </Box>
