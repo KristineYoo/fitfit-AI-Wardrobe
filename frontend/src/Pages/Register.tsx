@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { Box, TextField, Button, Typography, Alert } from '@mui/material';
+import { useNavigate} from 'react-router-dom';
 
 const RegisterPage = () => {
     const [username, setUsername] = useState('');
@@ -8,6 +9,7 @@ const RegisterPage = () => {
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState('');
     const [success, setSuccess] = useState('');
+    const navigate = useNavigate();
 
 
     const handleRegister = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -44,6 +46,7 @@ const RegisterPage = () => {
                 setUsername('');
                 setPassword('');
                 setConfirmPassword('');
+                navigate('/login')
             } else {
                 setError(data.message || 'Registration failed.');
             }

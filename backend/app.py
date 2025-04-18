@@ -265,6 +265,7 @@ def register_user():
     username = user_data.get("username")
     # password should be hashed in frontend (not here)
     password = user_data.get("password")
+    users=load_user_data()
 
     # Check if user exists
     existing_user = User.query.filter_by(username=username).first()
@@ -278,6 +279,11 @@ def register_user():
         password=password
     )
 
+    new_user_json={"username": username, "password": password, "wardrobe_items": [], "pastOutfits": []}
+
+    users.append(new_user_json)
+    with open(USER_DATA_FILE, 'w') as f:
+            json.dump(users, f, indent=4)
     # Add the new user to the user data
     db.session.add(new_user)
     db.session.commit()

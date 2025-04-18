@@ -2,7 +2,7 @@ import { Box, Button, Container, TextField } from "@mui/material";
 import Paper from "@mui/material/Paper";
 import axios from "axios";
 import { useState } from "react";
-import { useNavigate, useLocation } from 'react-router-dom';
+import { useNavigate} from 'react-router-dom';
 
 export function Login() {
    const [userInputValue, setUserInputValue] = useState('');
@@ -88,6 +88,10 @@ export function Login() {
         >
           Login
         </Button>
+        <Button
+        href="/#/register"
+        variant="contained"
+        >Register</Button>
         </Container>
     )
   }

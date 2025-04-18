@@ -11,6 +11,7 @@ import CheckroomIcon from '@mui/icons-material/Checkroom';
 import Container from "@mui/material/Container";
 import { useState } from "react";
 import LogoutIcon from '@mui/icons-material/Logout';
+import axios from "axios";
 
 // I just put the style recommend there so that the web looks more balance, we can delete if want by removing that object
 const pages = [
@@ -251,6 +252,9 @@ function Navbar() {
                     {/* would need more code here to handle logout, e.g: clear local storage */}
                     <Button
                         href="/#/login"
+                        onClick={()=> {
+                            axios.put("/api/logout")
+                        }}
                         sx={{
                             display: { xs: 'none', md: 'flex' },
                             fontFamily: '"Helvetica Neue", Arial, sans-serif',
