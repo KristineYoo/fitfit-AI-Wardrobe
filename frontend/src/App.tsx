@@ -6,6 +6,7 @@ import { Items } from './Pages/Items'
 import { Login } from './Pages/Login'
 import { Outfits } from './Pages/Outfits'
 import Navbar from './components/Navbar'
+import RegisterPage from './Pages/Register'
 
 
 //This is where we actually make our app
@@ -23,6 +24,7 @@ function App() {
         <Route path="/outfits" element={<Outfits />} />
         <Route path="/login" element={<Login />} />
         <Route path="/items" element={<Items />} />
+        <Route path="/register" element={<RegisterPage />} />
       </Routes>
 
     </Router>
