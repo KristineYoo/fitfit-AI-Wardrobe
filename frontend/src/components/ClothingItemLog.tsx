@@ -84,6 +84,9 @@ const LogItemModal: React.FC<LogItemModalProps> = ({ open, onClose, item }) => {
     fabric: { material: [], thickness: 'medium' },
   });
 
+  // const to store the preview of the uploaded image
+  const [imagePreview, setImagePreview] = React.useState<string | null>(null);
+
 
   useEffect(() => {
     if (item) {
@@ -218,21 +221,36 @@ const LogItemModal: React.FC<LogItemModalProps> = ({ open, onClose, item }) => {
     setFabric({ ...fabric, thickness: thickness });
   };
 
+  // handling when a user uploads an image file
+  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (e.target.files && e.target.files.length > 0) {
+      const file = e.target.files[0];
+
+      // Create a URL for the file preview
+      const previewUrl = URL.createObjectURL(file);
+      
+      // Create a FileReader to convert the file to base64 (this is needed to send it as a string)
+      const reader = new FileReader();
+      
+      reader.onloadend = () => {
+        // reader.result contains the base64 string representation of the file
+        setImage(reader.result as string);
+      };
+      
+      // Start reading the file as a data URL (base64)
+      reader.readAsDataURL(file);
+
+      // Store the preview URL in a separate state variable
+      setImagePreview(previewUrl);
+    
+      // Revoke the URL when no longer needed to prevent memory leaks
+      return () => URL.revokeObjectURL(previewUrl);
+    }
+  };
+
 
   return (
     <div>
-      <Fab
-        sx={{
-          position: 'fixed',
-          bottom: 16,
-          right: 16,
-        }}
-        color="primary"
-        aria-label="add"
-        onClick={handleOpen}
-      >
-        <AddIcon />
-      </Fab>
       <Modal
         open={open || isModalOpen}
         onClose={handleClose}
@@ -242,6 +260,17 @@ const LogItemModal: React.FC<LogItemModalProps> = ({ open, onClose, item }) => {
           <Typography id="clothingItemLogModalTitle" variant="h6" component="h2" sx={{ color: 'black' }}>
             Upload Clothing Item
           </Typography>
+          <input id="image" type="file" accept="image/*" onChange={handleFileChange}/>
+          {imagePreview && (
+            <div id="image-preview-div">
+              <img src={imagePreview} alt="Preview" style={{
+                                                    width: '100%',
+                                                    maxHeight: '250px',
+                                                    objectFit: 'contain',
+                                                    marginTop: '16px'
+                                                  }}/>
+            </div>
+          )}
           <TextField
             id="uploadItem-name"
             label="Name of Item"
