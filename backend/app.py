@@ -307,6 +307,7 @@ def add_item():
         user["wardrobe_items"].append(new_item_data["id"])
         print(f"Updated User: {user}")
         user.update(user)
+        session["user"]=user
         with open(USER_DATA_FILE, 'w') as f:
             json.dump(users, f, indent=4)
     
