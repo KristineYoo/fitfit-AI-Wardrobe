@@ -299,7 +299,7 @@ def login_user():
             session["user"]=user
             return jsonify({"message": "Successfully logged in"})
     else:
-        return jsonify({"message": "User name and or password does not exist"})
+        return jsonify({"message": "User name and or password does not exist"}), 404
 
 @app.route("/api/logout", methods=["PUT"])
 def logout_user():

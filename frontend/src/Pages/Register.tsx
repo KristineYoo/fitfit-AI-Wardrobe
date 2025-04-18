@@ -132,7 +132,7 @@ const RegisterPage = () => {
                 </form>
 
                 <Typography variant="body2" align="center" mt={2} >
-                    Have an account? <Button variant="text" size="small" sx={{ color: '#8AA899' }}>Login</Button>
+                    Have an account? <Button href="/#/login" variant="text" size="small" sx={{ color: '#8AA899' }}>Login</Button>
                 </Typography>
             </Box>
         </Box>

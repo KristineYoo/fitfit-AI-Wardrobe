@@ -1,4 +1,4 @@
-import { Box, Button, Container, TextField } from "@mui/material";
+import { Alert, Box, Button, Container, TextField } from "@mui/material";
 import Paper from "@mui/material/Paper";
 import axios from "axios";
 import { useState } from "react";
@@ -7,6 +7,7 @@ import { useNavigate} from 'react-router-dom';
 export function Login() {
    const [userInputValue, setUserInputValue] = useState('');
    const [passInputValue, setPassInputValue] = useState('');
+   const [error, setError] = useState('');
    const navigate = useNavigate();
   
 
@@ -23,7 +24,7 @@ export function Login() {
                  console.log(res.data); // Log for debugging
                  sessionStorage.setItem("login", "True")
                })
-               .catch((err) => console.log(err));
+               .catch((err) => setError("incorrect username or password"));
          }
    
      }
@@ -31,6 +32,7 @@ export function Login() {
     return (
        <Container sx={{height: "50vh"}}>
         <h1>Login</h1>
+        {error && <p style={{ color: 'red' }}>Error: {error}</p>}
         <Paper
         elevation={5}
         sx={{ pl: 3, pr: 3, pt: 1, pb: 1, m: 2, width: '100%' }}>
@@ -61,9 +63,9 @@ export function Login() {
         onChange={(event) => setPassInputValue(event.target.value)} 
         label="Password" 
         variant="outlined" 
+        type="password"
         fullWidth  
         onKeyUp={handleKeyPress} 
-        multiline
         color="primary"
         
         />
