@@ -24,7 +24,7 @@ http://localhost:5000/api
             "brand": "Zara",
             "size": "M",
             "color": "pink",
-            "image": "/img/pink_sweater.jpeg",
+            "image": "data:image/jpeg;base64,/9j/4AAQSkZJRgABAQEASABIAAD/2wBD...",
             "styling": { ... },
             "purchaseInfo": { ... },
             "status": { ... },
@@ -51,7 +51,7 @@ GET /items/1
     "brand": "Zara",
     "size": "M",
     "color": "pink",
-    "image": "/img/pink_sweater.jpeg",
+    "image": "data:image/jpeg;base64,/9j/4AAQSkZJRgABAQEASABIAAD/2wBD...",
     "styling": { ... },
     "purchaseInfo": { ... },
     "status": { ... },
@@ -76,9 +76,13 @@ Returns three randomly selected clothing items to form an outfit.
 ```json
 {
     "items": [
-        { "id": 1, "name": "Black T-Shirt" },
-        { "id": 2, "name": "Denim Jeans" },
-        { "id": 3, "name": "White Sneakers" }
+        { "id": 1, "name": "Black T-Shirt" ...},
+        { "id": 2, "name": "Denim Jeans" ...},
+        { "id": 3, "name": "White Sneakers" ...}
+    ],
+    "tags": [
+        "cute",
+        "casual"
     ]
 }
 ```
@@ -98,7 +102,7 @@ Adds a new clothing item to the wardrobe.
     "brand": "Nike",
     "size": "L",
     "color": "blue",
-    "image": "/img/Blue_Jacket.jpeg"
+    "image": "data:image/jpeg;base64,/9j/4AAQSkZJRgABAQEASABIAAD/2wBD..."
 }
 ```
 
@@ -111,7 +115,9 @@ Adds a new clothing item to the wardrobe.
     "brand": "Nike",
     "size": "L",
     "color": "blue",
-    "image": "/img/Blue_Jacket.jpeg"
+    "image": "9f553c0630fd6dec.jpeg",
+    "user_id":2,
+    "embedding":[-0.03667972609400749,...]
 }
 ```
 
@@ -119,6 +125,12 @@ Adds a new clothing item to the wardrobe.
 ```json
 {
     "message": "Invalid item"
+}
+```
+or
+```json
+{
+    "message": "No user logged in"
 }
 ```
 
