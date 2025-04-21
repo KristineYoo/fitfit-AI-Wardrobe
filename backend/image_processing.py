@@ -1,8 +1,9 @@
 """ 
-File: image_processing.py
 Author: Sophia Somers
-Date: 4-21-25
+Created: 4-21-25
 Description: Helper functions to be used in app.py when saving images to the backend, sending images to the frontend, and removing backgrounds.
+Code Updates and Attributions:
+4-21-25 Code taken from "Rembg: Effortlessly Remove Backgrounds in Python" tutorial my Manoj Das from Medium for the remove_bg function
 """
 from werkzeug.utils import secure_filename
 import base64
@@ -13,8 +14,8 @@ from PIL import Image
 
 IMAGE_UPLOAD_FOLDER = './public/assets/data/images'
 
-# function to save an uploaded image to the backend image directory
-# @param new_item: JSON file of the item with the image to be saved
+# function to save an uploaded image *in base64* to the backend image directory
+# @param new_item: JSON file of the item with the image to be saved (in a base64 format)
 # @return: the generated filename for the image that was saved
 def save_image(new_item):
     # Extract the base64 image string
@@ -67,5 +68,34 @@ def add_img_encodings(items):
         # Add encoded string as image data
         item["imageData"] = f"data:{mime_type};base64,{encoded_string}"
 
-def remove_bg():
-    pass
+# Function to remove the background from an image file in the backend
+# @param path: the name of the image file as a string
+# @return: None
+def remove_bg(path):
+    # Code Attribution: Most of the below code was taken from the tutorial "Rembg: Effortlessly Remove Backgrounds in Python"
+    # by Manoj Das on Medium
+
+    # Load the input image
+    input_image = Image.open(os.path.join("public","assets","data","images",path))
+    # input_image = Image.open(f"./public/assets/data/images/default.png")
+
+    # Convert the input image to a numpy array
+    input_array = np.array(input_image)
+
+    # Apply background removal using rembg
+    output_array = rembg.remove(input_array)
+
+    # Create a PIL Image from the output array
+    output_image = Image.fromarray(output_array)
+
+    # Sophia's Edit: as we are removing background, we must same as png to support transparency
+    # Extract base filename
+    base_filename = os.path.basename(path)
+    # take off the extension
+    base_filename = os.path.splitext(base_filename)[0]
+
+    # Save the output image
+    output_image.save(os.path.join(IMAGE_UPLOAD_FOLDER, f"{base_filename}.png"))
+
+if __name__ == "__main__":
+    remove_bg("Black_Dress.jpeg")
