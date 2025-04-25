@@ -1,99 +1,135 @@
-import { Alert, Box, Button, Container, TextField } from "@mui/material";
+import { Alert, Box, Button, Container, TextField, Typography } from "@mui/material";
 import Paper from "@mui/material/Paper";
 import axios from "axios";
 import { useState } from "react";
 import { useNavigate} from 'react-router-dom';
 
 export function Login() {
-   const [userInputValue, setUserInputValue] = useState('');
-   const [passInputValue, setPassInputValue] = useState('');
-   const [error, setError] = useState('');
-   const navigate = useNavigate();
+  const [username, setUsername] = useState('');
+  const [password, setPassword] = useState('');
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState('');
+  const [success, setSuccess] = useState('');
+  const navigate = useNavigate();
+
+
+  const handleLogin = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    setError('');
+    setSuccess('');
+
+
+    if (!username || !password) {
+        setError('Please fill in all fields.');
+        return;
+    }
+
+    setLoading(true);
+    try {
+        const response = await fetch('/api/login', {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                username,
+                password,
+            }),
+        });
+
+        const data = await response.json();
+        if (response.ok) {
+            setSuccess('Login successful!')
+            setUsername('')
+            setPassword('')
+            sessionStorage.setItem("login", "True")
+            window.location.assign("/#/")
+            window.location.reload()
+        } else {
+            setError(data.message || 'Login failed.')
+            setUsername('')
+            setPassword('')
+        }
+    } catch (err) {
+        setError('An error occurred. Please try again.')
+        setUsername('')
+        setPassword('')
+    } finally {
+        setLoading(false);
+        
+    }
+};
   
 
-   const handleKeyPress = (e: React.KeyboardEvent<HTMLInputElement>) => {
      
-         if (e.key === "Enter") {
-           console.log(userInputValue);
-           console.log(passInputValue);
-           const data={"username": userInputValue, "password": passInputValue}
-           setUserInputValue('')
-           setPassInputValue('')
-             axios.put("/api/login", data)
-               .then((res) => {
-                 console.log(res.data); // Log for debugging
-                 sessionStorage.setItem("login", "True")
-               })
-               .catch((err) => setError("incorrect username or password"));
-         }
-   
-     }
-     
-    return (
-       <Container sx={{height: "50vh"}}>
-        <h1>Login</h1>
-        {error && <p style={{ color: 'red' }}>Error: {error}</p>}
-        <Paper
-        elevation={5}
-        sx={{ pl: 3, pr: 3, pt: 1, pb: 1, m: 2, width: '100%' }}>
-           <Box
-        component="form"
-        sx={{ '& > :not(style)': { m: 5, width: '100ch' , height: '10ch'} }}
-      >
-        <TextField 
-        id="User Name" 
-        value={userInputValue} 
-        onChange={(event) => setUserInputValue(event.target.value)} 
-        label="User Name" 
-        variant="outlined" 
-        fullWidth  
-        onKeyUp={handleKeyPress} 
-        multiline
-        color="primary"
-        
-        />
-      </Box>
+     return (
       <Box
-        component="form"
-        sx={{ '& > :not(style)': { m: 5, width: '100ch' , height: '10ch'} }}
+          sx={{
+              display: 'flex',
+              justifyContent: 'center',
+              alignItems: 'center',
+              height: '100vh',
+              bgcolor: '#f5f5f5'
+          }}
       >
-        <TextField 
-        id="Password" 
-        value={passInputValue} 
-        onChange={(event) => setPassInputValue(event.target.value)} 
-        label="Password" 
-        variant="outlined" 
-        type="password"
-        fullWidth  
-        onKeyUp={handleKeyPress} 
-        color="primary"
-        
-        />
+          <Box
+              sx={{
+                  width: 300,
+                  p: 4,
+                  bgcolor: 'white',
+                  borderRadius: 2,
+                  boxShadow: 3
+              }}
+          >
+              <Typography variant="h5" align="center" mb={3} color="black">
+                  Login
+              </Typography>
+
+              {error && <Alert severity="error" sx={{ mb: 2 }}>{error}</Alert>}
+              {success && <Alert severity="success" sx={{ mb: 2 }}>{success}</Alert>}
+
+              <form onSubmit={handleLogin}>
+                  <TextField
+                      fullWidth
+                      label="Username"
+                      variant="outlined"
+                      margin="dense"
+                      value={username}
+                      onChange={e => setUsername(e.target.value)}
+                      autoComplete="username"
+                  />
+                  <TextField
+                      fullWidth
+                      label="Password"
+                      type="password"
+                      variant="outlined"
+                      margin="dense"
+                      value={password}
+                      onChange={e => setPassword(e.target.value)}
+                      autoComplete="new-password"
+                  />
+
+                  <Button
+                      fullWidth
+                      variant="contained"
+                      type="submit"
+                      disabled={loading}
+                      sx={{
+                          mt: 2,
+                          bgcolor: '#8AA899',
+                          '&:hover': {
+                              bgcolor: '#a0b8ac'
+                          }
+                      }}
+                  >
+                      {loading ? 'Loging in....' : 'Login'}
+                  </Button>
+              </form>
+
+              <Typography variant="body2" align="center" mt={2} color="black">
+                  Don't have an account? <Button href="/#/register" variant="text" size="small" sx={{ color: '#8AA899' }}>Register</Button>
+              </Typography>
+          </Box>
       </Box>
-        </Paper>
-        <Button 
-        variant="contained"
-        onClick={() => {
-          console.log(userInputValue);
-           console.log(passInputValue);
-           const data={"username": userInputValue, "password": passInputValue}
-           setUserInputValue('')
-           setPassInputValue('')
-             axios.put("/api/login", data)
-               .then((res) => {
-                 console.log(res.data); // Log for debugging
-                 sessionStorage.setItem("login", "True")
-                 navigate('/#/');
-               })
-               .catch((err) => console.log(err));
-        }}
-        >
-          Login
-        </Button>
-        <Button
-        href="/#/register"
-        variant="contained"
-        >Register</Button>
-        </Container>
-    )
+  );
   }
