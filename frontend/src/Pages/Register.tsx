@@ -135,8 +135,8 @@ const RegisterPage = () => {
                     </Button>
                 </form>
 
-                <Typography variant="body2" align="center" sx={{ mb: 3, color: 'black' }} >
-                    Have an account? <Button variant="text" size="small" sx={{ color: '#8AA899' }}>Login</Button>
+                <Typography variant="body2" align="center" sx={{ mb: 3, color: 'black' }}>
+                    Have an account? <Button href="/#/login" variant="text" size="small" sx={{ color: '#8AA899' }}>Login</Button>
                 </Typography>
             </Box>
         </Box>
