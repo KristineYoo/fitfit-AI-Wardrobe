@@ -12,7 +12,6 @@ import Container from "@mui/material/Container";
 import { useState } from "react";
 import LogoutIcon from '@mui/icons-material/Logout';
 import axios from "axios";
-import LoginOutButton from "./LoginOutButton";
 
 // I just put the style recommend there so that the web looks more balance, we can delete if want by removing that object
 const pages = [
@@ -251,7 +250,32 @@ function Navbar() {
                     
                     {/* Logout Button for Desktop */}
                     {/* would need more code here to handle logout, e.g: clear local storage */}
-                    <LoginOutButton></LoginOutButton>
+                    <Button
+                        onClick={()=> {
+                            axios.put("/api/logout")
+                            sessionStorage.setItem("login","False")
+                            window.location.assign("/#/login")
+                            window.location.reload()
+                        }}
+                        sx={{
+                            display: { xs: 'none', md: 'flex' },
+                            fontFamily: '"Helvetica Neue", Arial, sans-serif',
+                            fontWeight: 500,
+                            letterSpacing: '0.1rem',
+                            backgroundColor: '#D5B9B2',
+                            color: '#F5E6E8',
+                            px: 3,
+                            gap: 1,
+                            transition: 'all 0.3s ease',
+                            '&:hover': {
+                                color: '#D5B9B2',
+                                backgroundColor: '#F5E6E8',
+                                transform: 'translateY(-2px)'
+                            }
+                        }}
+                    >
+                        Logout <LogoutIcon />
+                    </Button>
                 </Toolbar>
             </Container>
         </AppBar>
