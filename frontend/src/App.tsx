@@ -7,15 +7,17 @@ import { Login } from './Pages/Login'
 import { Outfits } from './Pages/Outfits'
 import Navbar from './components/Navbar'
 import RegisterPage from './Pages/Register'
-
+import { ThemeProvider } from '@mui/material/styles';
+import theme from './components/theme'
 
 //This is where we actually make our app
 //this file will house all of our pages
 
 function App() {
   return (
+    <ThemeProvider theme={theme}>
     <Router>
-
+      
       <Navbar />
       <Routes>
         <Route path="/" element={<Landing />} />
@@ -28,6 +30,7 @@ function App() {
       </Routes>
 
     </Router>
+    </ThemeProvider>
   )
 }
 
