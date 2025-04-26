@@ -126,8 +126,8 @@ const RegisterPage = () => {
                             mt: 2,
                             bgcolor: 'primary.main', //'#8AA899',
                             '&:hover': {
-                                color: 'secondary.main',
-                                bgcolor: 'secondary.light' //'#a0b8ac'
+                                //color: 'secondary.main',
+                                bgcolor: 'primary.dark' //'#a0b8ac'
                             }
                         }}
                     >

@@ -34,7 +34,7 @@ function Navbar() {
 
     return (
         <AppBar position="static" sx={{ 
-            backgroundColor: 'primary.main', //'#8AA899',
+            backgroundColor: 'primary.main',
             boxShadow: '0 2px 8px rgba(138, 168, 153, 0.15)'
         }}>
             <Container maxWidth={false} >
@@ -49,7 +49,7 @@ function Navbar() {
                             '&:hover': {
                                 '& .logo-icon, & .logo-text': {
                                     transform: 'scale(1.1)',
-                                    color: 'secondary.dark',//'#D5B9B2'
+                                    color: 'primary.dark',
                                 }
                             }
                         }}
@@ -59,7 +59,7 @@ function Navbar() {
                             sx={{
                                 mr: 1,
                                 fontSize: '2rem',
-                                color: 'secondary.light',//'#F5E6E8',
+                                color: 'secondary.light',
                                 transition: 'transform 0.3s ease, color 0.3s ease'
                             }}
                         />
@@ -73,7 +73,7 @@ function Navbar() {
                                 fontWeight: 600,
                                 letterSpacing: '0.2rem',
                                 fontSize: '1.4rem',
-                                color: 'secondary.light', //'#F5E6E8',
+                                color: 'secondary.light', 
                                 transition: 'transform 0.3s ease, color 0.3s ease'
                             }}
                         >
@@ -87,7 +87,7 @@ function Navbar() {
                             size="large"
                             onClick={handleOpenNavMenu}
                             sx={{
-                                color: 'secondary.light',//'#F5E6E8',
+                                color: 'secondary.light',
                                 '&:hover': {
                                     backgroundColor: 'rgba(245, 230, 232, 0.1)'
                                 }
@@ -112,7 +112,7 @@ function Navbar() {
                             sx={{ 
                                 display: { xs: 'block', md: 'none' },
                                 '& .MuiPaper-root': {
-                                    backgroundColor: 'primary.main',//'#8AA899',
+                                    backgroundColor: 'primary.main',
                                 }
                             }}
                         >
@@ -121,7 +121,7 @@ function Navbar() {
                                     key={page.name} 
                                     onClick={() => { handleCloseNavMenu(); window.location.href = `/#${page.path}`; }}
                                     sx={{
-                                        color: 'secondary.light',//'#F5E6E8',
+                                        color: 'secondary.light',
                                         '&:hover': {
                                             backgroundColor: 'rgba(245, 230, 232, 0.1)'
                                         }
@@ -134,7 +134,7 @@ function Navbar() {
                                         letterSpacing: '0.1rem',
                                         transition: 'color 0.3s ease',
                                         '&:hover': {
-                                            color: 'secondary.dark',//'#D5B9B2'
+                                            color: 'primary.dark',
                                         }
                                     }}>
                                         {page.name}
@@ -144,7 +144,7 @@ function Navbar() {
                             <MenuItem 
                                 onClick={() => { handleCloseNavMenu(); window.location.href = '/#/login'; }}
                                 sx={{
-                                    color: 'secondary.light',//'#F5E6E8',
+                                    color: 'secondary.light',
                                     '&:hover': {
                                         backgroundColor: 'rgba(245, 230, 232, 0.1)'
                                     }
@@ -157,7 +157,7 @@ function Navbar() {
                                     letterSpacing: '0.1rem',
                                     transition: 'color 0.3s ease',
                                     '&:hover': {
-                                        color: 'secondary.dark',//'#D5B9B2'
+                                        color: 'primary.dark',
                                     }
                                 }}>
                                     Logout
@@ -179,7 +179,7 @@ function Navbar() {
                             '&:hover': {
                                 '& .logo-icon, & .logo-text': {
                                     transform: 'scale(1.1)',
-                                    color: 'secondary.dark',//'#D5B9B2'
+                                    color: 'primary.dark',
                                 }
                             }
                         }}
@@ -189,7 +189,7 @@ function Navbar() {
                             sx={{
                                 mr: 1,
                                 fontSize: '1.8rem',
-                                color: 'secondary.light',//'#F5E6E8',
+                                color: 'secondary.light',
                                 transition: 'transform 0.3s ease, color 0.3s ease'
                             }}
                         />
@@ -203,7 +203,7 @@ function Navbar() {
                                 fontWeight: 600,
                                 letterSpacing: '0.2rem',
                                 fontSize: '1.2rem',
-                                color: 'secondary.light',//'#F5E6E8',
+                                color: 'secondary.light',
                                 transition: 'transform 0.3s ease, color 0.3s ease'
                             }}
                         >
@@ -220,7 +220,7 @@ function Navbar() {
                                 sx={{
                                     mx: 2,
                                     py: 1,
-                                    color: 'secondary.light',//'#F5E6E8',
+                                    color: 'secondary.light',
                                     fontFamily: '"Helvetica Neue", Arial, sans-serif',
                                     fontWeight: 500,
                                     letterSpacing: '0.1rem',
@@ -233,11 +233,11 @@ function Navbar() {
                                         bottom: '5px',
                                         left: '50%',
                                         transform: 'translateX(-50%)',
-                                        backgroundColor: 'secondary.dark',//'#D5B9B2',
+                                        backgroundColor: 'primary.dark',
                                         transition: 'width 0.3s ease-in-out'
                                     },
                                     '&:hover': {
-                                        color: 'secondary.dark',//'#D5B9B2',
+                                        color: 'primary.dark',
                                         '&:after': {
                                             width: '80%'
                                         }
@@ -258,14 +258,16 @@ function Navbar() {
                             fontFamily: '"Helvetica Neue", Arial, sans-serif',
                             fontWeight: 500,
                             letterSpacing: '0.1rem',
-                            backgroundColor: 'secondary.dark',//'#D5B9B2',
-                            color: 'secondary.light',//'#F5E6E8',
+                            color: 'secondary.light',
                             px: 3,
                             gap: 1,
                             transition: 'all 0.3s ease',
+                            border: '2px solid',
+                            borderColor: 'secondary.light',
                             '&:hover': {
-                                color: 'secondary.main',//'#D5B9B2',
-                                backgroundColor: 'secondary.light',//'#F5E6E8',
+                                color: 'primary.contrastText',
+                                backgroundColor: 'primary.dark',
+                                borderColor: 'primary.dark',
                                 transform: 'translateY(-2px)'
                             }
                         }}
