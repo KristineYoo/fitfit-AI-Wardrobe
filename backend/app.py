@@ -307,6 +307,7 @@ def add_item():
         user["wardrobe_items"].append(new_item_data["id"])
         print(f"Updated User: {user}")
         user.update(user)
+        session["user"]=user
         with open(USER_DATA_FILE, 'w') as f:
             json.dump(users, f, indent=4)
     
@@ -367,6 +368,7 @@ def register_user():
     username = user_data.get("username")
     # password should be hashed in frontend (not here)
     password = user_data.get("password")
+    users=load_user_data()
 
     # Check if user exists
     existing_user = User.query.filter_by(username=username).first()
@@ -380,6 +382,11 @@ def register_user():
         password=password
     )
 
+    new_user_json={"username": username, "password": password, "wardrobe_items": [], "pastOutfits": []}
+
+    users.append(new_user_json)
+    with open(USER_DATA_FILE, 'w') as f:
+            json.dump(users, f, indent=4)
     # Add the new user to the user data
     db.session.add(new_user)
     db.session.commit()
@@ -395,7 +402,7 @@ def login_user():
             session["user"]=user
             return jsonify({"message": "Successfully logged in"})
     else:
-        return jsonify({"message": "User name and or password does not exist"})
+        return jsonify({"message": "User name and or password does not exist"}), 404
 
 @app.route("/api/logout", methods=["PUT"])
 def logout_user():
