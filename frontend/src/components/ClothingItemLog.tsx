@@ -1,3 +1,6 @@
+// frontend/src/components/ClothingItemLog.tsx
+// Last changed by Bao Vuong, 6:28PM 4/26/2025
+
 import React, { useState, useEffect } from 'react';
 import Box from '@mui/material/Box';
 import Fab from '@mui/material/Fab';
@@ -169,10 +172,10 @@ const LogItemModal: React.FC<LogItemModalProps> = ({ open, onClose, item }) => {
 
     try {
       if (item && item.id) {
-        await axios.put(`/api/update-item/${item.id}`, itemData);
+        await axios.put(`/api/item/update-item/${item.id}`, itemData);
         console.log('Item updated successfully');
       } else {
-        await axios.post('/api/add-item', itemData);
+        await axios.post('/api/item/add-item', itemData);
         console.log('Item added successfully');
       }
       onClose();

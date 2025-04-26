@@ -1,4 +1,6 @@
-//imports
+// frontend/src/Pages
+// Last changed by Bao Vuong, 6:30PM 4/26/2025
+
 import { useState } from 'react';
 import { Box, TextField, Button, Typography, Alert } from '@mui/material';
 
@@ -31,7 +33,7 @@ const RegisterPage = () => {
         // api 
         setLoading(true);
         try {
-            const response = await fetch('/api/register', {
+            const response = await fetch('/api/auth/register', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
