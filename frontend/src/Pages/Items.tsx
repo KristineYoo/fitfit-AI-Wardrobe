@@ -24,10 +24,7 @@ export function Items() {
       .catch((err) => console.log(err));
   }, []);
 
-  // const log={"username": "abc123",
-  //   "password": "hello_there"}
-  // axios.put("/api/auth/login", log)
-
+  
   return (
     <>
       <h1>Items Page</h1>
