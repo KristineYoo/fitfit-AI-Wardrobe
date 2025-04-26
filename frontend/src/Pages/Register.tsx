@@ -1,3 +1,5 @@
+//4-26-25 Mod Sophia Somers
+
 //imports
 import { useState } from 'react';
 import { Box, TextField, Button, Typography, Alert } from '@mui/material';
@@ -65,7 +67,7 @@ const RegisterPage = () => {
                 justifyContent: 'center',
                 alignItems: 'center',
                 height: '100vh',
-                bgcolor: '#f5f5f5'
+                //bgcolor: '#f5f5f5'
             }}
         >
             <Box
@@ -122,9 +124,10 @@ const RegisterPage = () => {
                         disabled={loading}
                         sx={{
                             mt: 2,
-                            bgcolor: '#8AA899',
+                            bgcolor: 'primary.main', //'#8AA899',
                             '&:hover': {
-                                bgcolor: '#a0b8ac'
+                                color: 'secondary.main',
+                                bgcolor: 'secondary.light' //'#a0b8ac'
                             }
                         }}
                     >
@@ -132,8 +135,8 @@ const RegisterPage = () => {
                     </Button>
                 </form>
 
-                <Typography variant="body2" align="center" sx={{ mb: 3, color: 'black' }} >
-                    Have an account? <Button variant="text" size="small" sx={{ color: '#8AA899' }}>Login</Button>
+                <Typography variant="body2" align="center" sx={{ mb: 3, mt: 2, color: 'primary.dark' }} >
+                    Have an account? <Button variant="text" size="small" sx={{ color: 'primary.main' }}>Login</Button>
                 </Typography>
             </Box>
         </Box>
