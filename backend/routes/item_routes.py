@@ -15,7 +15,6 @@ item_bp = Blueprint('item', __name__, url_prefix='/api/item')
 @item_bp.route('/', methods=["GET"])
 @login_required
 def get_items():
-    print("Get Items called! Session:", session.get("user"))
     current_user_id = get_current_user_id()
 
     items = load_user_clothing_items(current_user_id)
