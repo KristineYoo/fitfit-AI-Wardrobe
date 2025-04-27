@@ -32,7 +32,7 @@ def register_user():
 def login_user():
     # get user data from API call
     user_data = request.get_json()
-    print("I am called")
+    
     username = user_data.get("username")
     password = user_data.get("password")
 
