@@ -4,7 +4,7 @@
 import filters
 from flask import Blueprint, request, jsonify
 from routes.auth_helpers import login_required, get_current_user_id
-from services.data_service import load_user_clothing_items
+from services.data_service import load_user_clothing_items, serialize_items
 from services.image_service import add_image_encodings
 from services.recommend_service import get_similarities, configure_fit
 
@@ -18,9 +18,10 @@ def recommend_outfit():
     prompt = request.get_json()['prompt']
     
     # get items from database
-    current_user_id = get_current_user_id
+    current_user_id = get_current_user_id()
     items = load_user_clothing_items(current_user_id)
-    
+    items = serialize_items(items)
+
     # filter non-visible items
     filtered = filters.filter(items)
     # get similarities and store in a dictionary
