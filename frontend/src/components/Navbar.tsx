@@ -1,3 +1,5 @@
+//Mod by Iain Gore 4/25/25
+
 import AppBar from "@mui/material/AppBar";
 import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
@@ -16,7 +18,7 @@ import LogoutIcon from '@mui/icons-material/Logout';
 const pages = [
     { name: "Wardrobe", path: "/items" },
     { name: "Outfits", path: "/outfits" },
-    { name: "Style Recommend", path: "/template" }
+    { name: "Style Recommend", path: "/recomend" }
 ];
 
 function Navbar() {

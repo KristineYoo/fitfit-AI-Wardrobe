@@ -1,3 +1,5 @@
+//Mod by Iain Gore 4/25/25
+
 import './App.css'
 import { HashRouter as Router, Routes, Route } from 'react-router-dom'
 import { Landing } from './Pages/Landing'
@@ -5,6 +7,7 @@ import { Template } from './Pages/Template'
 import { Items } from './Pages/Items'
 import { Login } from './Pages/Login'
 import { Outfits } from './Pages/Outfits'
+import { Recomend } from './Pages/Recomend'
 import Navbar from './components/Navbar'
 import RegisterPage from './Pages/Register'
 
@@ -20,7 +23,7 @@ function App() {
       <Routes>
         <Route path="/" element={<Landing />} />
         <Route path="/home" element={<Landing />} />
-        <Route path="/template" element={<Template />} />
+        <Route path="/recomend" element={<Recomend />} />
         <Route path="/outfits" element={<Outfits />} />
         <Route path="/login" element={<Login />} />
         <Route path="/items" element={<Items />} />
