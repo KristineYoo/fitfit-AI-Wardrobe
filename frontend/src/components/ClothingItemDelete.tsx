@@ -76,7 +76,7 @@ export default function DeleteItemModal() {
         aria-labelledby="clothingItemDeleteModalTitle"
       >
         <Box sx={style}>
-          <Typography id="clothingItemLogModalTitle" variant="h6" component="h2">
+          <Typography id="clothingItemDeleteModalTitle" variant="h6" component="h2">
             Select Clothing Item to delete
           </Typography>
           <FormControl fullWidth>

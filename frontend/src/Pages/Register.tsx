@@ -1,6 +1,7 @@
 //imports
 import { useState } from 'react';
 import { Box, TextField, Button, Typography, Alert } from '@mui/material';
+import { useNavigate} from 'react-router-dom';
 
 // component declaration 
 const RegisterPage = () => {
@@ -11,6 +12,7 @@ const RegisterPage = () => {
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState('');
     const [success, setSuccess] = useState('');
+    const navigate = useNavigate();
 
 
     // form submission handling 
@@ -48,6 +50,7 @@ const RegisterPage = () => {
                 setUsername('');
                 setPassword('');
                 setConfirmPassword('');
+                navigate('/login')
             } else {
                 setError(data.message || 'Registration failed.');
             }
@@ -132,8 +135,8 @@ const RegisterPage = () => {
                     </Button>
                 </form>
 
-                <Typography variant="body2" align="center" sx={{ mb: 3, color: 'black' }} >
-                    Have an account? <Button variant="text" size="small" sx={{ color: '#8AA899' }}>Login</Button>
+                <Typography variant="body2" align="center" sx={{ mb: 3, color: 'black' }}>
+                    Have an account? <Button href="/#/login" variant="text" size="small" sx={{ color: '#8AA899' }}>Login</Button>
                 </Typography>
             </Box>
         </Box>
