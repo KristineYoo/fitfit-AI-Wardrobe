@@ -14,8 +14,10 @@ const themeOptions: ThemeOptions = {
     primary: {
       main: '#8aa899',
       contrastText:  "#ffffff", //'rgba(4,28,21,0.87)',
-      dark: "#275443",
-      light:"#b8d6c1"
+      dark: "#5f8a75",
+      light:"#b8d6c1",
+      light2: "#e6f7e7",
+      dark2: "#275443"
     },
     secondary: {
       main: '#ed77a0',

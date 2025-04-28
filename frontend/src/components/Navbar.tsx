@@ -49,7 +49,7 @@ function Navbar() {
                             '&:hover': {
                                 '& .logo-icon, & .logo-text': {
                                     transform: 'scale(1.1)',
-                                    color: 'primary.dark',
+                                    color: 'primary.dark2',
                                 }
                             }
                         }}
@@ -134,7 +134,7 @@ function Navbar() {
                                         letterSpacing: '0.1rem',
                                         transition: 'color 0.3s ease',
                                         '&:hover': {
-                                            color: 'primary.dark',
+                                            color: 'primary.dark2',
                                         }
                                     }}>
                                         {page.name}
@@ -157,7 +157,7 @@ function Navbar() {
                                     letterSpacing: '0.1rem',
                                     transition: 'color 0.3s ease',
                                     '&:hover': {
-                                        color: 'primary.dark',
+                                        color: 'primary.dark2',
                                     }
                                 }}>
                                     Logout
@@ -179,7 +179,7 @@ function Navbar() {
                             '&:hover': {
                                 '& .logo-icon, & .logo-text': {
                                     transform: 'scale(1.1)',
-                                    color: 'primary.dark',
+                                    color: 'primary.dark2',
                                 }
                             }
                         }}
@@ -233,11 +233,11 @@ function Navbar() {
                                         bottom: '5px',
                                         left: '50%',
                                         transform: 'translateX(-50%)',
-                                        backgroundColor: 'primary.dark',
+                                        backgroundColor: 'primary.dark2',
                                         transition: 'width 0.3s ease-in-out'
                                     },
                                     '&:hover': {
-                                        color: 'primary.dark',
+                                        color: 'primary.dark2',
                                         '&:after': {
                                             width: '80%'
                                         }
@@ -262,12 +262,13 @@ function Navbar() {
                             px: 3,
                             gap: 1,
                             transition: 'all 0.3s ease',
-                            border: '2px solid',
-                            borderColor: 'secondary.light',
+                            //border: '2px solid',
+                            //borderColor: 'secondary.light',
+                            backgroundColor: "primary.dark",
                             '&:hover': {
                                 color: 'primary.contrastText',
-                                backgroundColor: 'primary.dark',
-                                borderColor: 'primary.dark',
+                                backgroundColor: 'primary.dark2',
+                                //borderColor: 'primary.dark',
                                 transform: 'translateY(-2px)'
                             }
                         }}
