@@ -15,7 +15,7 @@ def register_user():
     password = user_data.get('password')
 
     # check to see if username exists
-    existing_user = User.query.filter(username=username).first()
+    existing_user = User.query.filter_by(username=username).first()
 
     if existing_user:
         return jsonify({"message": "Username already exists"}), 400 # return HTTP code 400: bad request from client
