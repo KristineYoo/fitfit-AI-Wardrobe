@@ -58,7 +58,10 @@ def add_item():
     new_item_data["embedding"] = get_embedding(stringify(new_item_data)).tolist()
     new_item_data["user_id"] = get_current_user_id()
     # Dealing with the image upload
-    filename = save_image(new_item_data)
+    try:
+        filename = save_image(new_item_data)
+    except:
+        filename = "default.png"
     # Update the item data with the file path instead of the base64 string
     new_item_data['image'] = filename
 

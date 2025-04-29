@@ -15,31 +15,28 @@ def save_image(new_item):
     # Extract the base64 image string
     image_data_url = new_item.get('image')
     
-    if image_data_url and isinstance(image_data_url, str) and image_data_url.startswith('data:'):
-        # Split the base64 string to get the actual data after the prefix
-        # Format is typically: data:image/jpeg;base64,/9j/4AAQSkZJRgABAQEASABIAAD/2wBD...
-        header, encoded = image_data_url.split(',', 1)
-        
-        # Get the file extension from the MIME type (image/some extension)
-        mime_type = header.split(';')[0].split(':')[1]
-        file_ext = mime_type.split('/')[1]
-        
-        # Decode the base64 string (to binary)
-        binary_data = base64.b64decode(encoded)
-        
-        # Create a unique filename
-        filename = secure_filename(f"{new_item.get('name', 'untitled')}_{os.urandom(8).hex()}.{file_ext}")
-        
-        # Save the file
-        upload_folder = current_app.config["IMAGE_UPLOAD_FOLDER"]
-        file_path = os.path.join(upload_folder, filename)
-
-        with open(file_path, 'wb') as f:
-            f.write(binary_data)
-
-        return filename
+    # Split the base64 string to get the actual data after the prefix
+    # Format is typically: data:image/jpeg;base64,/9j/4AAQSkZJRgABAQEASABIAAD/2wBD...
+    header, encoded = image_data_url.split(',', 1)
     
-    return None
+    # Get the file extension from the MIME type (image/some extension)
+    mime_type = header.split(';')[0].split(':')[1]
+    file_ext = mime_type.split('/')[1]
+    
+    # Decode the base64 string (to binary)
+    binary_data = base64.b64decode(encoded)
+    
+    # Create a unique filename
+    filename = secure_filename(f"{new_item.get('name', 'untitled')}_{os.urandom(8).hex()}.{file_ext}")
+    
+    # Save the file
+    upload_folder = current_app.config["IMAGE_UPLOAD_FOLDER"]
+    file_path = os.path.join(upload_folder, filename)
+
+    with open(file_path, 'wb') as f:
+        f.write(binary_data)
+
+    return filename
 
 
 # Function to add a "imageData" field to the JSON, with an image encoding
