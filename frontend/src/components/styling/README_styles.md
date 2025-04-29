@@ -32,8 +32,8 @@ Usage:
 * Background of the navbar
 * Color for buttons on a white background
 * Text on a white background
-#### dark, dark2
-This is a slightly darker variant of the main color. The shade can be made even darker by using primary.dark2
+#### dark, darker
+This is a slightly darker variant of the main color. The shade can be made even darker by using primary.darker
 
 <span style="display: inline-block; width: 100px; height: 50px; background-color: #5f8a75; border: 1px solid #000; margin-right: 10px; border-radius: 40%"></span> 
 <span style="display: inline-block; width: 100px; height: 50px; background-color: #275443; border: 1px solid #000; margin-right: 10px; border-radius: 40%"></span> 
@@ -44,8 +44,8 @@ Usage:
 * Colored text
 * Hover color for buttons of the primary.main color
 
-#### light, light2
-This is a lighter variant of primary.main. The shade can be made lighter by using primary.light2
+#### light, lighter
+This is a lighter variant of primary.main. The shade can be made lighter by using primary.lighter
 
 <span style="display: inline-block; width: 100px; height: 50px; background-color: #b8d6c1; border: 1px solid #000; margin-right: 10px; border-radius: 40%"></span> 
 <span style="display: inline-block; width: 100px; height: 50px; background-color: #e6f7e7; border: 1px solid #000; margin-right: 10px; border-radius: 40%"></span> 
