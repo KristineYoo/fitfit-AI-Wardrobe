@@ -36,7 +36,7 @@ def configure_fit(items, similarities):
         item = next((item for item in items if item["id"] == id), None)
         category = item['category']
         # add to appropriate list
-        if category in ['sweater', 't-shirt']:
+        if category in ['sweater', 't-shirt', 'blouse']:
             tops.append((item, score))
         elif category in ['dress']:
             top_bottom.append((item, score))
@@ -47,26 +47,23 @@ def configure_fit(items, similarities):
 
     # figure out top fits of each type
     # create fit object (fields: items, tags)
-    fit_1_tags = list(set(tops[0][0]["styling"]["tags"]+
-            bottoms[0][0]["styling"]["tags"]+
-            footwear[0][0]["styling"]["tags"]))
+
+    # determine item categories in which the user has items
+    available_items = []
+    for category in (tops, bottoms, footwear):
+        if len(category) != 0:
+            available_items.append(category)
+
+    # determine tags associated with this fit
+    fit_1_tags = list(set(tag for item in available_items for tag in item[0][0]["styling"]["tags"]))
+
+    fit_1_items = list(item[0][0] for item in available_items)
+
+    # create the fit object
     fit_1 = {
-        "items":[
-            tops[0][0],
-            bottoms[0][0],
-            footwear[0][0]
-        ],
+        "items":fit_1_items,
         "tags":fit_1_tags
     }
-    # don't forget about tops made up of top_bottoms like dresses or onesies! (not used currently)
-    fit_2_tags = list(set(top_bottom[0][0]["styling"]["tags"]+
-            footwear[0][0]["styling"]["tags"]))
-    fit_2 = {
-        "items":[
-            top_bottom[0][0],
-            footwear[0][0]
-        ],
-        "tags":fit_2_tags
-    }
-    # return fit
+
+    # return fits in a list
     return [fit_1]
