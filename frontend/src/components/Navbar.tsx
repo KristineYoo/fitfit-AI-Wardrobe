@@ -1,5 +1,7 @@
 //Mod by Iain Gore 4/25/25
 
+// Mod by Sophia Somers, 4-26-2025
+
 import AppBar from "@mui/material/AppBar";
 import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
@@ -35,7 +37,7 @@ function Navbar() {
 
     return (
         <AppBar position="static" sx={{ 
-            backgroundColor: '#8AA899',
+            backgroundColor: 'primary.main',
             boxShadow: '0 2px 8px rgba(138, 168, 153, 0.15)'
         }}>
             <Container maxWidth={false} >
@@ -50,7 +52,7 @@ function Navbar() {
                             '&:hover': {
                                 '& .logo-icon, & .logo-text': {
                                     transform: 'scale(1.1)',
-                                    color: '#D5B9B2'
+                                    color: 'primary.darker',
                                 }
                             }
                         }}
@@ -60,7 +62,7 @@ function Navbar() {
                             sx={{
                                 mr: 1,
                                 fontSize: '2rem',
-                                color: '#F5E6E8',
+                                color: 'secondary.light',
                                 transition: 'transform 0.3s ease, color 0.3s ease'
                             }}
                         />
@@ -74,7 +76,7 @@ function Navbar() {
                                 fontWeight: 600,
                                 letterSpacing: '0.2rem',
                                 fontSize: '1.4rem',
-                                color: '#F5E6E8',
+                                color: 'secondary.light', 
                                 transition: 'transform 0.3s ease, color 0.3s ease'
                             }}
                         >
@@ -88,7 +90,7 @@ function Navbar() {
                             size="large"
                             onClick={handleOpenNavMenu}
                             sx={{
-                                color: '#F5E6E8',
+                                color: 'secondary.light',
                                 '&:hover': {
                                     backgroundColor: 'rgba(245, 230, 232, 0.1)'
                                 }
@@ -113,7 +115,7 @@ function Navbar() {
                             sx={{ 
                                 display: { xs: 'block', md: 'none' },
                                 '& .MuiPaper-root': {
-                                    backgroundColor: '#8AA899',
+                                    backgroundColor: 'primary.main',
                                 }
                             }}
                         >
@@ -122,7 +124,7 @@ function Navbar() {
                                     key={page.name} 
                                     onClick={() => { handleCloseNavMenu(); window.location.href = `/#${page.path}`; }}
                                     sx={{
-                                        color: '#F5E6E8',
+                                        color: 'secondary.light',
                                         '&:hover': {
                                             backgroundColor: 'rgba(245, 230, 232, 0.1)'
                                         }
@@ -135,7 +137,7 @@ function Navbar() {
                                         letterSpacing: '0.1rem',
                                         transition: 'color 0.3s ease',
                                         '&:hover': {
-                                            color: '#D5B9B2'
+                                            color: 'primary.darker',
                                         }
                                     }}>
                                         {page.name}
@@ -145,7 +147,7 @@ function Navbar() {
                             <MenuItem 
                                 onClick={() => { handleCloseNavMenu(); window.location.href = '/#/login'; }}
                                 sx={{
-                                    color: '#F5E6E8',
+                                    color: 'secondary.light',
                                     '&:hover': {
                                         backgroundColor: 'rgba(245, 230, 232, 0.1)'
                                     }
@@ -158,7 +160,7 @@ function Navbar() {
                                     letterSpacing: '0.1rem',
                                     transition: 'color 0.3s ease',
                                     '&:hover': {
-                                        color: '#D5B9B2'
+                                        color: 'primary.darker',
                                     }
                                 }}>
                                     Logout
@@ -180,7 +182,7 @@ function Navbar() {
                             '&:hover': {
                                 '& .logo-icon, & .logo-text': {
                                     transform: 'scale(1.1)',
-                                    color: '#D5B9B2'
+                                    color: 'primary.darker',
                                 }
                             }
                         }}
@@ -190,7 +192,7 @@ function Navbar() {
                             sx={{
                                 mr: 1,
                                 fontSize: '1.8rem',
-                                color: '#F5E6E8',
+                                color: 'secondary.light',
                                 transition: 'transform 0.3s ease, color 0.3s ease'
                             }}
                         />
@@ -204,7 +206,7 @@ function Navbar() {
                                 fontWeight: 600,
                                 letterSpacing: '0.2rem',
                                 fontSize: '1.2rem',
-                                color: '#F5E6E8',
+                                color: 'secondary.light',
                                 transition: 'transform 0.3s ease, color 0.3s ease'
                             }}
                         >
@@ -221,7 +223,7 @@ function Navbar() {
                                 sx={{
                                     mx: 2,
                                     py: 1,
-                                    color: '#F5E6E8',
+                                    color: 'secondary.light',
                                     fontFamily: '"Helvetica Neue", Arial, sans-serif',
                                     fontWeight: 500,
                                     letterSpacing: '0.1rem',
@@ -234,11 +236,11 @@ function Navbar() {
                                         bottom: '5px',
                                         left: '50%',
                                         transform: 'translateX(-50%)',
-                                        backgroundColor: '#D5B9B2',
+                                        backgroundColor: 'primary.darker',
                                         transition: 'width 0.3s ease-in-out'
                                     },
                                     '&:hover': {
-                                        color: '#D5B9B2',
+                                        color: 'primary.darker',
                                         '&:after': {
                                             width: '80%'
                                         }
@@ -264,14 +266,17 @@ function Navbar() {
                             fontFamily: '"Helvetica Neue", Arial, sans-serif',
                             fontWeight: 500,
                             letterSpacing: '0.1rem',
-                            backgroundColor: '#D5B9B2',
-                            color: '#F5E6E8',
+                            color: 'secondary.light',
                             px: 3,
                             gap: 1,
                             transition: 'all 0.3s ease',
+                            //border: '2px solid',
+                            //borderColor: 'secondary.light',
+                            backgroundColor: "primary.dark",
                             '&:hover': {
-                                color: '#D5B9B2',
-                                backgroundColor: '#F5E6E8',
+                                color: 'primary.contrastText',
+                                backgroundColor: 'primary.darker',
+                                //borderColor: 'primary.dark',
                                 transform: 'translateY(-2px)'
                             }
                         }}
