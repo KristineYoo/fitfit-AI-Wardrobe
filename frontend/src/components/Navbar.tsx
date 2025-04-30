@@ -254,7 +254,7 @@ function Navbar() {
                     {/* would need more code here to handle logout, e.g: clear local storage */}
                     <Button
                         onClick={()=> {
-                            axios.put("/api/logout")
+                            axios.put("/api/auth/logout")
                             sessionStorage.setItem("login","False")
                             window.location.assign("/#/login")
                             window.location.reload()
