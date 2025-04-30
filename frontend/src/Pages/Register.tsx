@@ -1,4 +1,5 @@
 // frontend/src/Pages
+// 4-26-25 Mod Sophia Somers
 // Last changed by Bao Vuong, 6:30PM 4/26/2025
 
 import { useState } from 'react';
@@ -70,7 +71,7 @@ const RegisterPage = () => {
                 justifyContent: 'center',
                 alignItems: 'center',
                 height: '100vh',
-                bgcolor: '#f5f5f5'
+                //bgcolor: '#f5f5f5'
             }}
         >
             <Box
@@ -127,9 +128,10 @@ const RegisterPage = () => {
                         disabled={loading}
                         sx={{
                             mt: 2,
-                            bgcolor: '#8AA899',
+                            bgcolor: 'primary.main', //'#8AA899',
                             '&:hover': {
-                                bgcolor: '#a0b8ac'
+                                //color: 'secondary.main',
+                                bgcolor: 'primary.dark' //'#a0b8ac'
                             }
                         }}
                     >
@@ -138,7 +140,7 @@ const RegisterPage = () => {
                 </form>
 
                 <Typography variant="body2" align="center" sx={{ mb: 3, color: 'black' }}>
-                    Have an account? <Button href="/#/login" variant="text" size="small" sx={{ color: '#8AA899' }}>Login</Button>
+                    Have an account? <Button href="/#/login" variant="text" size="small" sx={{ color: 'primary.main', '&:hover': {color:'primary.dark'} }}>Login</Button>
                 </Typography>
             </Box>
         </Box>

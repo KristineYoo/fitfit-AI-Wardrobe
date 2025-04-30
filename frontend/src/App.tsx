@@ -1,3 +1,5 @@
+// 4-26-25 Mod Sophia Somers (added theme)
+
 import './App.css'
 import { HashRouter as Router, Routes, Route } from 'react-router-dom'
 import { Landing } from './Pages/Landing'
@@ -7,15 +9,17 @@ import { Login } from './Pages/Login'
 import { Outfits } from './Pages/Outfits'
 import Navbar from './components/Navbar'
 import RegisterPage from './Pages/Register'
-
+import { ThemeProvider } from '@mui/material/styles';
+import theme from './components/styling/Theme'
 
 //This is where we actually make our app
 //this file will house all of our pages
 
 function App() {
   return (
+    <ThemeProvider theme={theme}>
     <Router>
-
+      
       <Navbar />
       <Routes>
         <Route path="/" element={<Landing />} />
@@ -28,6 +32,7 @@ function App() {
       </Routes>
 
     </Router>
+    </ThemeProvider>
   )
 }
 
