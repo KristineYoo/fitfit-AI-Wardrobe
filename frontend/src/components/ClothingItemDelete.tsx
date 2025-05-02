@@ -1,3 +1,6 @@
+// frontend/src/components/ClothingItemDelete.tsx
+// Last changed by Bao Vuong, 6:28PM 4/26/2025
+
 import * as React from 'react';
 import axios from 'axios';
 import Box from '@mui/material/Box';
@@ -40,7 +43,7 @@ export default function DeleteItemModal() {
   const [data, setData] = useState([]);
 
   useEffect(() => {
-    axios.get("/api/relevantItems")
+    axios.get("/api/item/")
       .then((res) => {
         console.log(res.data); 
         setData(res.data.items || []); 
@@ -49,7 +52,7 @@ export default function DeleteItemModal() {
   }, []);
 
   const deleted = () => {
-    axios.delete("/api/delete-item/"+id)
+    axios.delete("/api/item/delete-item/"+id)
       .then(() => {
         window.location.reload();
       })

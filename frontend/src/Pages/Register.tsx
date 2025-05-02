@@ -1,6 +1,7 @@
-//4-26-25 Mod Sophia Somers
+// frontend/src/Pages
+// 4-26-25 Mod Sophia Somers
+// Last changed by Bao Vuong, 6:30PM 4/26/2025
 
-//imports
 import { useState } from 'react';
 import { Box, TextField, Button, Typography, Alert } from '@mui/material';
 import { useNavigate} from 'react-router-dom';
@@ -35,7 +36,7 @@ const RegisterPage = () => {
         // api 
         setLoading(true);
         try {
-            const response = await fetch('/api/register', {
+            const response = await fetch('/api/auth/register', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
