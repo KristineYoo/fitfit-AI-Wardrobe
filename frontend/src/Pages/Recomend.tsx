@@ -4,9 +4,10 @@
 
 import axios from 'axios';
 import { useState } from "react";
-import { Box, TextField, Typography } from '@mui/material'
+import { Box, IconButton, TextField, Tooltip, Typography } from '@mui/material'
 import FitRecWindow from '../components/FitRecWindow'
 import Typewriter from '../components/Typewriter';
+import QuestionMarkIcon from '@mui/icons-material/QuestionMark';
 
 
 export function Recomend() {
@@ -42,9 +43,14 @@ export function Recomend() {
         <Box sx={{bgcolor:"#f5f5f5", height:"130vh",  justifyContent: 'center',
           alignItems: 'center'}}>
             <Typography variant="h1" sx={{p:2, color:"primary.main"}}>Find a Fit!</Typography>
+            <Tooltip title="Enter your prompt here and hit enter to get your recommended fit" placement="right">
+            <IconButton>
+            <QuestionMarkIcon/>
+            </IconButton>
+            </Tooltip>
             <Box
         component="form"
-        sx={{ '& > :not(style)': { mt: 5, width: '100ch' , height: '10ch', bgcolor:"background"} }}
+        sx={{ '& > :not(style)': { mt: 5, width: '100ch' , height: '10ch', bgcolor:"background.main"} }}
       >
         <TextField 
         id="prompt box" 
