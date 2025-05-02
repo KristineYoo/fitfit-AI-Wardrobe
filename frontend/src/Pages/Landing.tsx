@@ -1,3 +1,6 @@
+// frontend/src/Pages/Landing.tsx
+// Last changed by Bao Vuong, 6:29PM 4/26/2025
+
 import axios from 'axios';
 import { useEffect } from "react";
 import { useState } from "react";
@@ -18,7 +21,7 @@ export function Landing(){
         console.log(inputValue);
         const data={"prompt": inputValue}
         setInputValue('')
-          axios.post("/api/recommend", data)
+          axios.post("/api/recommend/", data)
             .then((res) => {
               console.log(res.data); // Log for debugging
               setRecs(res.data.fits || []); // Assuming the response is like { items: [...] }
@@ -32,7 +35,7 @@ export function Landing(){
   }
     
     useEffect(() => {
-        axios.get('/api/relevantItems')
+        axios.get('/api/item/')
             .then((res) => {
                 console.log(res.data);
                 setData(res.data.items || []);

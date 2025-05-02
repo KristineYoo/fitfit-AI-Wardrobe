@@ -1,3 +1,6 @@
+// frontend/src/components/ItemThumbnail.tsx
+// Last changed by Bao Vuong, 6:29PM 4/26/2025
+
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
@@ -20,7 +23,7 @@ export default function ItemThumbnail({ item }: { item: Item }) {
   const handleCloseModal = () => setOpenModal(false);
 
   const deleted = () => {
-    axios.delete("/api/delete-item/" + String(item.id))
+    axios.delete("/api/item/delete-item/" + String(item.id))
       .then(() => {
         window.location.reload();
       })

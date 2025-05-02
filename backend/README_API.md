@@ -10,32 +10,8 @@ http://localhost:5000/api
 
 ## Endpoints
 
-### Get All Clothing Items
-**GET** `/items`
-
-#### Response:
-```json
-{
-    "items": [
-        {
-            "id": 1,
-            "name": "Pink Sweater",
-            "category": "sweater",
-            "brand": "Zara",
-            "size": "M",
-            "color": "pink",
-            "image": "data:image/jpeg;base64,/9j/4AAQSkZJRgABAQEASABIAAD/2wBD...",
-            "styling": { ... },
-            "purchaseInfo": { ... },
-            "status": { ... },
-            "fabric": { ... }
-        }
-    ]
-}
-```
-
 ### Get a Specific Clothing Item
-**GET** `/items/{item_id}`
+**GET** `/api/item/{item_id}`
 
 #### Request:
 ```
@@ -67,7 +43,7 @@ GET /items/1
 ```
 
 ### Recommend Outfit
-**GET** `/api/recommend`
+**GET** `/api/recommend/`
 
 #### Description:
 Returns three randomly selected clothing items to form an outfit.
@@ -88,7 +64,7 @@ Returns three randomly selected clothing items to form an outfit.
 ```
 
 ### Add a Clothing Item
-**POST** `/api/add-item`
+**POST** `/api/item/add-item`
 
 #### Description:
 Adds a new clothing item to the wardrobe.
@@ -135,7 +111,7 @@ or
 ```
 
 ### Update a Clothing Item
-**PUT** `/api/update-item/{item_id}`
+**PUT** `/api/item/update-item/{item_id}`
 
 #### Description:
 Updates the details of a specific clothing item.
@@ -166,7 +142,7 @@ Updates the details of a specific clothing item.
 ```
 
 ### Register a User
-**POST** `/api/register`
+**POST** `/api/auth/register`
 
 #### Description:
 Check if user exists in the database, if not, create a new user in the database
@@ -202,7 +178,7 @@ Check if user exists in the database, if not, create a new user in the database
 
 
 ### Login a user
-**PUT** `/api/login`
+**PUT** `/api/auth/login`
 
 ### Descriptions:
 Check to see if a username and password exsits and if they do sets that user as the active user
@@ -234,7 +210,7 @@ Check to see if a username and password exsits and if they do sets that user as 
 ```
 
 ### Logout a user
-**PUT** `/api/logout`
+**PUT** `/api/auth/logout`
 
 ### Descriptions:
 Logs out the active user
@@ -250,7 +226,7 @@ Logs out the active user
 ```
 
 ### Gets the items of the user
-**GET** `/api/relevantItems`
+**GET** `/api/item/`
 
 ### Descriptions:
 Returns the items registered to the active user
