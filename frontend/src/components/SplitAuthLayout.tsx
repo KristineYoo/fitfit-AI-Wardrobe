@@ -4,7 +4,7 @@ import { Box, useMediaQuery, useTheme } from "@mui/material";
 import { ReactNode } from "react";
 
 export default function SplitAuthLayout(props: {children: ReactNode}) {
-  const BACKGROUND_IMAGE_PATH = '/img/wardrobe_background_2.jpg';
+  const BACKGROUND_IMAGE_PATH = '/img/wardrobe_background.jpg';
   
   const theme = useTheme();
   const mdScreenUp = useMediaQuery(theme.breakpoints.up('md'));
