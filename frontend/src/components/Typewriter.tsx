@@ -1,3 +1,5 @@
+//Made by Iain Gore 5/2/25
+
 import React, { useState, useEffect } from 'react';
 
 interface TypewriterProps {
@@ -5,11 +7,11 @@ interface TypewriterProps {
   speed?: number; // Milliseconds per character, default to 50ms
 }
 
-const Typewriter: React.FC<TypewriterProps> = ({ texts, speed = 50 }) => {
+const Typewriter: React.FC<TypewriterProps> = ({ texts, speed}) => {
   const [displayedText, setDisplayedText] = useState('');
   const [index, setIndex] = useState(0);
   const [deleting, setdeleting] = useState(false);
-  const [textIndex, setTextIndex] = useState(0)
+  const [textIndex, setTextIndex] = useState(1)
   const [text, setText] = useState(texts[0])
 
   useEffect(() => {
