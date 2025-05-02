@@ -5,6 +5,7 @@ import { useEffect } from "react";
 import { useState } from "react";
 import { Box, Container, Paper, TextField, Typography } from '@mui/material'
 import FitRecWindow from '../components/FitRecWindow'
+import Typewriter from '../components/Typewriter';
 
 
 export function Recomend() {
@@ -13,11 +14,13 @@ export function Recomend() {
     const [inputValue, setInputValue] = useState('');
     const [rec, setRecs] = useState([])
     const [loadingR, setLoadingR] = useState(true);
+    const [done, setDone] = useState(true)
 
     const handleKeyPress = (e: React.KeyboardEvent<HTMLInputElement>) => {
-  
       if (e.key === "Enter") {
         console.log(inputValue);
+        setDone(false)
+        setRecs([])
         const data={"prompt": inputValue}
         setInputValue('')
           axios.post("/api/recommend", data)
@@ -26,6 +29,7 @@ export function Recomend() {
               setRecs(res.data.fits || []); // Assuming the response is like { items: [...] }
               console.log(rec)
               setLoadingR(false)
+              setDone(true)
 
             })
             .catch((err) => console.log(err));
@@ -72,7 +76,8 @@ export function Recomend() {
         
         />
       </Box>
-      { loadingR==false && <FitRecWindow recs={rec}/>}
+      {done==false && <Typography sx={{color:"black"}}> <Typewriter texts={["Hello There", "How are you", "this is the last"]} speed={100}></Typewriter></Typography>}
+      {loadingR==false && <FitRecWindow recs={rec}/>}
         </Box>
     )
 
