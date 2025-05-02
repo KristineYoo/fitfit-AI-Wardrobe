@@ -14,6 +14,7 @@ import Container from "@mui/material/Container";
 import { useState } from "react";
 import LogoutIcon from '@mui/icons-material/Logout';
 import axios from "axios";
+import { useLocation } from "react-router-dom";
 
 // I just put the style recommend there so that the web looks more balance, we can delete if want by removing that object
 const pages = [
@@ -23,6 +24,15 @@ const pages = [
 ];
 
 function Navbar() {
+    const location = useLocation();
+
+    if (
+        location.pathname === '/login' ||
+        location.pathname === '/register'
+    ) {
+        return null;
+    }
+
     const [anchorElNav, setAnchorElNav] = useState<null | HTMLElement>(null);
 
     const handleOpenNavMenu = (event: React.MouseEvent<HTMLButtonElement>) => {
