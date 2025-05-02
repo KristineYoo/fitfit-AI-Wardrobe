@@ -1,4 +1,6 @@
 // Modified by Bao Vuong, 5/2/2025 11:43AM
+// Modified by Bao VUong, 5/2/2025 12:26PM
+
 import { Alert, Box, Button, TextField, Typography } from "@mui/material";
 import axios from "axios";
 import { useState } from "react";
@@ -33,7 +35,7 @@ export function Login() {
             setUsername('')
             setPassword('')
             sessionStorage.setItem("login", "True")
-            navigate("/")
+            navigate("/home")
             console.log(response.data)
         })
         .catch(error => {
