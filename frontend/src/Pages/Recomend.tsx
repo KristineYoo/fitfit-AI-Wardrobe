@@ -1,11 +1,10 @@
 //Made by Iain Gore 4/25/25
-
+//Mod by Iain Gore 5/1/25
 import axios from 'axios';
 import { useEffect } from "react";
 import { useState } from "react";
 import { Box, Container, Paper, TextField, Typography } from '@mui/material'
 import FitRecWindow from '../components/FitRecWindow'
-import { Fit, Item } from '../types/jsonDataTypes'
 
 
 export function Recomend() {
@@ -51,32 +50,14 @@ export function Recomend() {
         return <Typography>Loading...</Typography>; 
     }
 
-    const all_items = data as Item[];
-    console.log(all_items[0])
-    const fit1: Fit = {
-        items: [all_items[0], all_items[3], all_items[4]],
-        tags: ["cute", "pink", "casual"]
-    };
-
-    const fit2: Fit = {
-        items: [all_items[2], all_items[5]],
-        tags:["clean","simple","casual","chill"]
-    };
-
-    var fit_recs:Fit[] = [fit1, fit2]
     
     return (
-        <Container sx={{height: "50vh"}}>
-            <Typography variant="h1" sx={{p:2}}>Find a Fit!</Typography>
-            <Paper 
-        elevation={5} 
-        sx={{pl:3, pr:3, pt:1, pb:1, m:2, width:'100%'}}
-      >
-        <Typography variant="h3" sx={{p:2}}>Recommendations</Typography>
-        { loadingR==false && <FitRecWindow recs={rec}/>}
+        <Box sx={{bgcolor:"#f5f5f5", height:"130vh",  justifyContent: 'center',
+          alignItems: 'center'}}>
+            <Typography variant="h1" sx={{p:2, color:"primary.main"}}>Find a Fit!</Typography>
             <Box
         component="form"
-        sx={{ '& > :not(style)': { m: 5, width: '100ch' , height: '10ch'} }}
+        sx={{ '& > :not(style)': { mt: 5, width: '100ch' , height: '10ch', bgcolor:"background"} }}
       >
         <TextField 
         id="prompt box" 
@@ -91,8 +72,8 @@ export function Recomend() {
         
         />
       </Box>
-      </Paper>
-        </Container>
+      { loadingR==false && <FitRecWindow recs={rec}/>}
+        </Box>
     )
 
 
