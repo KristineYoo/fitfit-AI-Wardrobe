@@ -16,11 +16,14 @@ const FloatingActionButton: React.FC = () => {
         <>
             <Fab
                 color="primary"
+
                 aria-label="add"
-                style={{
+                sx={{
                     position: "fixed",
                     bottom: "20px",
                     right: "20px",
+                    bgcolor: 'primary.dark',
+                    '&:hover': { bgcolor: 'primary.main', color: 'common.white' },
                 }}
                 onClick={handleOpen}
             >
