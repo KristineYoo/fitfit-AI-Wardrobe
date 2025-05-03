@@ -1,4 +1,6 @@
 // Mod by Sophia Somers, 4-26-2025
+// Modified by Bao Vuong, 5-2-2025 10:34 AM
+// Modified by Bao Vuong, 5-2-2025 12:25 PM
 
 import AppBar from "@mui/material/AppBar";
 import Toolbar from "@mui/material/Toolbar";
@@ -14,6 +16,7 @@ import Container from "@mui/material/Container";
 import { useState } from "react";
 import LogoutIcon from '@mui/icons-material/Logout';
 import axios from "axios";
+import { useLocation } from "react-router-dom";
 
 // I just put the style recommend there so that the web looks more balance, we can delete if want by removing that object
 const pages = [
@@ -23,6 +26,15 @@ const pages = [
 ];
 
 function Navbar() {
+    const location = useLocation();
+
+    if (
+        location.pathname === '/login' ||
+        location.pathname === '/register'
+    ) {
+        return null;
+    }
+
     const [anchorElNav, setAnchorElNav] = useState<null | HTMLElement>(null);
 
     const handleOpenNavMenu = (event: React.MouseEvent<HTMLButtonElement>) => {
@@ -42,7 +54,7 @@ function Navbar() {
                 <Toolbar disableGutters sx={{ minHeight: { xs: '56px', sm: '64px' } }}>
                     <Box
                         component="a"
-                        href="/#/"
+                        href="/#/home"
                         sx={{
                             display: { xs: 'none', md: 'flex' },
                             alignItems: 'center',
