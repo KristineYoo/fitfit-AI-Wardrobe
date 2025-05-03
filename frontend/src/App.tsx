@@ -1,9 +1,9 @@
 //Mod by Iain Gore 4/25/25
 
 // 4-26-25 Mod Sophia Somers (added theme)
-
+// Modified by Bao Vuong, 5/2/2025 12:24PM
 import './App.css'
-import { HashRouter as Router, Routes, Route } from 'react-router-dom'
+import { HashRouter as Router, Routes, Route, Navigate } from 'react-router-dom'
 import { Landing } from './Pages/Landing'
 import { Template } from './Pages/Template'
 import { Items } from './Pages/Items'
@@ -25,7 +25,7 @@ function App() {
       
       <Navbar />
       <Routes>
-        <Route path="/" element={<Landing />} />
+        <Route path="/" element={<Navigate to="/login"/>} />
         <Route path="/home" element={<Landing />} />
         <Route path="/recomend" element={<Recomend />} />
         <Route path="/outfits" element={<Outfits />} />
