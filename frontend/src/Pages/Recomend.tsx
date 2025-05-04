@@ -13,6 +13,7 @@ import QuestionMarkIcon from '@mui/icons-material/QuestionMark';
 export function Recomend() {
     const [inputValue, setInputValue] = useState('');
     const [rec, setRecs] = useState([])
+    const [clicked, setClicked] = useState(false);
     const [loadingR, setLoadingR] = useState(true);
     const [done, setDone] = useState(true)
     const handleKeyPress = (e: React.KeyboardEvent<HTMLInputElement>) => {
@@ -36,27 +37,40 @@ export function Recomend() {
     }
 
   }
-    
+
+    const handleFocus=()=>{
+      setClicked(true)
+    }
+
+    const handleBlur=()=>{
+      setClicked(false)
+    }
 
     
     return (
-        <Box sx={{bgcolor:"#f5f5f5", height:"130vh",  justifyContent: 'center',
-          alignItems: 'center'}}>
+      <div style={{ backgroundColor: '#f5f5f5', height:'100vh'}}>
+        <div style={{ backgroundColor: '#f5f5f5'}}>
             <Typography variant="h1" sx={{p:2, color:"primary.main"}}>Find a Fit!</Typography>
-            <Tooltip title="Enter your prompt here and hit enter to get your recommended fit" placement="right">
-            <IconButton>
-            <QuestionMarkIcon/>
-            </IconButton>
-            </Tooltip>
             <Box
         component="form"
         sx={{ '& > :not(style)': { mt: 5, width: '100ch' , height: '10ch', bgcolor:"background.main"} }}
       >
+
         <TextField 
-        id="prompt box" 
+        hiddenLabel
+        id="prompt box"
         value={inputValue} 
+        onFocus={handleFocus}
+        onBlur={handleBlur}
         onChange={(event) => setInputValue(event.target.value)} 
-        label="Enter Prompt" 
+        label={(!clicked && <Typewriter texts=
+          {
+          ["I need an formal outfit for an interview", 
+          "I need a pink themed outfit for a pool party", 
+          "Outfit with a chill vibe", "Recommend me an outfit that goes with a sun tatoo", 
+          "Cottage core mixed with light academina ", "I want to look like a knight in shining board shorts"]
+        } speed={50}></Typewriter>) 
+        || clicked && "Enter prompt"}
         variant="outlined" 
         fullWidth  
         onKeyUp={handleKeyPress} 
@@ -67,7 +81,8 @@ export function Recomend() {
       </Box>
       {done==false && <Typography sx={{color:"black"}}> <Typewriter texts={["Loading your items", "Pulling weather data", "Compling your fits"]} speed={100}></Typewriter></Typography>}
       {loadingR==false && <FitRecWindow recs={rec}/>}
-        </Box>
+        </div>
+      </div>
     )
 
 
