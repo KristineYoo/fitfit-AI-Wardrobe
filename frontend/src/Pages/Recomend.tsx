@@ -4,10 +4,9 @@
 
 import axios from 'axios';
 import { useState } from "react";
-import { Box, IconButton, TextField, Tooltip, Typography } from '@mui/material'
+import { Box, TextField, Typography } from '@mui/material'
 import FitRecWindow from '../components/FitRecWindow'
 import Typewriter from '../components/Typewriter';
-import QuestionMarkIcon from '@mui/icons-material/QuestionMark';
 
 
 export function Recomend() {
@@ -53,7 +52,7 @@ export function Recomend() {
             <Typography variant="h1" sx={{p:2, color:"primary.main"}}>Find a Fit!</Typography>
             <Box
         component="form"
-        sx={{ '& > :not(style)': { mt: 5, width: '100ch' , height: '10ch', bgcolor:"background.main"} }}
+        sx={{ '& > :not(style)': { mt: 5, width: '100vw' , height: '10ch', bgcolor:"background.main"} }}
       >
 
         <TextField 
@@ -72,15 +71,18 @@ export function Recomend() {
         } speed={50}></Typewriter>) 
         || clicked && "Enter prompt"}
         variant="outlined" 
-        fullWidth  
         onKeyUp={handleKeyPress} 
         multiline
         color="primary"
         
         />
       </Box>
-      {done==false && <Typography sx={{color:"black"}}> <Typewriter texts={["Loading your items", "Pulling weather data", "Compling your fits"]} speed={100}></Typewriter></Typography>}
+      <Box
+      sx={{display: 'flex', justifyContent: 'center', alignItems: 'center'}}
+      >
+      {done==false && <Typography sx={{color:"black"}}> <Typewriter texts={["Loading your items", "Pulling weather data", "Compling your fits"]} speed={50}></Typewriter></Typography>}
       {loadingR==false && <FitRecWindow recs={rec}/>}
+      </Box>
         </div>
       </div>
     )
