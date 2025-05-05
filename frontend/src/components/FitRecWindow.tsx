@@ -1,4 +1,4 @@
-// Mod by Iain Gore 5/1/25
+// Most recent mod: Iain Gore 5/5/25
 
 import {Paper, Grid2, Typography, Box, TextField} from '@mui/material';
 import { FitThumbnail } from './FitThumbnail';
