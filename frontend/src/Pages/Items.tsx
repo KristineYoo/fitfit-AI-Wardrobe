@@ -22,8 +22,7 @@ export function Items() {
   }, []);
 
   return (
-    <>
-
+    <Box sx={{ backgroundColor: 'white', minHeight: '100vh' }}>
       <FloatingActionButton />
       <DeleteItemModal />
       <Box sx={{ m: 3 }}>
@@ -36,7 +35,6 @@ export function Items() {
                 sm={6}
                 md={6}
                 lg={3}
-                xl={2.4} // 5 per row on extra large screens (MUI v5+)
                 key={item.id}
               >
                 <ItemThumbnail item={item} />
@@ -45,6 +43,6 @@ export function Items() {
           )}
         </Grid>
       </Box>
-    </>
+    </Box>
   );
 }
