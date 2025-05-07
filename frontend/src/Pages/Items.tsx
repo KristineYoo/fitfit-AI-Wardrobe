@@ -22,7 +22,7 @@ export function Items() {
   }, []);
 
   return (
-    <Box sx={{ backgroundColor: 'white' }}>
+    <Box sx={{ backgroundColor: 'white', height: '100vh', marginTop: -1 }}>
       <FloatingActionButton />
       <DeleteItemModal />
       <Box sx={{ m: 3 }}>
