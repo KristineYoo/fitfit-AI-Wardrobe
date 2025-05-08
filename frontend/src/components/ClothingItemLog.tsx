@@ -173,6 +173,7 @@ const LogItemModal: React.FC<LogItemModalProps> = ({ open, onClose, item }) => {
     try {
       if (item && item.id) {
         await axios.put(`/api/item/update-item/${item.id}`, itemData);
+        sessionStorage.setItem("Status", "Add")
         console.log('Item updated successfully');
       } else {
         await axios.post('/api/item/add-item', itemData);

@@ -54,6 +54,8 @@ export default function DeleteItemModal() {
   const deleted = () => {
     axios.delete("/api/item/delete-item/"+id)
       .then(() => {
+        window.sessionStorage.setItem("Status", "Delete")
+        console.log(window.sessionStorage.getItem("Status"))
         window.location.reload();
       })
       .catch((err) => console.log(err));

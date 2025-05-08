@@ -11,9 +11,37 @@ import { useEffect } from "react";
 import { useState } from "react";
 import { Item } from "../types/jsonDataTypes";
 import DeleteItemModal from '../components/ClothingItemDelete.tsx';
+import { Snackbar } from '@mui/material';
 
 export function Items() {
   const [data, setData] = useState([]);
+  const [del, setDelete] = useState(false);
+  const[add, setAdd] = useState(false)
+
+  const handleDelClose= () => {
+    setDelete(false)
+
+  }
+
+  const handleAddClose= () => {
+    setAdd(false)
+
+  }
+
+  useEffect(() => {
+    const stat= sessionStorage.getItem("Status")
+    console.log(stat)
+    if (stat=="Delete") {
+      setDelete(true)
+      sessionStorage.setItem("Status", "none")
+      console.log("deleted")
+    }
+    if (stat=="Add") {
+      setAdd(true)
+      sessionStorage.setItem("Status", "none")
+      console.log("added")
+    }
+  })
 
   useEffect(() => {
     axios.get("/api/item/")
@@ -47,6 +75,18 @@ export function Items() {
             })
           }
         </Grid>
+        <Snackbar
+        open={add}
+        autoHideDuration={6000}
+        onClose={handleAddClose}
+        message="Item Added"
+      />
+      <Snackbar
+        open={del}
+        autoHideDuration={6000}
+        onClose={handleDelClose}
+        message="Item deleted"
+      />
       </Box>
     </>
   )
