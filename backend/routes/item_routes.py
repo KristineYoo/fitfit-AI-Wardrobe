@@ -77,7 +77,6 @@ def add_item():
 @login_required
 def update_item(item_id):
     updated_item = request.get_json()
-    updated_item["embedding"] = get_embedding(stringify(updated_item)).tolist()
     item = ClothingItem.query.get(item_id)
 
     if not item:
@@ -86,6 +85,18 @@ def update_item(item_id):
     if item.user_id != get_current_user_id():
         return jsonify({"message": "Unauthorized access"}), 403
     
+    updated_item["embedding"] = get_embedding(stringify(updated_item)).tolist()
+    # Dealing with the image upload
+    try:
+        if updated_item.get("image") != None:
+            filename = save_image(updated_item)
+        else:
+            filename = item.image
+    except:
+        filename = "default.png"
+    # Update the item data with the file path instead of the base64 string
+    updated_item['image'] = filename
+
     # update fields
     for field in ["name", "note", "category", "color", "styling", "visibility", "fabric", "embedding", "image"]:
         if field in updated_item:
