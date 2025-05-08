@@ -1,5 +1,6 @@
 // frontend/src/Pages/Items.tsx
 // Last changed by Bao Vuong, 6:29PM 4/26/2025
+// last changed by Kristine Yoo, 7:29 5/8/2025
 
 import ItemThumbnail from '../components/ItemThumbnail.tsx';
 import FloatingActionButton from '../components/floatingEditButton.tsx';
