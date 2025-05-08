@@ -1,6 +1,6 @@
 # backend/routes/item_routes.py
 # Refactored by Bao Vuong, 6:23PM 4/26/2025
-
+# Modified by Bao Vuong, 5:29PM 5/8/2025
 from flask import Blueprint, request, jsonify, session
 from models import ClothingItem, db
 from .auth_helpers import login_required, get_current_user_id
