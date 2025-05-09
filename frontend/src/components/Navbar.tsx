@@ -1,3 +1,5 @@
+//Mod by Iain Gore 4/25/25
+
 // Mod by Sophia Somers, 4-26-2025
 // Modified by Bao Vuong, 5-2-2025 10:34 AM
 // Modified by Bao Vuong, 5-2-2025 12:25 PM
@@ -22,7 +24,7 @@ import { useLocation } from "react-router-dom";
 const pages = [
     { name: "Wardrobe", path: "/items" },
     { name: "Outfits", path: "/outfits" },
-    { name: "Style Recommend", path: "/template" }
+    { name: "Style Recommend", path: "/recomend" }
 ];
 
 function Navbar() {
