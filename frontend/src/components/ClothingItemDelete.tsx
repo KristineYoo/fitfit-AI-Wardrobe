@@ -33,9 +33,10 @@ const style = {
 export default function DeleteItemModal() {
   const [open, setOpen] = React.useState<boolean>(false);
   const handleOpen = () => setOpen(true);
-  const handleClose = () => {setOpen(false);
+  const handleClose = () => {
+    setOpen(false);
     window.location.reload();
-  } 
+  }
   const [id, setId] = useState('');
   const handleChange = (event: SelectChangeEvent) => {
     setId(event.target.value as string);
@@ -45,14 +46,14 @@ export default function DeleteItemModal() {
   useEffect(() => {
     axios.get("/api/item/")
       .then((res) => {
-        console.log(res.data); 
-        setData(res.data.items || []); 
+        console.log(res.data);
+        setData(res.data.items || []);
       })
       .catch((err) => console.log(err));
   }, []);
 
   const deleted = () => {
-    axios.delete("/api/item/delete-item/"+id)
+    axios.delete("/api/item/delete-item/" + id)
       .then(() => {
         window.location.reload();
       })
@@ -66,9 +67,12 @@ export default function DeleteItemModal() {
         sx={{
           position: 'fixed',
           bottom: 16,
-          left: 16
+          left: 16,
+          bgcolor: '#f5e6e8',
+          '&:hover': { bgcolor: 'error.main', color: 'common.white' },
+
         }}
-        color="primary"
+        color="error"
         aria-label="add"
         onClick={handleOpen} >
         <RemoveIcon />
@@ -92,9 +96,9 @@ export default function DeleteItemModal() {
             >
               {
                 data.map((item: Item) => (
-                  <MenuItem value={item.id}>{item.deleted==false && item.name}</MenuItem>
+                  <MenuItem value={item.id}>{item.deleted == false && item.name}</MenuItem>
                 ))
-                }
+              }
             </Select>
           </FormControl>
           <DialogActions>
