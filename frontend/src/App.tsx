@@ -1,3 +1,5 @@
+//Mod by Iain Gore 4/25/25
+
 // 4-26-25 Mod Sophia Somers (added theme)
 // Modified by Bao Vuong, 5/2/2025 12:24PM
 import './App.css'
@@ -7,6 +9,7 @@ import { Template } from './Pages/Template'
 import { Items } from './Pages/Items'
 import { Login } from './Pages/Login'
 import { Outfits } from './Pages/Outfits'
+import { Recomend } from './Pages/Recomend'
 import Navbar from './components/Navbar'
 import RegisterPage from './Pages/Register'
 import { ThemeProvider } from '@mui/material/styles';
@@ -24,7 +27,7 @@ function App() {
       <Routes>
         <Route path="/" element={<Navigate to="/login"/>} />
         <Route path="/home" element={<Landing />} />
-        <Route path="/template" element={<Template />} />
+        <Route path="/recomend" element={<Recomend />} />
         <Route path="/outfits" element={<Outfits />} />
         <Route path="/login" element={<Login />} />
         <Route path="/items" element={<Items />} />

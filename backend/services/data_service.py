@@ -1,14 +1,27 @@
 # backend/services/data_service.py
 # Created by Bao Vuong, 6:26PM 4/26/2025
+# Mod by Sophia, 5/7/25
 
 from models import ClothingItem
+#from flask_sqlalchemy import or_
 
 # Load clothing items that belong to a user.
 # @param user_id: ID of the user
 # @param include_deleted: If True, include soft-deleted items
 # @return: List of ClothingItem objects
-def load_user_clothing_items(user_id, include_deleted=False):
-    query = ClothingItem.query.filter_by(user_id=user_id)
+def load_user_clothing_items(user_id, include_deleted=False, search=None):
+    query = ClothingItem.query.filter(ClothingItem.user_id==user_id)
+    print("SEARCH THERM:",search)
+    if search != None:
+        print("refining query...")
+        search_pattern = f"%{search}%"
+        query = query.filter(
+            (
+                ClothingItem.name.ilike(search_pattern) |
+                ClothingItem.category.ilike(search_pattern) |
+                ClothingItem.note.ilike(search_pattern)
+            )
+        )
     # if don't include soft-deleted items
     if not include_deleted:
         query = query.filter_by(deleted=False)
