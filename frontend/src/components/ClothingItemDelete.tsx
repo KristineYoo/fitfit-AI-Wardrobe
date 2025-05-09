@@ -1,5 +1,6 @@
 // frontend/src/components/ClothingItemDelete.tsx
 // Last changed by Bao Vuong, 6:28PM 4/26/2025
+// Mod by Iain Gore 5/9/25
 
 import * as React from 'react';
 import axios from 'axios';
@@ -32,6 +33,7 @@ const style = {
 
 export default function DeleteItemModal() {
   const [open, setOpen] = React.useState<boolean>(false);
+  const [mess, setMess] = useState("")
   const handleOpen = () => setOpen(true);
   const handleClose = () => {
     setOpen(false);
@@ -52,12 +54,19 @@ export default function DeleteItemModal() {
       .catch((err) => console.log(err));
   }, []);
 
+  useEffect(() => {
+    if (mess!="") {
+      sessionStorage.setItem("Status", mess)
+    }
+  })
+
   const deleted = () => {
     axios.delete("/api/item/delete-item/" + id)
       .then(() => {
+        setMess("Delete")
         window.location.reload();
       })
-      .catch((err) => console.log(err));
+      .catch((err) => setMess("Error"));
   }
 
 
