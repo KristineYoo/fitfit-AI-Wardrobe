@@ -45,7 +45,7 @@ export function Items() {
   };
 
   return (
-    <Box sx={{ backgroundColor: 'white', height: '100vh', marginTop: -1 }}>
+    <Box sx={{ backgroundColor: 'white', minHeight: '100vh', marginTop: -1, pb: 8 }}>
       <FloatingActionButton />
       <DeleteItemModal />
       <ItemSearchBar setSearchTerm={setSearchTerm} />
