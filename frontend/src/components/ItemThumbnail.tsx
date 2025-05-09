@@ -12,22 +12,30 @@ import { Box, Button } from '@mui/material';
 import axios from 'axios';
 import RemoveIcon from '@mui/icons-material/Remove';
 import LogItemModal from './ClothingItemLog.tsx';
-import React from 'react';
+import React, { use, useEffect, useState } from 'react';
 import EditIcon from '@mui/icons-material/Edit';
 
 
 export default function ItemThumbnail({ item }: { item: Item }) {
   const [openModal, setOpenModal] = React.useState(false);
+  const [mess, setMess] = useState("")
 
   const handleOpenModal = () => setOpenModal(true);
   const handleCloseModal = () => setOpenModal(false);
 
+  useEffect(() => {
+      if (mess!="") {
+        sessionStorage.setItem("Status", mess)
+      }
+    })
+
   const deleted = () => {
     axios.delete("/api/item/delete-item/" + String(item.id))
       .then(() => {
+        setMess("Delete")
         window.location.reload();
       })
-      .catch((err) => console.log(err));
+      .catch((err) => setMess("Error"));
   }
   if (item.deleted == false && item.visibility == "shown")
     return (

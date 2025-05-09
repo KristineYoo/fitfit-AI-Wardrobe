@@ -32,6 +32,7 @@ const style = {
 
 export default function DeleteItemModal() {
   const [open, setOpen] = React.useState<boolean>(false);
+  const [mess, setMess] = useState("")
   const handleOpen = () => setOpen(true);
   const handleClose = () => {setOpen(false);
     window.location.reload();
@@ -45,20 +46,26 @@ export default function DeleteItemModal() {
   useEffect(() => {
     axios.get("/api/item/")
       .then((res) => {
-        console.log(res.data); 
         setData(res.data.items || []); 
       })
       .catch((err) => console.log(err));
   }, []);
 
+  useEffect(() => {
+    if (mess!="") {
+      sessionStorage.setItem("Status", mess)
+    }
+  })
+
   const deleted = () => {
+    window.localStorage.setItem("Status", "Delete")
+    console.log(window.localStorage.getItem("Status"))
     axios.delete("/api/item/delete-item/"+id)
       .then(() => {
-        window.sessionStorage.setItem("Status", "Delete")
-        console.log(window.sessionStorage.getItem("Status"))
+        setMess("Delete")
         window.location.reload();
       })
-      .catch((err) => console.log(err));
+      .catch((err) => setMess("Error"));
   }
 
 
