@@ -1,5 +1,7 @@
 # backend/routes/item_routes.py
 # Refactored by Bao Vuong, 6:23PM 4/26/2025
+# Mod by Sophia Somers 5/7/25
+
 # Modified by Bao Vuong, 5:29PM 5/8/2025
 from flask import Blueprint, request, jsonify, session
 from models import ClothingItem, db
@@ -15,9 +17,17 @@ item_bp = Blueprint('item', __name__, url_prefix='/api/item')
 @item_bp.route('/', methods=["GET"])
 @login_required
 def get_items():
+    query=request.args.get("term")
+    print("QUERY:",query)
+
     current_user_id = get_current_user_id()
 
-    items = load_user_clothing_items(current_user_id)
+    items = []
+    if query != None:
+        items = load_user_clothing_items(current_user_id, search=query)
+        print(items)
+    else:
+        items = load_user_clothing_items(current_user_id)
     
     # serialize SQLAlchemy object into dictionary
     serialized_items = serialize_items(items)
