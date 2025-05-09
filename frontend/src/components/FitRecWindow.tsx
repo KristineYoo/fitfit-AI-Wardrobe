@@ -1,3 +1,5 @@
+// Most recent mod: Iain Gore 5/5/25
+
 import {Paper, Grid2, Typography, Box, TextField} from '@mui/material';
 import { FitThumbnail } from './FitThumbnail';
 import { Fit } from '../types/jsonDataTypes';
@@ -12,9 +14,8 @@ export default function FitRecWindow( {recs} : {recs:Fit[]} ) {
         <Typography 
           variant="h3" 
           sx={{
-            p:2,
             pb:4,
-            color: 'primary',
+            color: 'primary.main',
             fontWeight: 'bold',
             letterSpacing: 1.5,
             textAlign: 'center'
@@ -22,10 +23,11 @@ export default function FitRecWindow( {recs} : {recs:Fit[]} ) {
         >
           Recommended Fits
         </Typography>
-        <Grid2 container spacing={4}>
+        <Grid2 
+        container spacing={4} >
           {
             recs.map((rec:Fit, i:number) => (
-              <Grid2 size={{xs:12, sm:6, md:4, xl:3}}>
+              <Grid2 size={{xs:12, sm:12, md:12, xl:12}} sx={{display: 'flex', justifyContent: 'center', alignItems: 'center'}}>
                 <FitThumbnail rec={rec} key={"fitThumbnail"+i}/>
               </Grid2>
             ))
