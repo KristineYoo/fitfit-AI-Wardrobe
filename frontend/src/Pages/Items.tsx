@@ -123,6 +123,7 @@ export function Items() {
         open={add}
         autoHideDuration={6000}
         onClose={handleAddClose}
+        anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
       >
         <Alert
           onClose={handleAddClose}
@@ -137,6 +138,7 @@ export function Items() {
         open={up}
         autoHideDuration={6000}
         onClose={handleUpClose}
+        anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
       
       >
       <Alert
@@ -152,6 +154,7 @@ export function Items() {
         open={error}
         autoHideDuration={6000}
         onClose={handleErrorClose}
+        anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
       >
         <Alert
           onClose={handleErrorClose}
@@ -166,6 +169,7 @@ export function Items() {
         open={del}
         autoHideDuration={6000}
         onClose={handleDelClose}
+        anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
       >
         <Alert
           onClose={handleDelClose}
