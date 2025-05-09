@@ -1,5 +1,6 @@
 // frontend/src/components/ClothingItemDelete.tsx
 // Last changed by Bao Vuong, 6:28PM 4/26/2025
+// Mod by Iain Gore 5/9/25
 
 import * as React from 'react';
 import axios from 'axios';

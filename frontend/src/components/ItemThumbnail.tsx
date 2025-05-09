@@ -1,5 +1,6 @@
 // frontend/src/components/ItemThumbnail.tsx
 // Last changed by Bao Vuong, 6:29PM 4/26/2025
+// Mod by Iain Gore 5/9/25
 
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';

@@ -1,6 +1,7 @@
 // frontend/src/Pages/Items.tsx
 // Last changed by Bao Vuong, 6:29PM 4/26/2025
 // Mod by Sophia Somers 5/8/25
+// Mod by Iain Gore 5/9/25
 
 // import data from '../../data/WardrobeData.json'
 import ItemThumbnail from '../components/ItemThumbnail.tsx'
