@@ -1,5 +1,6 @@
 // frontend/src/Pages/Items.tsx
 // Last changed by Bao Vuong, 6:29PM 4/26/2025
+// Mod by Sophia Somers 5/8/25
 
 // import data from '../../data/WardrobeData.json'
 import ItemThumbnail from '../components/ItemThumbnail.tsx'
@@ -15,23 +16,48 @@ import ItemSearchBar from '../components/ItemSearchBar.tsx';
 
 export function Items() {
   const [data, setData] = useState([]);
+  const [searchTerm, setSearchTerm] = useState<string>('');
+  const [loading, setLoading] = useState<boolean>(false);
+  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    axios.get("/api/item/")
-      .then((res) => {
-        console.log(res.data); // Log for debugging
-        setData(res.data.items || []); // Assuming the response is like { items: [...] }
-      })
-      .catch((err) => console.log(err));
-  }, []);
 
+    //make a 500ms delay between searching db
+    const timeout = setTimeout(() => {
+        fetchData();
+    }, 200);
+
+    return (() => clearTimeout(timeout))
+  }, [searchTerm]);
+
+  //make API call
+  const fetchData = async () => {
+    setLoading(true);
+    axios.get('/api/item/', {
+        params: {term: searchTerm}
+    })
+    .then(response => {
+        //set info here
+        setData(response.data.items || []);
+        console.log(response.data)
+    })
+    .catch(error => {
+        setError("An error occured. Please try again later.");
+        console.log(error.response.data);
+    })
+    .finally(() => {
+        setLoading(false)
+    });
+  }
   
   return (
     <>
       <h1>Items Page</h1>
       <FloatingActionButton />
       <DeleteItemModal></DeleteItemModal>
-      <ItemSearchBar></ItemSearchBar>
+      <ItemSearchBar
+        setSearchTerm={setSearchTerm}
+      ></ItemSearchBar>
       <Box sx={{ m: 4 }}>
         <Grid container spacing={3}>
           {

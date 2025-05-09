@@ -1,50 +1,8 @@
+// Created by Sophia Somers 5/8/25
 import { Box, TextField } from '@mui/material'
-import { useState, ChangeEvent, useEffect } from 'react'
-import { Item } from '../types/jsonDataTypes';
-import axios from "axios";
+import { ChangeEvent } from 'react'
 
-
-export default function ItemSearchBar(): JSX.Element {
-    const [searchTerm, setSearchTerm] = useState<string>('');
-    const [results, setResults] = useState<Item[] | null>(null);
-    const [loading, setLoading] = useState<boolean>(false);
-    const [error, setError] = useState<string | null>(null);
-
-    useEffect(() => {
-        //don't query db for empty searches
-        if(!searchTerm.trim()){
-            setResults([]);
-            return;
-        }
-
-        //make a 500ms delay between searching db
-        const timeout = setTimeout(() => {
-            fetchData();
-        }, 500);
-
-        return (() => clearTimeout(timeout))
-
-    }, [searchTerm]);
-
-    //make API call
-    const fetchData = async () => {
-        setLoading(true);
-        axios.get('/api/item/', {
-            params: {term: searchTerm}
-        })
-        .then(response => {
-            //set info here
-            setResults(response.data)
-            console.log(response.data)
-        })
-        .catch(error => {
-            setError("An error occured. Please try again later.");
-            console.log(error.response.data);
-        })
-        .finally(() => {
-            setLoading(false)
-        });
-    }
+export default function ItemSearchBar({setSearchTerm }:{setSearchTerm:(value: string) => void}): JSX.Element {
 
     const handleChange = (event: ChangeEvent<HTMLInputElement>): void => {
         setSearchTerm(event.target.value)
@@ -52,6 +10,8 @@ export default function ItemSearchBar(): JSX.Element {
 
     return (
         <>
+        {// CREDIT: Styling by ChatGPT, 5/7/25
+        }
         <Box
             sx={{
                 display: 'flex',
