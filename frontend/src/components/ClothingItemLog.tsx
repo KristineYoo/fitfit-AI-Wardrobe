@@ -1,5 +1,6 @@
 // frontend/src/components/ClothingItemLog.tsx
 // Last changed by Bao Vuong, 6:28PM 4/26/2025
+// Mod by Iain Gore 5/9/25
 // Modified by Bao Vuong, 7:05PM 5/10/2025
 
 import React, { useState, useEffect } from 'react';
@@ -95,6 +96,7 @@ const LogItemModal: React.FC<LogItemModalProps> = ({ open, onClose, item }) => {
     const [imagePreview, setImagePreview] = React.useState<string | null>(null);
 
 
+
     useEffect(() => {
         if (item) {
             const initial = {
@@ -177,15 +179,18 @@ const LogItemModal: React.FC<LogItemModalProps> = ({ open, onClose, item }) => {
         try {
             if (item && item.id) {
                 await axios.put(`/api/item/update-item/${item.id}`, itemData);
+                sessionStorage.setItem("Status", "Update")
                 console.log('Item updated successfully');
             } else {
                 await axios.post('/api/item/add-item', itemData);
+                sessionStorage.setItem("Status", "Add")
                 console.log('Item added successfully');
             }
             onClose();
             window.location.reload();
         } catch (error) {
             console.error('Error saving item:', error);
+            sessionStorage.setItem("Status", "Error")
             alert('Failed to save item. Please try again.');
         }
     };
