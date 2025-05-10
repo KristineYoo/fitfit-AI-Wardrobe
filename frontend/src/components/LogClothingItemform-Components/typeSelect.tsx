@@ -1,3 +1,5 @@
+// Modified by Bao Vuong 7:07PM 5/10/2025
+
 import React from 'react';
 import Box from '@mui/material/Box';
 import InputLabel from '@mui/material/InputLabel';
@@ -30,7 +32,7 @@ const TypeSelect: React.FC<TypeSelectProps> = ({ value, onChange }) => {
     };
 
     return (
-        <Box sx={{ minWidth: 400, my: 2 }}>
+        <Box sx={{ minWidth: '100%', my: 1 }}>
             <FormControl fullWidth>
                 <InputLabel id="selectType-logClothing-label">Select Category</InputLabel>
                 <Select

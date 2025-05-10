@@ -1,3 +1,5 @@
+// Modified by Bao Vuong 7:07PM 5/10/2025
+
 import { Theme, useTheme } from '@mui/material/styles';
 import Box from '@mui/material/Box';
 import OutlinedInput from '@mui/material/OutlinedInput';
@@ -55,7 +57,7 @@ export default function OccasionTagList({ selectedOccasions, onChange }: Occasio
     };
 
     return (
-        <FormControl sx={{ my: 2, width: 400 }}>
+        <FormControl sx={{ my: 2, width: '100%' }}>
             <InputLabel>Select Occasion</InputLabel>
             <Select
                 multiple

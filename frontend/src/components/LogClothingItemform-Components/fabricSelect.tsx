@@ -1,3 +1,4 @@
+// Modified by Bao VUong 7:07PM 5/10/2025
 
 import { Theme, useTheme } from '@mui/material/styles';
 import Box from '@mui/material/Box';
@@ -96,7 +97,7 @@ export default function FabricSelect({ selectedFabrics, onFabricChange }: Fabric
     };
 
     return (
-        <FormControl sx={{ my: 2, width: 400 }}>
+        <FormControl sx={{ my: 2, width: '100%' }}>
             <InputLabel>Select Fabric</InputLabel>
             <Select
                 multiple
