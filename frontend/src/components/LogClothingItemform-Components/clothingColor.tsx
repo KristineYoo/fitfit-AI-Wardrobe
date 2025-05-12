@@ -1,4 +1,5 @@
 // Modified by Bao Vuong 7:07PM 5/10/2025
+// Modified by Bao Vuong 11:19AM 5/12/2025
 
 import * as React from 'react';
 import { Theme, useTheme } from '@mui/material/styles';
@@ -79,7 +80,7 @@ export default function ColorSelector({ onColorChange }: ColorSelectorProps) {
     return (
         <div>
             <FormControl sx={{ my: 2, width: '100%' }}>
-                <InputLabel id="color-selector-label">Select Colors</InputLabel>
+                <InputLabel id="color-selector-label"  sx={{backgroundColor: 'white', paddingRight: '4px'}}>Select Colors</InputLabel>
                 <Select
                     labelId="color-selector-label"
                     id="color-selector"

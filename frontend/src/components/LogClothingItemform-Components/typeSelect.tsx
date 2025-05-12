@@ -1,4 +1,5 @@
 // Modified by Bao Vuong 7:07PM 5/10/2025
+// Modified by Bao Vuong 11:19AM 5/12/2025
 
 import React from 'react';
 import Box from '@mui/material/Box';
@@ -34,7 +35,7 @@ const TypeSelect: React.FC<TypeSelectProps> = ({ value, onChange }) => {
     return (
         <Box sx={{ minWidth: '100%', my: 1 }}>
             <FormControl fullWidth>
-                <InputLabel id="selectType-logClothing-label">Select Category</InputLabel>
+                <InputLabel id="selectType-logClothing-label" sx={{backgroundColor: 'white', paddingRight: '4px'}}>Select Category</InputLabel>
                 <Select
                     labelId="selectType-logClothing-label"
                     id="selectType-logClothing"

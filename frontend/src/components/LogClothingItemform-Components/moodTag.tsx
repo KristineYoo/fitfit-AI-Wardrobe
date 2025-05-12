@@ -1,4 +1,5 @@
 // Modified by Bao VUong 7:07PM 5/10/2025
+// Modified by Bao Vuong 11:19AM 5/12/2025
 
 import { Theme, useTheme } from '@mui/material/styles';
 import Box from '@mui/material/Box';
@@ -58,7 +59,7 @@ export default function MoodTagList({ selectedMoods, onChange }: MoodTagListProp
 
     return (
         <FormControl sx={{ my: 2, width: '100%' }}>
-            <InputLabel>Select Mood</InputLabel>
+            <InputLabel  sx={{backgroundColor: 'white', paddingRight: '4px'}}>Select Mood</InputLabel>
             <Select
                 multiple
                 value={selectedMoods}
