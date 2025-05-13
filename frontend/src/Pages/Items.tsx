@@ -2,6 +2,7 @@
 // Last changed by Bao Vuong, 6:29PM 4/26/2025
 // last changed by Kristine Yoo, 7:29 5/8/2025
 // Mod by Sophia Somers 5/8/25
+// Mod by Sophia Somers 5/12/25
 import ItemThumbnail from '../components/ItemThumbnail.tsx';
 import FloatingActionButton from '../components/floatingEditButton.tsx';
 import Grid from '@mui/material/Grid2';
@@ -83,7 +84,7 @@ export function Items() {
       params: { term: searchTerm }
     })
       .then(response => {
-        setError("");
+        setError(false);
         setData(response.data.items || []);
       })
       .catch(error => {
