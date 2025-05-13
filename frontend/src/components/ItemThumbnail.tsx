@@ -33,13 +33,23 @@ const ItemThumbnail: React.FC<ItemThumbnailProps> = ({ item }) => {
   const chipsContainerRef = useRef<HTMLDivElement>(null);
   const chipRefs = useRef<(HTMLDivElement | null)[]>([]);
 
+  const [mess, setMess] = useState("")
+
   const handleOpenModal = () => setOpenModal(true);
   const handleCloseModal = () => setOpenModal(false);
 
+  useEffect(() => {
+      if (mess!="") {
+        sessionStorage.setItem("Status", mess)
+      }
+    })
+
   const handleDelete = () => {
     axios.delete(`/api/item/delete-item/${item.id}`)
-      .then(() => window.location.reload())
-      .catch((err) => console.log(err));
+      .then(() => {
+        setMess("Delete")
+        window.location.reload()})
+      .catch((err) => setMess("Error"));
   };
 
   // Calculate how many chips fit in the available width
