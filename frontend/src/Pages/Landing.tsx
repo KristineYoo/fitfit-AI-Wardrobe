@@ -4,9 +4,10 @@
 import axios from 'axios';
 import { useEffect } from "react";
 import { useState } from "react";
-import { Box, Container, Paper, TextField, Typography } from '@mui/material'
+import { Box, Button, Container, Paper, TextField, Typography } from '@mui/material'
 import FitRecWindow from '../components/FitRecWindow'
 import { Fit, Item } from '../types/jsonDataTypes'
+import mascot from "backend/public/assets/data/images/mascot.jpg"
 
 export function Landing(){
     const [data, setData] = useState([]);
@@ -33,6 +34,8 @@ export function Landing(){
       }
 
   }
+
+ 
     
     useEffect(() => {
         axios.get('/api/item/')
@@ -47,50 +50,11 @@ export function Landing(){
             });
     }, []);
 
-    if (loading) {
-        return <Typography>Loading...</Typography>; 
-    }
-
-    const all_items = data as Item[];
-    console.log(all_items[0])
-    const fit1: Fit = {
-        items: [all_items[0], all_items[3], all_items[4]],
-        tags: ["cute", "pink", "casual"]
-    };
-
-    const fit2: Fit = {
-        items: [all_items[2], all_items[5]],
-        tags:["clean","simple","casual","chill"]
-    };
-
-    var fit_recs:Fit[] = [fit1, fit2]
     
     return (
-        <Container sx={{height: "50vh"}}>
-            <Typography variant="h1" sx={{p:2}}>Welcome to Fitfit!</Typography>
-            <Paper 
-        elevation={5} 
-        sx={{pl:3, pr:3, pt:1, pb:1, m:2, width:'100%'}}
-      >
-        { loadingR==false && <FitRecWindow recs={rec}/>}
-            <Box
-        component="form"
-        sx={{ '& > :not(style)': { m: 5, width: '100ch' , height: '10ch'} }}
-      >
-        <TextField 
-        id="prompt box" 
-        value={inputValue} 
-        onChange={(event) => setInputValue(event.target.value)} 
-        label="Enter Prompt" 
-        variant="outlined" 
-        fullWidth  
-        onKeyUp={handleKeyPress} 
-        multiline
-        color="primary"
-        
-        />
-      </Box>
-      </Paper>
+        <Container sx={{height: "100vh", color:"#f5f5f5"}}>
+          <Typography variant="h1" sx={{color:"primary.main"}}>Welcome to Fitfit</Typography>
+        { (sessionStorage.getItem("login")=="False" || sessionStorage.getItem("login")==null) && <Button href="/#/login">Login</Button>}
         </Container>
     )
 }

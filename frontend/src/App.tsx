@@ -25,7 +25,7 @@ function App() {
       
       <Navbar />
       <Routes>
-        <Route path="/" element={<Navigate to="/login"/>} />
+        <Route path="/" element={<Landing/>} />
         <Route path="/home" element={<Landing />} />
         <Route path="/recomend" element={<Recomend />} />
         <Route path="/outfits" element={<Outfits />} />

@@ -32,7 +32,8 @@ function Navbar() {
 
     if (
         location.pathname === '/login' ||
-        location.pathname === '/register'
+        location.pathname === '/register' ||
+        (location.pathname === '/home' && (sessionStorage.getItem("login")=="False" || sessionStorage.getItem("login")==null))
     ) {
         return null;
     }
