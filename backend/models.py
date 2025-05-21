@@ -1,5 +1,5 @@
 # Modified by Bao Vuong, 11:03PM 5/18/2025
-# Modified by Bao Vuong, 3:30PM 5/21/2025
+# Modified by Bao Vuong, 4:35PM 5/21/2025
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy.dialects.sqlite import JSON
 
@@ -67,6 +67,10 @@ class ClothingItem(db.Model):
     options = db.relationship('Option', secondary=clothing_item_options, back_populates='clothing_items')
 
     def serialize(self):
+        option_groups= {}
+        for option in self.options:
+            option_groups.setdefault(option.type, []).append(option.value)
+        
         return {
             'id': self.id,
             'user_id': self.user_id,
@@ -76,7 +80,18 @@ class ClothingItem(db.Model):
             'visibility': self.visibility,
             'embedding': self.embedding,
             'deleted': self.deleted,
-            'options': [option.serialize() for option in self.options]
+            'styling': {
+                'tags': option_groups.get('styleTag', []),
+                'mood': option_groups.get('moodTag', []),
+                'occasion': option_groups.get('occasion', []),
+                'season': option_groups.get('season', []),
+            },
+            'category': option_groups.get('category', [None])[0],
+            'color': option_groups.get('color', []),
+            'fabric': {
+                'material': option_groups.get('material', []),
+                'thickness': option_groups.get('thickness', [None])[0],
+            },
         }
     
     # Create an instance of ClothingItem instance from a dictionary
