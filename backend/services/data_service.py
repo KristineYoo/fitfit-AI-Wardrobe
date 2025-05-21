@@ -1,8 +1,9 @@
 # backend/services/data_service.py
 # Created by Bao Vuong, 6:26PM 4/26/2025
 # Mod by Sophia, 5/7/25
+# Modified by Bao Vuong, 4:05PM 5/21/2025
 
-from models import ClothingItem
+from models import ClothingItem, Option, db
 #from flask_sqlalchemy import or_
 
 # Load clothing items that belong to a user.
@@ -15,11 +16,14 @@ def load_user_clothing_items(user_id, include_deleted=False, search=None):
     if search != None:
         print("refining query...")
         search_pattern = f"%{search}%"
-        query = query.filter(
+        query = query.join(ClothingItem.options).filter(
             (
                 ClothingItem.name.ilike(search_pattern) |
-                ClothingItem.category.ilike(search_pattern) |
-                ClothingItem.note.ilike(search_pattern)
+                ClothingItem.note.ilike(search_pattern) |
+                (
+                    (Option.type  == "category") & 
+                    Option.label.ilike(search_pattern)
+                )
             )
         )
     # if don't include soft-deleted items
@@ -45,3 +49,40 @@ def validate_item(item):
         if field not in item:
             return False
     return True
+
+# Function to gather all the categories, tags, etc. into an "options" attribute
+# @param item: the new item to be added to the wardrobe data
+# @return: item with options attribute
+def attach_options_to_item(item, data):
+    option_labels = []
+
+    def add(type_, values):
+        if isinstance(values, list):
+            for value in values:
+                option_labels.append(type_, value)
+        elif isinstance(values, str):
+            option_labels.append(type_, values)
+    
+    add("category", data.get("category", [None]))
+    add("color", data.get("color", []))
+
+    styling = data.get("styling", {})
+    add("material", styling.get("material", []))
+    add("styleTag", styling.get("tags", []))
+    add("moodTag", styling.get("mood", []))
+    add("occasion", styling.get("occasion", []))
+    add("season", styling.get("season", []))
+    
+    fabric = data.get("fabric", {})
+    add("thickness", fabric.get("thickness", [None]))
+    add("fabric", fabric.get("material", []))
+
+    matched_options = Option.query.filter(
+        db.or_(
+            db.and_(Option.type == type_, Option.label == label)
+            for type_, label in option_labels
+        )
+    ).all()
+
+    item.options = matched_options
+
