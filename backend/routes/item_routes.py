@@ -7,7 +7,7 @@ from flask import Blueprint, request, jsonify, session
 from models import ClothingItem, db
 from .auth_helpers import login_required, get_current_user_id
 from services.image_service import add_image_encodings, save_image
-from services.data_service import serialize_items, validate_item, load_user_clothing_items
+from services.data_service import serialize_items, validate_item, load_user_clothing_items, attach_options_to_item
 from services.embedding_service import get_embedding, stringify
 
 item_bp = Blueprint('item', __name__, url_prefix='/api/item')
@@ -76,7 +76,11 @@ def add_item():
     new_item_data['image'] = filename
 
     # add the new item to clothing item table
-    new_item = ClothingItem.from_dict(new_item_data)
+    item_fields = ["user_id", "name", "note", "image", "visibility", "deleted", "embedding"]
+    item_data_filtered = {key: new_item_data[key] for key in item_fields if key in new_item_data}
+
+    new_item = ClothingItem.from_dict(item_data_filtered)
+    attach_options_to_item(new_item, new_item_data)
     db.session.add(new_item)
     db.session.commit()
     return jsonify(new_item_data), 201
