@@ -1,4 +1,5 @@
 # Modified by Bao Vuong, 11:03PM 5/18/2025
+# Modified by Bao Vuong, 3:30PM 5/21/2025
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy.dialects.sqlite import JSON
 
@@ -26,6 +27,9 @@ class Option(db.Model):
     type = db.Column(db.String(50), nullable=False)  # e.g., color, moodTag, styleTag, category
     label = db.Column(db.String(100), nullable=False)  # e.g., Red, Happy, Casual, T-shirt
     value = db.Column(db.String(100), nullable=True)   # e.g., #FF0000 for colors
+
+    # Many-to-many relationship with clothing items
+    clothing_items = db.relationship('ClothingItem', secondary='clothing_item_options', back_populates='options')
 
     def serialize(self):
         return {
@@ -60,7 +64,7 @@ class ClothingItem(db.Model):
     owner = db.relationship('User', back_populates='wardrobe_items')
 
     # Many-to-many relationship with options
-    options = db.relationship('Option', secondary=clothing_item_options, backref='clothing_items')
+    options = db.relationship('Option', secondary=clothing_item_options, back_populates='clothing_items')
 
     def serialize(self):
         return {
