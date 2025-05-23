@@ -5,6 +5,10 @@ import numpy as np
 from sklearn.metrics.pairwise import cosine_similarity
 from .embedding_service import get_embedding
 
+LAYERS_THRESHOLD = .5
+ACCESSORIES_THRESHOLD = .5
+PROMPT_WEIGHT = 1
+
 # Function to compute cosine similarites between the prompt and item embeddings
 # @param item: embedded user prompt from frontend
 # @return: dictionary of similarities {item id: float between 0 and 1}
@@ -110,26 +114,38 @@ def configure_fit(items, prompt, k=3):
 #        bottoms: optional item id list argument
 # @return: list of item objects
 def select_ensemble(items, prompt_emb, main_piece, footwears, layers, accessories, bottoms=None):
-    group_center = item_average(items, [main_piece], prompt_emb=prompt_emb)
+    wip_ensemble = [main_piece]
+    
+    group_center = item_average(items, wip_ensemble, prompt_emb=prompt_emb)
     # Secondary: BOTTOM
     bottom = None
     if bottoms is not None:
         bottom = compare_item_embeddings(items, group_center, bottoms)[0][0]
 
-    group_center = item_average(items, [main_piece, bottom], prompt_emb=prompt_emb)
+    wip_ensemble.append(bottom)
+    group_center = item_average(items, wip_ensemble, prompt_emb=prompt_emb)
     # Secondary: FOOTWEAR
     footwear = compare_item_embeddings(items, group_center, footwears)[0][0]
 
-    group_center = item_average(items, [main_piece, bottom, footwear], prompt_emb=prompt_emb)
+    wip_ensemble.append(footwear)
+    group_center = item_average(items, wip_ensemble, prompt_emb=prompt_emb)
     # Optional: ACCESSORIES
     accessory = compare_item_embeddings(items, group_center, accessories)[0][0] #TODO only add for a certain threshold
 
-    group_center = item_average(items, [main_piece, bottom, footwear, accessory], prompt_emb=prompt_emb)
+    # Add accessory only if it is similar enough
+    if float(cosine_similarity(np.asarray(get_item_from_id(items, accessory)['embedding'], dtype=np.float32).reshape(1, -1), prompt_emb.reshape(1, -1))[0][0]) >= ACCESSORIES_THRESHOLD:
+        wip_ensemble.append(accessory)
+        group_center = item_average(items, wip_ensemble, prompt_emb=prompt_emb)
     # Optional: LAYERS
     layer = compare_item_embeddings(items, group_center, layers)[0][0]
 
+    # Add layer only if it is similar enough
+    if float(cosine_similarity(np.asarray(get_item_from_id(items, layer)['embedding'], dtype=np.float32).reshape(1, -1), prompt_emb.reshape(1, -1))[0][0]) >= LAYERS_THRESHOLD:
+        wip_ensemble.append(layer)
+        group_center = item_average(items, wip_ensemble, prompt_emb=prompt_emb)
+
     ensemble = []
-    for i in (main_piece, bottom, footwear, accessory, layer):
+    for i in wip_ensemble:
         if i is not None:
             ensemble.append(i)
 
@@ -149,7 +165,7 @@ def item_average(items, chosen_items, prompt_emb=None):
     vectors_array = np.asarray(vectors_array, dtype=np.float32)
     average_vector = np.mean(vectors_array, axis=0)
     if prompt_emb is not None:
-        average_vector = np.mean(np.array([average_vector, prompt_emb]), axis=0)
+        average_vector = np.mean(np.array([average_vector, prompt_emb*PROMPT_WEIGHT]), axis=0)
     return average_vector
 
 # Finds the k items with closest embedding vectors to given center
@@ -157,7 +173,7 @@ def item_average(items, chosen_items, prompt_emb=None):
 #        center: a numpy embedding vector
 #        items: a item ids for the items to be compard
 #        k: an integer number of closest vectors to choose
-# @return: list of k items
+# @return: list of k tuples (id, similarity to prompt)
 def compare_item_embeddings(items, center, chosen_items, k=1):
     # determine k
     k = min(k, len(chosen_items))
