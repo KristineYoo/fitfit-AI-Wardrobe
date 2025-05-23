@@ -1,6 +1,7 @@
 // frontend/src/components/ClothingItemLog.tsx
 // Last changed by Bao Vuong, 6:28PM 4/26/2025
 // Mod by Iain Gore 5/9/25
+// Modified by Bao Vuong, 7:05PM 5/10/2025
 
 import React, { useState, useEffect } from 'react';
 import Box from '@mui/material/Box';
@@ -11,7 +12,7 @@ import Modal from '@mui/material/Modal';
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 import axios from 'axios';
-
+import Grid from '@mui/material/Grid';
 
 import SelectStyleTagList from './LogClothingItemform-Components/styleTag';
 import SeasonTagList from './LogClothingItemform-Components/seasonTag';
@@ -25,17 +26,19 @@ import { Item } from '../types/jsonDataTypes';
 
 
 const style = {
-    position: 'absolute' as const,
-    top: '50%',
-    left: '50%',
-    transform: 'translate(-50%, -50%)',
-    width: 400,
-    bgcolor: 'background.paper',
-    border: '2px solid #000',
-    boxShadow: 24,
-    p: 4,
-    maxHeight: '80vh',
-    overflowY: 'auto',
+  position: 'absolute' as const,
+  top: '50%',
+  left: '50%',
+  transform: 'translate(-50%, -50%)',
+  width: '70vw',
+  bgcolor: 'background.paper',
+  border: 'none',
+  boxShadow: 24,
+  p: 4,
+  maxHeight: '90vh',
+  overflowY: 'auto',
+  overflow: 'auto',
+  borderRadius: '10px',
 };
 
 
@@ -47,20 +50,21 @@ interface LogItemModalProps {
 
 
 const LogItemModal: React.FC<LogItemModalProps> = ({ open, onClose, item }) => {
-    const [name, setName] = useState<string>('');
-    const [notes, setNotes] = useState<string>('');
-    const [category, setCategory] = useState<string>('');
-    const [color, setColor] = useState<string[]>([]);
-    const [image, setImage] = useState<string>('/img/default.png');
-    const [styleTags, setStyleTags] = useState<string[]>([]);
-    const [seasonTags, setSeasonTags] = useState<string[]>([]);
-    const [occasionTags, setOccasionTags] = useState<string[]>([]);
-    const [moodTags, setMoodTags] = useState<string[]>([]);
-    const [fabric, setFabric] = useState<{ material: string[]; thickness: string }>({
-        material: [],
-        thickness: 'medium',
-    });
-    const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
+  const [name, setName] = useState<string>('');
+  const [notes, setNotes] = useState<string>('');
+  const [category, setCategory] = useState<string>('');
+  const [color, setColor] = useState<string[]>([]);
+  const [image, setImage] = useState<string>('/img/default.png');
+  const [styleTags, setStyleTags] = useState<string[]>([]);
+  const [seasonTags, setSeasonTags] = useState<string[]>([]);
+  const [occasionTags, setOccasionTags] = useState<string[]>([]);
+  const [moodTags, setMoodTags] = useState<string[]>([]);
+  const [fabric, setFabric] = useState<{ material: string[]; thickness: string }>({
+    material: [],
+    thickness: 'medium',
+  });
+  const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
+  const [headerText, setHeaderText] = useState<string>('Add New Clothing Item');
 
 
     // New state to store initial values
@@ -111,8 +115,8 @@ const LogItemModal: React.FC<LogItemModalProps> = ({ open, onClose, item }) => {
                 },
             };
 
-
-            setInitialValues(initial);
+      setHeaderText('Edit Clothing Item');
+      setInitialValues(initial);
 
 
             setName(initial.name);
@@ -257,71 +261,77 @@ const LogItemModal: React.FC<LogItemModalProps> = ({ open, onClose, item }) => {
     };
 
 
+
     return (
         <div>
             <Modal
-                open={open || isModalOpen}
-                onClose={handleClose}
-                aria-labelledby="clothingItemLogModalTitle"
+            open={open || isModalOpen}
+            onClose={handleClose}
+            aria-labelledby="clothingItemLogModalTitle"
             >
-                <Box sx={style} component="form" onSubmit={handleSubmit}>
-                    <Typography id="clothingItemLogModalTitle" variant="h6" component="h2" sx={{ color: 'black' }}>
-                        Upload Clothing Item
-                    </Typography>
-                    <input id="image" type="file" accept="image/*" onChange={handleFileChange} />
+            <Box sx={style} component="form" onSubmit={handleSubmit}>
+                <Typography id="clothingItemLogModalTitle" variant="h6" component="h2" sx={{ color: 'primary.main', mb: 2 }}>
+                {headerText}
+                </Typography>
+                <Grid container spacing={2} alignItems="center">
+                <Grid item xs={12} display="flex" alignItems="center">
+                    <div style={{ display: 'flex', alignItems: 'center', flexDirection: 'column' }}>
+                    <label htmlFor="uploadImage" style={{ color: '#8aa899', fontWeight: 'bold', marginRight: '0.5rem' }}>Image:</label>
+                    <Button variant="outlined" component="label" sx={{ mb: 2 }}>
+                    Browse
+                    <input hidden accept="image/*" type="file" onChange={handleFileChange} />
+                    </Button>
+                    </div>
                     {imagePreview && (
-                        <div id="image-preview-div">
-                            <img src={imagePreview} alt="Preview" style={{
-                                width: '100%',
-                                maxHeight: '250px',
-                                objectFit: 'contain',
-                                marginTop: '16px'
-                            }} />
-                        </div>
+                    <img src={imagePreview} alt="Preview" style={{ width: '100px', height: '100px', objectFit: 'contain', marginLeft: '1rem' }} />
                     )}
-                    <TextField
-                        id="uploadItem-name"
-                        label="Name of Item"
-                        variant="outlined"
-                        fullWidth
-                        sx={{ my: 2 }}
-                        value={name}
-                        onChange={(e) => setName(e.target.value)}
-                    />
-                    <TextField
-                        id="uploadItem-note"
-                        label="Notes"
-                        variant="outlined"
-                        fullWidth
-                        sx={{ my: 2 }}
-                        value={notes}
-                        onChange={(e) => setNotes(e.target.value)}
-                    />
+                </Grid>
+                <Grid item xs={12} sm={6} md={4}>
+                    <TextField id="uploadItem-name" label="Name" variant="outlined" sx={{my:1}} fullWidth value={name} onChange={(e) => setName(e.target.value)} />
+                </Grid>
+                <Grid item xs={12} sm={6} md={4}>
+                    <TextField id="uploadItem-note" label="Notes" variant="outlined" sx={{my:1}} fullWidth value={notes} onChange={(e) => setNotes(e.target.value)} />
+                </Grid>
+                <Grid item xs={12} sm={6} md={4}>
                     <TypeSelect value={category} onChange={(cat) => setCategory(cat)} />
+                </Grid>
+                <Grid item xs={12} sm={6} md={4}>
                     <ColorSelector onColorChange={(colors) => setColor(colors)} />
-                    <p style={{ color: 'black' }}>Clothing Styles</p>
+                </Grid>
+                <Grid item xs={12} sm={6} md={4}>
                     <SelectStyleTagList selectedStyles={styleTags} onChange={(styles) => setStyleTags(styles)} />
+                </Grid>
+                <Grid item xs={12} sm={6} md={4}>
                     <SeasonTagList selectedSeasons={seasonTags} onChange={handleSeasonChange} />
+                </Grid>
+                <Grid item xs={12} sm={6} md={4}>
                     <OccasionTagList selectedOccasions={occasionTags} onChange={(occasions) => setOccasionTags(occasions)} />
+                </Grid>
+                <Grid item xs={12} sm={6} md={4}>
                     <MoodTagList selectedMoods={moodTags} onChange={(moods) => setMoodTags(moods)} />
-                    <p style={{ color: 'black' }}>Fabric </p>
-                    <FabricSelect selectedFabrics={fabric.material} onFabricChange={handleFabricChange} onChange={handleFabricChange} />
-
-
-
-
+                </Grid>
+                <Grid item xs={12} sm={6} md={4}>
+                    <FabricSelect selectedFabrics={fabric.material} onFabricChange={handleFabricChange} onChange={handleFabricChange}/>
+                </Grid>
+                <Grid item xs={12} sm={6} md={4}>
                     <ThicknessSelect value={fabric.thickness} onChange={handleThicknessChange} />
-
-
-                    <Box sx={{ mt: 3, display: 'flex', justifyContent: 'space-between' }}>
-                        <Button variant="outlined" color="secondary" onClick={handleCancel}>
-                            Cancel
-                        </Button>
-                        <Button variant="contained" color="primary" type="submit">
-                            Save Item
-                        </Button>
-                    </Box>
+                </Grid>
+                </Grid>
+                <Box sx={{ mt: 3, display: 'flex', justifyContent: 'space-between' }}>
+                <Button variant="outlined" onClick={handleCancel} sx={{ boxShadow: '0px 3px 1px -2px rgba(0,0,0,0.2),0px 2px 2px 0px rgba(0,0,0,0.14),0px 1px 5px 0px rgba(0,0,0,0.12)', color: 'secondary.main', borderColor: 'secondary.main',                    transition: 'background-color 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms,box-shadow 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms,border-color 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;',
+                '&:hover': {
+                    bgcolor: 'secondary.main',
+                    color: 'white',
+                    borderColor: 'secondary.main',
+                    boxShadow: '0px 2px 4px -1px rgba(0,0,0,0.2),0px 4px 5px 0px rgba(0,0,0,0.14),0px 1px 10px 0px rgba(0,0,0,0.12)',
+                }}}>
+                    Cancel
+                </Button>
+                <Button variant="contained" color="primary" type="submit">
+                    Save Item
+                </Button>
                 </Box>
+            </Box>
             </Modal>
         </div>
     );

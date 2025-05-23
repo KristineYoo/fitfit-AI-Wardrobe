@@ -1,3 +1,5 @@
+// Modified by Bao Vuong 7:07PM 5/10/2025
+// Modified by Bao Vuong 11:19AM 5/12/2025
 
 import Box from '@mui/material/Box';
 import InputLabel from '@mui/material/InputLabel';
@@ -24,9 +26,9 @@ export default function ThicknessSelect({ value, onChange }: ThicknessSelectProp
     };
 
     return (
-        <Box sx={{ minWidth: 400, my: 2 }}>
+        <Box sx={{ width: '100%', my: 2 }}>
             <FormControl fullWidth>
-                <InputLabel id="thickness-select-label">Select Thickness</InputLabel>
+                <InputLabel id="thickness-select-label"  sx={{backgroundColor: 'white', paddingRight: '4px'}}>Select Thickness</InputLabel>
                 <Select
                     labelId="thickness-select-label"
                     id="thickness-select"

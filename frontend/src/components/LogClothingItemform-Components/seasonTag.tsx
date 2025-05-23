@@ -1,3 +1,6 @@
+// Modified by Bao Vuong 7:07PM 5/10/2025
+// Modified by Bao Vuong 11:19AM 5/12/2025
+
 import { Theme, useTheme } from '@mui/material/styles';
 import Box from '@mui/material/Box';
 import OutlinedInput from '@mui/material/OutlinedInput';
@@ -52,8 +55,8 @@ export default function SeasonTagList({ selectedSeasons, onChange }: SeasonTagLi
     };
 
     return (
-        <FormControl sx={{ my: 2, width: 400 }}>
-            <InputLabel>Select Season</InputLabel>
+        <FormControl sx={{ my: 2, width: '100%' }}>
+            <InputLabel sx={{backgroundColor: 'white', paddingRight: '4px'}}>Select Season</InputLabel>
             <Select
                 multiple
                 value={selectedSeasons}

@@ -1,3 +1,6 @@
+// Modified by Bao Vuong 7:07PM 5/10/2025
+// Modified by Bao Vuong 11:19AM 5/12/2025
+
 import { Theme, useTheme } from '@mui/material/styles';
 import Box from '@mui/material/Box';
 import OutlinedInput from '@mui/material/OutlinedInput';
@@ -55,8 +58,8 @@ export default function SelectStyleTagList({ selectedStyles, onChange }: SelectS
     };
 
     return (
-        <FormControl sx={{ my: 2, width: 400 }}>
-            <InputLabel>Select Styles</InputLabel>
+        <FormControl sx={{ my: 2, width: '100%' }}>
+            <InputLabel  sx={{backgroundColor: 'white', paddingRight: '4px'}}>Select Styles</InputLabel>
             <Select
                 multiple
                 value={selectedStyles}
