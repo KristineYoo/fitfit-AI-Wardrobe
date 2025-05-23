@@ -33,7 +33,7 @@ function Navbar() {
     if (
         location.pathname === '/login' ||
         location.pathname === '/register' ||
-        (location.pathname === '/home' && (sessionStorage.getItem("login")=="False" || sessionStorage.getItem("login")==null))
+        (location.pathname === '/' && (sessionStorage.getItem("login")!="True"))
     ) {
         return null;
     }
