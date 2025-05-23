@@ -8,6 +8,9 @@ def get_model():
       sentence_transformer_model = SentenceTransformer('all-MiniLM-L6-v2') 
    return sentence_transformer_model
 
+# Uses the embedding model to create an embedding of the text provided
+# @param texts: string
+# @returns: nd array
 def getEmbedding(texts):
     model = get_model()
     embedding = model.encode(texts)

@@ -69,14 +69,14 @@ def configure_fit(items, prompt, k=3):
     two_piece_fits = []
     # For each of the top k tops, create a two-piece fit
     for i in range(k_tops):
-        two_piece_fits.append(select_ensemble(items, tops[i], footwear, layers, accessories, bottoms=bottoms))
+        two_piece_fits.append(select_ensemble(items, prompt_emb, tops[i], footwear, layers, accessories, bottoms=bottoms))
 
     # Main Piece: ONE PIECE
     k_onepiece = min(k, len(onepiece))
     onepiece_fits = []
     # For each of the top k onpieces, create a one-piece fit
     for i in range(k_onepiece):
-        onepiece_fits.append(select_ensemble(items, onepiece[i], footwear, layers, accessories))
+        onepiece_fits.append(select_ensemble(items, prompt_emb, onepiece[i], footwear, layers, accessories))
 
     # COMPARISON
     # Compare the average similarity scores for each fit and determine the best k fits
@@ -109,22 +109,22 @@ def configure_fit(items, prompt, k=3):
 #        footwears, layers, accessories: mandatory item ids list arguments
 #        bottoms: optional item id list argument
 # @return: list of item objects
-def select_ensemble(items, main_piece, footwears, layers, accessories, bottoms=None):
-    group_center = item_average(items, [main_piece])
+def select_ensemble(items, prompt_emb, main_piece, footwears, layers, accessories, bottoms=None):
+    group_center = item_average(items, [main_piece], prompt_emb=prompt_emb)
     # Secondary: BOTTOM
     bottom = None
     if bottoms is not None:
         bottom = compare_item_embeddings(items, group_center, bottoms)[0][0]
 
-    group_center = item_average(items, [main_piece, bottom])
+    group_center = item_average(items, [main_piece, bottom], prompt_emb=prompt_emb)
     # Secondary: FOOTWEAR
     footwear = compare_item_embeddings(items, group_center, footwears)[0][0]
 
-    group_center = item_average(items, [main_piece, bottom, footwear])
+    group_center = item_average(items, [main_piece, bottom, footwear], prompt_emb=prompt_emb)
     # Optional: ACCESSORIES
     accessory = compare_item_embeddings(items, group_center, accessories)[0][0] #TODO only add for a certain threshold
 
-    group_center = item_average(items, [main_piece, bottom, footwear, accessory])
+    group_center = item_average(items, [main_piece, bottom, footwear, accessory], prompt_emb=prompt_emb)
     # Optional: LAYERS
     layer = compare_item_embeddings(items, group_center, layers)[0][0]
 
@@ -138,15 +138,18 @@ def select_ensemble(items, main_piece, footwears, layers, accessories, bottoms=N
 # Determines the average vector for the items provided
 # @param items: list of all items
 #        chosen_items: list of item ids for the items whose vectors should be averaged
+#        prompt_emb: embedding of the prompt
 # @return: a numpy vector, the same shape as embedding
-def item_average(items, chosen_items):
+def item_average(items, chosen_items, prompt_emb=None):
     # store the vectors as numpy
     vectors_array = []
     for i in chosen_items:
-        print(f"item: {i}")
-        vectors_array.append(get_item_from_id(items, i)['embedding']) #TODO nontype object not subscriptable
+        #print(f"item: {i}")
+        vectors_array.append(get_item_from_id(items, i)['embedding'])
     vectors_array = np.asarray(vectors_array, dtype=np.float32)
     average_vector = np.mean(vectors_array, axis=0)
+    if prompt_emb is not None:
+        average_vector = np.mean(np.array([average_vector, prompt_emb]), axis=0)
     return average_vector
 
 # Finds the k items with closest embedding vectors to given center
