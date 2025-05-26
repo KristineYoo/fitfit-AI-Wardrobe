@@ -2,6 +2,7 @@
 # Created by Bao Vuong, 6:26PM 4/26/2025
 # Mod by Sophia, 5/7/25
 # Modified by Bao Vuong, 4:05PM 5/21/2025
+# Modified by Bao Vuong, 9:03PM 5/25/2025
 
 from models import ClothingItem, Option, db
 #from flask_sqlalchemy import or_
@@ -12,6 +13,9 @@ from models import ClothingItem, Option, db
 # @return: List of ClothingItem objects
 def load_user_clothing_items(user_id, include_deleted=False, search=None):
     query = ClothingItem.query.filter(ClothingItem.user_id==user_id)
+    # if don't include soft-deleted items
+    if not include_deleted:
+        query = query.filter_by(deleted=False)
     print("SEARCH THERM:",search)
     if search != None:
         print("refining query...")
@@ -26,7 +30,14 @@ def load_user_clothing_items(user_id, include_deleted=False, search=None):
                 )
             )
         )
-    # if don't include soft-deleted items
+    return query.all()
+
+# Find a clothing item belongs to a user by its ID
+# @param user_id: ID of the user
+# @param item_id: ID of the clothing item
+# @return: ClothingItem object if found, None otherwise
+def find_user_clothing_item_by_id(user_id, item_id, include_deleted=False):
+    query = ClothingItem.query.filter(ClothingItem.user_id==user_id, ClothingItem.id==item_id)
     if not include_deleted:
         query = query.filter_by(deleted=False)
     return query.all()
@@ -59,15 +70,14 @@ def attach_options_to_item(item, data):
     def add(type_, values):
         if isinstance(values, list):
             for value in values:
-                option_labels.append(type_, value)
+                option_labels.append((type_, value.lower()))
         elif isinstance(values, str):
-            option_labels.append(type_, values)
+            option_labels.append((type_, values.lower()))
     
     add("category", data.get("category", [None]))
     add("color", data.get("color", []))
 
     styling = data.get("styling", {})
-    add("material", styling.get("material", []))
     add("styleTag", styling.get("tags", []))
     add("moodTag", styling.get("mood", []))
     add("occasion", styling.get("occasion", []))
@@ -75,14 +85,23 @@ def attach_options_to_item(item, data):
     
     fabric = data.get("fabric", {})
     add("thickness", fabric.get("thickness", [None]))
-    add("fabric", fabric.get("material", []))
+    add("material", fabric.get("material", []))
 
-    matched_options = Option.query.filter(
-        db.or_(
+    label_set = set(option_labels)
+
+    existing = Option.query.filter(
+        db.or_(*[
             db.and_(Option.type == type_, Option.label == label)
             for type_, label in option_labels
-        )
+        ])
     ).all()
 
-    item.options = matched_options
+    existing_pairs = set((opt.type, opt.label) for opt in existing)
+
+    to_create = [Option(type=type_, label=label, value=label) for (type_, label) in label_set - existing_pairs]
+
+    db.session.add_all(to_create)
+    db.session.flush()
+
+    item.options = existing + to_create
 
