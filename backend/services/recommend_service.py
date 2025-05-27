@@ -1,5 +1,6 @@
 # backend/services/recommend_service.py
 # Refactored by Bao Vuong, 6:27PM 4/26/2025
+# Mod by Sophia Somers 5/27/25
 
 import numpy as np
 from sklearn.metrics.pairwise import cosine_similarity
@@ -90,7 +91,6 @@ def configure_fit(items, prompt, k=3):
         if len(best_k_fits)<k:
             best_k_fits.append((item_list, similarity_to_prompt))
         elif best_k_fits[-1][1] < similarity_to_prompt:
-            print(f" best_k_fits: {best_k_fits}")
             best_k_fits[-1] = (item_list, similarity_to_prompt)
         best_k_fits = sorted(best_k_fits, key=lambda i: i[1], reverse=True)
 
@@ -160,7 +160,6 @@ def item_average(items, chosen_items, prompt_emb=None):
     # store the vectors as numpy
     vectors_array = []
     for i in chosen_items:
-        #print(f"item: {i}")
         vectors_array.append(get_item_from_id(items, i)['embedding'])
     vectors_array = np.asarray(vectors_array, dtype=np.float32)
     average_vector = np.mean(vectors_array, axis=0)
@@ -211,34 +210,3 @@ def get_similarity_to_prompt(items, prompt_emb, fit):
 def get_item_from_id(items, id):
     # find item with given id
     return next((item for item in items if item["id"] == id), None)
-
-"""
-    # determine item categories in which the user has items
-    available_items = []
-    for category in (tops, bottoms, footwear):
-        if len(category) != 0:
-            available_items.append(category)
-
-    # determine tags associated with this fit TODO: move this to the end
-    fit_1_tags = list(set(tag for item in available_items for tag in item[0][0]["styling"]["tags"]))
-
-    # determine items in this fit
-    fit_1_items = list(item[0][0] for item in available_items)
-
-    # determine accessories, based on similarity threshold
-    THRESHOLD = .8
-    if len(accessories) != 0:
-        for item in fit_1_items:
-            for accessory in accessories:
-                if float(cosine_similarity(np.array(item['embedding']).reshape(1, -1), np.array(accessory['embedding']).reshape(1, -1))[0][0]) < THRESHOLD:
-                    fit_1_items.append(accessory)
-
-    # create the fit object
-    fit_1 = {
-        "items":fit_1_items,
-        "tags":fit_1_tags
-    }
-
-    # return fits in a list
-    return [fit_1]
-"""
