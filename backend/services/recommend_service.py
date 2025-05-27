@@ -122,8 +122,8 @@ def select_ensemble(items, prompt_emb, main_piece, footwears, layers, accessorie
     if bottoms is not None:
         bottom = compare_item_embeddings(items, group_center, bottoms)[0][0]
 
-    wip_ensemble.append(bottom)
-    group_center = item_average(items, wip_ensemble, prompt_emb=prompt_emb)
+        wip_ensemble.append(bottom)
+        group_center = item_average(items, wip_ensemble, prompt_emb=prompt_emb)
     # Secondary: FOOTWEAR
     footwear = compare_item_embeddings(items, group_center, footwears)[0][0]
 
