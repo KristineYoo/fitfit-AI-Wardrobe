@@ -24,7 +24,8 @@ import { useLocation } from "react-router-dom";
 const pages = [
     { name: "Wardrobe", path: "/items" },
     { name: "Outfits", path: "/outfits" },
-    { name: "Style Recommend", path: "/recomend" }
+    { name: "Style Recommend", path: "/recomend" },
+    {name: "Help", path: "/user"}
 ];
 
 function Navbar() {
