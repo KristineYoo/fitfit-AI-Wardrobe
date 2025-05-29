@@ -1,5 +1,6 @@
 // Modified by Bao VUong 7:07PM 5/10/2025
 // Modified by Bao Vuong 11:19AM 5/12/2025
+// Modified by Bao Vuong 11:12PM 5/28/2025
 
 import { Theme, useTheme } from '@mui/material/styles';
 import Box from '@mui/material/Box';
@@ -9,7 +10,8 @@ import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select, { SelectChangeEvent, } from '@mui/material/Select';
 import Chip from '@mui/material/Chip';
-
+import {useEffect, useState} from 'react';
+import axios from 'axios';
 
 interface FabricSelectProps {
     selectedFabrics: string[];
@@ -29,47 +31,6 @@ const MenuProps = {
     },
 };
 
-const fabricList = [
-    'Cotton',
-    'Linen',
-    'Wool',
-    'Silk',
-    'Hemp',
-    'Ramie',
-    'Alpaca',
-    'Cashmere',
-    'Mohair',
-    'Angora',
-    'Polyester',
-    'Nylon',
-    'Acrylic',
-    'Spandex',
-    'Rayon',
-    'Modal',
-    'Tencel',
-    'Polypropylene',
-    'Poly-Cotton',
-    'Tri-Blend',
-    'Wool Blend',
-    'Silk Blend',
-    'Linen Blend',
-    'Denim',
-    'Twill',
-    'Corduroy',
-    'Velvet',
-    'Suede',
-    'Satin',
-    'Chiffon',
-    'Organza',
-    'Lace',
-    'Mesh',
-    'Fleece',
-    'Jersey',
-    'Terrycloth',
-    'Neoprene',
-    'Gore-Tex',
-];
-
 function getStyles(name: string, selectedFabrics: readonly string[], theme: Theme) {
     return {
         fontWeight: selectedFabrics.includes(name)
@@ -86,7 +47,15 @@ interface FabricSelectProps {
 
 export default function FabricSelect({ selectedFabrics, onFabricChange }: FabricSelectProps) {
     const theme = useTheme();
-
+    const [fabricList, setFabricList] = useState<string[]>([]);
+    useEffect(() => {
+        axios.get('/api/option', { params: { type: 'material' } })
+            .then((res) => {
+                const labels = res.data.map((option: { label: string }) => option.label);
+                setFabricList(labels);
+            })
+            .catch((err) => console.error('Failed to fetch fabric options:', err));
+    }, []);
     const handleChange = (event: SelectChangeEvent<typeof selectedFabrics>) => {
         const value = event.target.value;
         onFabricChange(typeof value === "string" ? value.split(",") : value);

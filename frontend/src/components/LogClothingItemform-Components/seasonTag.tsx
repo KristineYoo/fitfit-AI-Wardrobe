@@ -1,5 +1,6 @@
 // Modified by Bao Vuong 7:07PM 5/10/2025
 // Modified by Bao Vuong 11:19AM 5/12/2025
+// Modified by Bao Vuong 11:12PM 5/28/2025
 
 import { Theme, useTheme } from '@mui/material/styles';
 import Box from '@mui/material/Box';
@@ -8,6 +9,7 @@ import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select, { SelectChangeEvent } from '@mui/material/Select';
+import { useState, useEffect } from 'react';
 import Chip from '@mui/material/Chip';
 
 interface SeasonTagListProps {
@@ -26,13 +28,6 @@ const MenuProps = {
     },
 };
 
-const seasonTags = [
-    'Spring',
-    'Summer',
-    'Autumn',
-    'Winter',
-];
-
 function getStyles(name: string, selectedSeasons: readonly string[], theme: Theme) {
     return {
         fontWeight: selectedSeasons.includes(name)
@@ -43,7 +38,17 @@ function getStyles(name: string, selectedSeasons: readonly string[], theme: Them
 
 export default function SeasonTagList({ selectedSeasons, onChange }: SeasonTagListProps) {
     const theme = useTheme();
+    const [seasonTags, setSeasonTags] = useState<string[]>([]);
 
+    useEffect(() => {
+        fetch('/api/option?type=season')
+            .then((res) => res.json())
+            .then((data) => {
+                const labels = data.map((option: { label: string }) => option.label);
+                setSeasonTags(labels);
+            })
+            .catch((err) => console.error('Failed to fetch season tags:', err));
+    }, []);
     const handleChange = (event: SelectChangeEvent<typeof selectedSeasons>) => {
         const value = event.target.value;
         onChange(typeof value === 'string' ? value.split(',') : value);

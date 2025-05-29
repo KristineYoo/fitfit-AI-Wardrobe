@@ -1,5 +1,6 @@
 // Modified by Bao Vuong 7:07PM 5/10/2025
 // Modified by Bao Vuong 11:19AM 5/12/2025
+// Modified by Bao Vuong 11:12PM 5/28/2025
 
 import * as React from 'react';
 import { Theme, useTheme } from '@mui/material/styles';
@@ -10,6 +11,8 @@ import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select, { SelectChangeEvent } from '@mui/material/Select';
 import Chip from '@mui/material/Chip';
+import { useEffect } from 'react';
+import axios from 'axios';
 
 interface ColorOption {
     label: string;
@@ -27,28 +30,6 @@ const MenuProps = {
     },
 };
 
-const colorOptions: ColorOption[] = [
-    { label: 'Red', hex: '#FF0000' },
-    { label: 'Green', hex: '#00FF00' },
-    { label: 'Blue', hex: '#0000FF' },
-    { label: 'Yellow', hex: '#FFFF00' },
-    { label: 'Magenta', hex: '#FF00FF' },
-    { label: 'Cyan', hex: '#00FFFF' },
-    { label: 'White', hex: '#FFFFFF' },
-    { label: 'Black', hex: '#000000' },
-    { label: 'Orange', hex: '#FFA500' },
-    { label: 'Purple', hex: '#800080' },
-    { label: 'Brown', hex: '#964B00' },
-    { label: 'Gray', hex: '#808080' },
-    { label: 'Light Gray', hex: '#C0C0C0' },
-    { label: 'Pink', hex: '#FFC0CB' },
-    { label: 'Dark Green', hex: '#008000' },
-    { label: 'Indigo', hex: '#4B0082' },
-    { label: 'Gold', hex: '#FFD700' },
-    { label: 'Maroon', hex: '#A52A2A' },
-    { label: 'Deep Sky Blue', hex: '#00BFFF' },
-    { label: 'Hot Pink', hex: '#FF69B4' },
-];
 
 function getStyles(name: string, selectedLabels: readonly string[], theme: Theme) {
     return {
@@ -64,6 +45,19 @@ interface ColorSelectorProps{
 export default function ColorSelector({ onColorChange }: ColorSelectorProps) {
     const theme = useTheme();
     const [selectedLabels, setSelectedLabels] = React.useState<string[]>([]);
+    const [colorOptions, setColorOptions] = React.useState<ColorOption[]>([]);
+
+    useEffect(() => {
+        axios.get('/api/option', { params: { type: 'color' }})
+            .then(res => {
+                const options = res.data.map((option: { label: string, hex: string }) => ({
+                    label: option.label,
+                    hex: option.hex,
+                }));
+                setColorOptions(options);
+            })
+            .catch(err => console.error('Failed to fetch color options:', err));
+    }, []);
 
     const handleChange = (event: SelectChangeEvent<typeof selectedLabels>) => {
         const {
@@ -96,7 +90,7 @@ export default function ColorSelector({ onColorChange }: ColorSelectorProps) {
                                     label={label}
                                     style={{
                                         backgroundColor: colorOptions.find(color => color.label === label)?.hex,
-                                        color: colorOptions.find(color => color.label === label)?.hex === '#FFFFFF' || colorOptions.find(color => color.label === label)?.hex === '#C0C0C0' ? '#000000' : '#FFFFFF'
+                                        color: '#000',
                                     }}
                                 />
                             ))}
