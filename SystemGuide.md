@@ -2,7 +2,7 @@
 
 ##  Start the Backend Server
 
-1. Navigate to the backendend directory:
+1. Navigate to the backend directory:
 
        cd backend
 
