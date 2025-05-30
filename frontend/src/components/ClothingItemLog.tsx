@@ -99,6 +99,8 @@ const LogItemModal: React.FC<LogItemModalProps> = ({ open, onClose, item }) => {
 
     useEffect(() => {
         if (item) {
+            setImagePreview(item.imageData);
+
             const initial = {
                 name: item.name,
                 notes: item.note || '',
