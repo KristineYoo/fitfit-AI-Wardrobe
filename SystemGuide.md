@@ -28,7 +28,7 @@ Run this command if you working directory is .../fitfit/backend
 cd ../frontend
 ```
 
-4. **Run the backend server**
+4. **Run the frontend server**
 ```
 npm run dev
 ```
@@ -331,3 +331,5 @@ import numpy as np
 
 a = np.array(jsonContent)
 ```
+
+# Common bugs and issues
