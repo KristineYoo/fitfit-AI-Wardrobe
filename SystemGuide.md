@@ -1,3 +1,42 @@
+# Project Setup
+
+1. **Change working directory to backend**
+
+Run this command if your working directory is .../fitfit:
+```
+cd backend
+```
+
+Run this command if you working directory is .../fitfit/frontend
+```
+cd ../backend
+```
+2. **Run the backend server**
+```
+python app.py
+```
+The server should now be running at `http://127.0.0.1:5000/`.
+
+3. **Open a new terminal and change your working directory to frontend**
+Run this command if your working directory is .../fitfit:
+```
+cd frontend
+```
+
+Run this command if you working directory is .../fitfit/backend
+```
+cd ../frontend
+```
+
+4. **Run the backend server**
+```
+npm run dev
+```
+Then open the link this command provides to open the website
+
+
+
+
 # Wardrobe API Documentation
 
 ## Overview
