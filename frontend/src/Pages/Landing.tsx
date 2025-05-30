@@ -42,7 +42,7 @@ export function Landing(){
         { (sessionStorage.getItem("login")=="True") && <Box
           padding={"5%"}>
           <Typography variant="h3" sx={{color:"primary.main"}}>First time here?</Typography>
-        <Button href="/#/login" variant='contained'>Get started</Button>
+        <Button href="/#/user" variant='contained'>Get started</Button>
         </Box>}
         </Container>
       </div>
