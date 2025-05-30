@@ -1,5 +1,6 @@
 // Modified by Bao Vuong 7:07PM 5/10/2025
 // Modified by Bao Vuong 11:19AM 5/12/2025
+// Modified by Bao Vuong 11:12PM 5/28/2025
 
 import { Theme, useTheme } from '@mui/material/styles';
 import Box from '@mui/material/Box';
@@ -9,15 +10,8 @@ import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select, { SelectChangeEvent } from '@mui/material/Select';
 import Chip from '@mui/material/Chip';
-import data from '../../data/logItemsFormData.json';
-
-interface FormData {
-    clothingTypes: { value: number; label: string }[];
-    currencies: { value: string; label: string }[];
-    moodTags: string[];
-    stylingTags: string[];
-    occasionTags: string[];
-}
+import axios from 'axios';
+import { useState, useEffect } from 'react';
 
 interface OccasionTagListProps {
     selectedOccasions: string[];
@@ -45,8 +39,17 @@ function getStyles(name: string, selectedOccasions: readonly string[], theme: Th
 
 export default function OccasionTagList({ selectedOccasions, onChange }: OccasionTagListProps) {
     const theme = useTheme();
-    const occasionTags = (data as FormData).occasionTags;
+    const [occasionTags, setOccasionTags] = useState<string[]>([]);
 
+    useEffect(() => {
+        axios.get('/api/option', { params: { type: 'occasion'}})
+            .then(res => {
+                const labels = res.data.map((option: { label: string }) => option.label);
+                setOccasionTags(labels);
+            })
+            .catch(err => console.error('Failed to fetch occasion tags:', err));
+    }, []);
+    
     const handleChange = (event: SelectChangeEvent<typeof selectedOccasions>) => {
         const value = event.target.value;
         onChange(typeof value === 'string' ? value.split(',') : value);

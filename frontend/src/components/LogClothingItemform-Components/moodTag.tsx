@@ -1,5 +1,6 @@
 // Modified by Bao VUong 7:07PM 5/10/2025
 // Modified by Bao Vuong 11:19AM 5/12/2025
+// Modified by Bao Vuong 11:12PM 5/28/2025
 
 import { Theme, useTheme } from '@mui/material/styles';
 import Box from '@mui/material/Box';
@@ -9,15 +10,8 @@ import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select, { SelectChangeEvent } from '@mui/material/Select';
 import Chip from '@mui/material/Chip';
-import data from '../../data/logItemsFormData.json';
-
-interface FormData {
-    clothingTypes: { value: number; label: string }[];
-    currencies: { value: string; label: string }[];
-    moodTags: string[];
-    stylingTags: string[];
-    occasionTags: string[];
-}
+import { useEffect, useState } from 'react';
+import axios from 'axios';
 
 interface MoodTagListProps {
     selectedMoods: string[];
@@ -45,7 +39,15 @@ function getStyles(name: string, selectedMoods: readonly string[], theme: Theme)
 
 export default function MoodTagList({ selectedMoods, onChange }: MoodTagListProps) {
     const theme = useTheme();
-    const moodTags = (data as FormData).moodTags;
+    const [moodTags, setMoodTags] = useState<string[]>([]);
+    useEffect(() => {
+        axios.get('/api/option', { params: { type: 'moodTag' } })
+            .then(res => {
+                const options = res.data.map((option: { label: string }) => option.label);
+                setMoodTags(options);
+            })
+            .catch(err => console.error('Failed to fetch mood tags:', err));
+    }, []);
 
     const handleChange = (event: SelectChangeEvent<typeof selectedMoods>) => {
         const value = event.target.value;

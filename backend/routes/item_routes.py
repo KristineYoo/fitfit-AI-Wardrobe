@@ -3,11 +3,12 @@
 # Mod by Sophia Somers 5/7/25
 
 # Modified by Bao Vuong, 5:29PM 5/8/2025
+# Modified by Bao Vuong, 9:03PM 5/25/2025
 from flask import Blueprint, request, jsonify, session
 from models import ClothingItem, db
 from .auth_helpers import login_required, get_current_user_id
 from services.image_service import add_image_encodings, save_image
-from services.data_service import serialize_items, validate_item, load_user_clothing_items
+from services.data_service import serialize_items, validate_item, load_user_clothing_items, attach_options_to_item, find_user_clothing_item_by_id
 from services.embedding_service import get_embedding, stringify
 
 item_bp = Blueprint('item', __name__, url_prefix='/api/item')
@@ -42,7 +43,12 @@ def get_items():
 @item_bp.route('/<int:item_id>', methods=["GET"])
 @login_required
 def get_item(item_id):
-    item = ClothingItem.query.get(item_id)
+    item = find_user_clothing_item_by_id(get_current_user_id(), item_id)
+        
+    if not item:
+        return jsonify({"message": "Item not found"}), 404
+    if item[0].user_id != get_current_user_id():
+        return jsonify({"message": "Unauthorized access"}), 403
     
     # serialize SQLAlchemy object into dictionary
     serialized_item = serialize_items(item)
@@ -76,7 +82,11 @@ def add_item():
     new_item_data['image'] = filename
 
     # add the new item to clothing item table
-    new_item = ClothingItem.from_dict(new_item_data)
+    item_fields = ["user_id", "name", "note", "image", "visibility", "deleted", "embedding"]
+    item_data_filtered = {key: new_item_data[key] for key in item_fields if key in new_item_data}
+
+    new_item = ClothingItem.from_dict(item_data_filtered)
+    attach_options_to_item(new_item, new_item_data)
     db.session.add(new_item)
     db.session.commit()
     return jsonify(new_item_data), 201
@@ -87,12 +97,13 @@ def add_item():
 @login_required
 def update_item(item_id):
     updated_item = request.get_json()
-    item = ClothingItem.query.get(item_id)
+    print("UPDATED ITEM:", updated_item)
+    item = find_user_clothing_item_by_id(get_current_user_id(), item_id)
 
     if not item:
         return jsonify({"message": "Item not found"}), 404
     
-    if item.user_id != get_current_user_id():
+    if item[0].user_id != get_current_user_id():
         return jsonify({"message": "Unauthorized access"}), 403
     
     updated_item["embedding"] = get_embedding(stringify(updated_item)).tolist()
@@ -101,35 +112,35 @@ def update_item(item_id):
         if updated_item.get("image") != None:
             filename = save_image(updated_item)
         else:
-            filename = item.image
+            filename = item[0].image
     except:
         filename = "default.png"
     # Update the item data with the file path instead of the base64 string
     updated_item['image'] = filename
 
     # update fields
-    for field in ["name", "note", "category", "color", "styling", "visibility", "fabric", "embedding", "image"]:
+    for field in ["name", "note", "visibility", "embedding", "image"]:
         if field in updated_item:
-            setattr(item, field, updated_item[field])
-
+            setattr(item[0], field, updated_item[field])
+    attach_options_to_item(item[0], updated_item)
     db.session.commit()
 
-    return jsonify(item.serialize()), 200
+    return jsonify(item[0].serialize()), 200
 
 
 # DELETE /api/item/delete-item/<int:item_id>: marks item as deleted 
 @item_bp.route("/delete-item/<int:item_id>", methods=["DELETE"])
 @login_required
 def delete_item(item_id):
-    item = ClothingItem.query.get(item_id)
+    item = find_user_clothing_item_by_id(get_current_user_id(), item_id)
 
     if not item:
         return jsonify({"message": "Item not found"}), 404
     
-    if item.user_id != get_current_user_id():
+    if item[0].user_id != get_current_user_id():
         return jsonify({"message": "Unauthorized access"}), 403
     
-    item.deleted = True
+    item[0].deleted = True
 
     db.session.commit()
 

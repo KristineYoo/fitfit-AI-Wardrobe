@@ -1,5 +1,6 @@
 // Modified by Bao Vuong 7:07PM 5/10/2025
 // Modified by Bao Vuong 11:19AM 5/12/2025
+// Modified by Bao Vuong 10:55 5/28/2025
 
 import { Theme, useTheme } from '@mui/material/styles';
 import Box from '@mui/material/Box';
@@ -9,15 +10,8 @@ import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select, { SelectChangeEvent } from '@mui/material/Select';
 import Chip from '@mui/material/Chip';
-import data from '../../data/logItemsFormData.json';
-
-interface FormData {
-    clothingTypes: { value: number; label: string }[];
-    currencies: { value: string; label: string }[];
-    moodTags: string[];
-    stylingTags: string[];
-    occasionTags: string[];
-}
+import axios from 'axios';
+import { useState, useEffect } from 'react';
 
 interface SelectStyleTagListProps {
     selectedStyles: string[];
@@ -45,7 +39,16 @@ function getStyles(name: string, selectedStyles: readonly string[], theme: Theme
 
 export default function SelectStyleTagList({ selectedStyles, onChange }: SelectStyleTagListProps) {
     const theme = useTheme();
-    const stylingTags = (data as FormData).stylingTags;
+    const [stylingTags, setStylingTags] = useState<string[]>([]);
+
+    useEffect(() => {
+        axios.get('/api/option', { params: { type: 'styleTag' } })
+            .then(res => {
+                const labels = res.data.map((option: { label: string }) => option.label);
+                setStylingTags(labels);
+            })
+            .catch(err => console.error('Failed to fetch styling tags:', err));
+    }, []);
 
     const handleChange = (event: SelectChangeEvent<typeof selectedStyles>) => {
         const value = event.target.value;
