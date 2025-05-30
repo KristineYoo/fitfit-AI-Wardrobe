@@ -1,10 +1,10 @@
 ## FitFit
 
-# FitFit is a website that uses artificial intelligence to recommend daily outfits straight from what clothes you have in your wardrobe
-# You are able to sign in/ log in 
-# Upload clothing items and pictures
-# View, edit, and delete clothing items
-# Use a recommendation system to get personalized outfits
+ FitFit is a website that uses artificial intelligence to recommend daily outfits straight from what clothes you have in your wardrobe
+ You are able to sign in/ log in 
+ Upload clothing items and pictures
+ View, edit, and delete clothing items
+ Use a recommendation system to get personalized outfits
 
 ##  Installation Guide
 
