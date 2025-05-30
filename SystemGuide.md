@@ -1,3 +1,26 @@
+# Setup
+
+##  Start the Backend Server
+
+To run the backend server:
+
+    python app.py
+
+This will start the backend, usually at `http://localhost:5000`.
+
+---
+
+##  Frontend Setup
+
+1. Open a new terminal tab or window.
+2. Navigate to the frontend directory:
+
+       cd frontend
+
+3. Start the frontend development server:
+
+       npm run dev
+
 
 # Wardrobe API Documentation
 
