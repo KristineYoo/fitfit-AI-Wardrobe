@@ -1,3 +1,31 @@
+# Setup
+
+##  Start the Backend Server
+
+1. Navigate to the backend directory:
+
+       cd backend
+
+2. Run the backend server:
+
+       python app.py
+
+This will start the backend, usually at `http://localhost:5000`.
+
+---
+
+##  Frontend Setup
+
+1. Open a new terminal tab or window.
+2. Navigate to the frontend directory:
+
+       cd frontend
+
+3. Start the frontend development server:
+
+       npm run dev
+
+
 # Wardrobe API Documentation
 
 ## Overview
@@ -107,6 +135,37 @@ or
 ```json
 {
     "message": "No user logged in"
+}
+```
+
+### Delete a Clothing Item
+**POST** `/api/item/delete-item/{item_id}`
+
+#### Description:
+Deletes a clothing item from the wardrobe.
+
+#### Request:
+```
+Delete /item/delete-item/1
+```
+
+#### Response Example:
+```json
+{
+    "message": "Item marked as deleted"
+}
+```
+
+#### Error Response:
+```json
+{
+    "message": "Item not found"
+}
+```
+or
+```json
+{
+    "message": "Unauthorized access"
 }
 ```
 
@@ -261,3 +320,13 @@ import numpy as np
 
 a = np.array(jsonContent)
 ```
+
+# Common bugs and issues
+
+## Webpage not loading
+
+Ensure the API has fully loaded and reload the page
+
+## Future Issues
+
+For any issues not listed here contact member of team
