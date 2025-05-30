@@ -296,4 +296,10 @@ a = np.array(jsonContent)
 
 # Common bugs and issues
 
+## Webpage not loading
 
+Ensure the API has fully loaded and reload the page
+
+## Future Issues
+
+For any issues not listed here contact member of team
