@@ -2,9 +2,13 @@
 
 ##  Start the Backend Server
 
-To run the backend server:
+1. Navigate to the backendend directory:
 
-    python app.py
+       cd backend
+
+2. Run the backend server:
+
+       python app.py
 
 This will start the backend, usually at `http://localhost:5000`.
 
