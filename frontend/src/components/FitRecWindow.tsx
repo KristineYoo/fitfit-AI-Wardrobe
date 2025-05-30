@@ -27,7 +27,7 @@ export default function FitRecWindow( {recs} : {recs:Fit[]} ) {
         container spacing={4} >
           {
             recs.map((rec:Fit, i:number) => (
-              <Grid2 size={{xs:12, sm:12, md:12, xl:12}} sx={{display: 'flex', justifyContent: 'center', alignItems: 'center'}}>
+              <Grid2 size={{xs:12, sm:12, md:4}} sx={{display: 'flex', justifyContent: 'center', alignItems: 'center'}}>
                 <FitThumbnail rec={rec} key={"fitThumbnail"+i}/>
               </Grid2>
             ))
