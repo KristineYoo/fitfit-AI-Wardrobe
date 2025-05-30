@@ -108,8 +108,6 @@ This will start the backend, usually at `http://localhost:5000`.
 
 ## Support
 For support or trouble shooting email bgv25@drexel.edu, irg35@drexel.edu, ss5837@drexel.edu, or kly35@drexel.edu 
-## Roadmap
-If you have ideas for releases in the future, it is a good idea to list them in the README.
 
 ## Contributing
 
@@ -121,8 +119,8 @@ If you have ideas for releases in the future, it is a good idea to list them in 
 
 
 ## Authors and acknowledgment
-Bao Vuong
-Sophia Somers
-Iain Gore
+Bao Vuong,
+Sophia Somers,
+Iain Gore,
 Kristine Yoo
 
