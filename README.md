@@ -116,6 +116,8 @@ If you have ideas for releases in the future, it is a good idea to list them in 
 - All contributions must go through a **merge request (MR)**.
 - Each MR must be reviewed and approved by **at least one of the four original project creators** before being merged.
 - Make sure your code is clean, readable, and well-documented.
+- Ensure the virtual environment **is** activated **before** installing **new** dependencies.
+- Run `pip freeze > requirements.txt` **after** adding **new** dependencies.
 
 
 ## Authors and acknowledgment
