@@ -4,6 +4,7 @@
 from flask import Flask
 from flask_cors import CORS
 from dotenv import load_dotenv
+from image_processing import save_image, add_img_encodings
 
 from models import db
 from routes import register_blueprints
