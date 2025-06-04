@@ -72,7 +72,6 @@ Adds a new clothing item to the wardrobe.
 #### Request Body Example:
 ```json
 {
-    "id": 7,
     "name": "Blue Jacket",
     "category": "jackets",
     "brand": "Nike",
