@@ -1,5 +1,6 @@
 # backend/routes/recommend_routes.py
 # Refactored by Bao Vuong, 6:23PM 4/26/2025
+# Mod by Sophia Somers, 5/27/25
 
 import filters
 from flask import Blueprint, request, jsonify
@@ -10,11 +11,11 @@ from services.recommend_service import get_similarities, configure_fit
 
 recommend_bp = Blueprint('recommend', __name__, url_prefix='/api/recommend')
 
-# GET /api/recommend: return 3 random clothing items to form an outfit when request is made
+# GET /api/recommend: return k=3 best fits when request is made
 @recommend_bp.route("/", methods=["GET", "POST"])
 @login_required
 def recommend_outfit():
-    # retireve prompt
+    # retrieve prompt
     prompt = request.get_json()['prompt']
     
     # get items from database
@@ -24,10 +25,8 @@ def recommend_outfit():
 
     # filter non-visible items
     filtered = filters.filter(items)
-    # get similarities and store in a dictionary
-    similarities = get_similarities(prompt, filtered)
     # configure fits
-    fits = configure_fit(filtered, similarities)
+    fits = configure_fit(filtered, prompt)
     # add image data
     for i, fit in enumerate(fits):
         items = fits[i]["items"]

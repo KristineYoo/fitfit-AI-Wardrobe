@@ -23,8 +23,8 @@ import { useLocation } from "react-router-dom";
 // I just put the style recommend there so that the web looks more balance, we can delete if want by removing that object
 const pages = [
     { name: "Wardrobe", path: "/items" },
-    { name: "Outfits", path: "/outfits" },
-    { name: "Style Recommend", path: "/recomend" }
+    { name: "Style Recommend", path: "/recomend" },
+    {name: "Help", path: "/user"}
 ];
 
 function Navbar() {
@@ -32,7 +32,8 @@ function Navbar() {
 
     if (
         location.pathname === '/login' ||
-        location.pathname === '/register'
+        location.pathname === '/register' ||
+        (location.pathname === '/' && (sessionStorage.getItem("login")!="True"))
     ) {
         return null;
     }
