@@ -1,6 +1,8 @@
 # backend/routes/item_routes.py
 # Refactored by Bao Vuong, 6:23PM 4/26/2025
+# Mod by Sophia Somers 5/7/25
 
+# Modified by Bao Vuong, 5:29PM 5/8/2025
 from flask import Blueprint, request, jsonify, session
 from models import ClothingItem, db
 from .auth_helpers import login_required, get_current_user_id
@@ -15,9 +17,17 @@ item_bp = Blueprint('item', __name__, url_prefix='/api/item')
 @item_bp.route('/', methods=["GET"])
 @login_required
 def get_items():
+    query=request.args.get("term")
+    print("QUERY:",query)
+
     current_user_id = get_current_user_id()
 
-    items = load_user_clothing_items(current_user_id)
+    items = []
+    if query != None:
+        items = load_user_clothing_items(current_user_id, search=query)
+        print(items)
+    else:
+        items = load_user_clothing_items(current_user_id)
     
     # serialize SQLAlchemy object into dictionary
     serialized_items = serialize_items(items)
@@ -77,7 +87,6 @@ def add_item():
 @login_required
 def update_item(item_id):
     updated_item = request.get_json()
-    updated_item["embedding"] = get_embedding(stringify(updated_item)).tolist()
     item = ClothingItem.query.get(item_id)
 
     if not item:
@@ -86,6 +95,18 @@ def update_item(item_id):
     if item.user_id != get_current_user_id():
         return jsonify({"message": "Unauthorized access"}), 403
     
+    updated_item["embedding"] = get_embedding(stringify(updated_item)).tolist()
+    # Dealing with the image upload
+    try:
+        if updated_item.get("image") != None:
+            filename = save_image(updated_item)
+        else:
+            filename = item.image
+    except:
+        filename = "default.png"
+    # Update the item data with the file path instead of the base64 string
+    updated_item['image'] = filename
+
     # update fields
     for field in ["name", "note", "category", "color", "styling", "visibility", "fabric", "embedding", "image"]:
         if field in updated_item:

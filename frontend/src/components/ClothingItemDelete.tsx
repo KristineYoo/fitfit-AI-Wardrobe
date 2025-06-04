@@ -1,5 +1,6 @@
 // frontend/src/components/ClothingItemDelete.tsx
 // Last changed by Bao Vuong, 6:28PM 4/26/2025
+// Mod by Iain Gore 5/9/25
 
 import * as React from 'react';
 import axios from 'axios';
@@ -32,10 +33,12 @@ const style = {
 
 export default function DeleteItemModal() {
   const [open, setOpen] = React.useState<boolean>(false);
+  const [mess, setMess] = useState("")
   const handleOpen = () => setOpen(true);
-  const handleClose = () => {setOpen(false);
+  const handleClose = () => {
+    setOpen(false);
     window.location.reload();
-  } 
+  }
   const [id, setId] = useState('');
   const handleChange = (event: SelectChangeEvent) => {
     setId(event.target.value as string);
@@ -45,18 +48,25 @@ export default function DeleteItemModal() {
   useEffect(() => {
     axios.get("/api/item/")
       .then((res) => {
-        console.log(res.data); 
-        setData(res.data.items || []); 
+        console.log(res.data);
+        setData(res.data.items || []);
       })
       .catch((err) => console.log(err));
   }, []);
 
+  useEffect(() => {
+    if (mess!="") {
+      sessionStorage.setItem("Status", mess)
+    }
+  })
+
   const deleted = () => {
-    axios.delete("/api/item/delete-item/"+id)
+    axios.delete("/api/item/delete-item/" + id)
       .then(() => {
+        setMess("Delete")
         window.location.reload();
       })
-      .catch((err) => console.log(err));
+      .catch((err) => setMess("Error"));
   }
 
 
@@ -66,9 +76,12 @@ export default function DeleteItemModal() {
         sx={{
           position: 'fixed',
           bottom: 16,
-          left: 16
+          left: 16,
+          bgcolor: '#f5e6e8',
+          '&:hover': { bgcolor: 'error.main', color: 'common.white' },
+
         }}
-        color="primary"
+        color="error"
         aria-label="add"
         onClick={handleOpen} >
         <RemoveIcon />
@@ -92,9 +105,9 @@ export default function DeleteItemModal() {
             >
               {
                 data.map((item: Item) => (
-                  <MenuItem value={item.id}>{item.deleted==false && item.name}</MenuItem>
+                  <MenuItem value={item.id}>{item.deleted == false && item.name}</MenuItem>
                 ))
-                }
+              }
             </Select>
           </FormControl>
           <DialogActions>
